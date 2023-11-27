@@ -11,5 +11,9 @@ public class User {
     private String password;
     private String phone;
     private Date birth_date;
-//    Map<User, > hm = new HashMap<String, Integer>();
+    HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();
+    HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();
+    public Post posts[];
+    public Group groups[];
+
 }
