@@ -3,32 +3,68 @@ import  java.util.*;
 
 import java.util.Date;
 
+//getters=g,setters=s
+
 public class User {
-    private String email;
-    private String last_name;
-    private String first_name;
-    private boolean martial_status;
-    private String password;
-    private String phone;
-    private Date birth_date;
-    protected HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();
-    protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();
+    private String email; //done g=32 s=36
+    private String first_name;//done g=48 s=52
+    private String last_name;//done g=36 g =40
+    //    private boolean martial_status;//enum ( married or single or engaged )
+    private String password;//done g=63,s= 67
+    private boolean gender;//0female 1 male
+    private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
+    private String phone; //done
+    private Date birth_date;//done
+    protected HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();//problem
+    protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
     public Post posts[];
     public Group groups[];
+    private static int idCounter=1;
+    private final int id=idCounter;
 
     //constructor func
-    public User(String email, String last_name, String first_name, boolean martial_status, String password, String phone, Date birth_date) {
+    public User(String email, String last_name, String first_name, RelationshipStatus status, String password, String phone, Date birth_date,boolean gender) {
         this.email = email;
         this.last_name = last_name;
         this.first_name = first_name;
-        this.martial_status = martial_status;
+        this.status= status;
         this.password = password;
         this.phone = phone;
         this.birth_date = birth_date;
-    }
+        this.gender=gender;
+        idCounter++;
+
+    }//main constructor
+    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,boolean gender, Date birth_date) {
+        this.email = email;
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.status=status;
+        this.password = password;
+        this.birth_date = birth_date;
+        this.gender=gender;
+    }//without phone
+    public User(String email, String last_name, String first_name, String password, String phone ,boolean gender, Date birth_date) {
+        this.email = email;
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.phone=phone;
+        this.password = password;
+        this.birth_date = birth_date;
+        this.gender=gender;
+    }//without status
+    public User(String email, String last_name, String first_name, String password, boolean gender, Date birth_date) {
+        this.email = email;
+        this.last_name = last_name;
+        this.first_name = first_name;
+        this.password = password;
+        this.birth_date = birth_date;
+        this.gender=gender;
+    }//minimum constructor
 
 
-    //getters and setters
+
+    //================================> getters and setters <==========================================//
     public String getEmail() {
         return email;
     }
@@ -53,12 +89,12 @@ public class User {
         this.first_name = first_name;
     }
 
-    public boolean isMartial_status() {
-        return martial_status;
+    public RelationshipStatus isMartial_status() {
+        return status;
     }
 
-    public void setMartial_status(boolean martial_status) {
-        this.martial_status = martial_status;
+    public void setMartial_status(RelationshipStatus state) {
+        status=state;
     }
 
     public String getPassword() {
@@ -93,15 +129,15 @@ public class User {
         FriendType.put(user,type);
     }
 
-    public HashMap<User, Conversation> getFriendChat() {
-        return FriendChat;
-    }
+//    public HashMap<User, Conversation> getFriendChat() {
+//        return FriendChat;
+//    }
 
 
     //important
-    public void setFriendChat(User user,Conversation conv) {
-        FriendChat.put(user,conv);
-    }
+//    public void setFriendChat(User user,Conversation conv) {
+//        FriendChat.put(user,conv);
+//    }
 
     public Post[] getPosts() {
         return posts;
@@ -118,4 +154,13 @@ public class User {
     public void setGroups(Group[] groups) {
         this.groups = groups;
     }
+    protected int getId(){
+        return this.id;
+    }
+
+
+    //=====================>methods<===================//
+
+
+
 }
