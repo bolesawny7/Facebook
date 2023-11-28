@@ -1,9 +1,11 @@
 package Models;
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Post {
@@ -15,8 +17,6 @@ public class Post {
     private final int  postId =postCounter;
     private boolean privacyOption; //(0 friends , 1 public)
     //private React[] reacts;
-
-
 
    // post without tag
     public Post(User createdBy, Date creationDate,  boolean privacyOption , String content)
