@@ -2,6 +2,10 @@ package Models;
 import  java.util.*;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 //getters=g,setters=s
 
@@ -17,42 +21,34 @@ public class User {
     private Date birth_date;//done
     protected HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();//problem
     protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
-    public Post posts[];
+//    public Post posts[];
+
+    public  ArrayList<Post> posts = new ArrayList<>();
+
+    private static int userPostsCounter=1;
     public Group groups[];
     private static int idCounter=1;
     private final int id=idCounter;
 
     //constructor func
-    public User(String email, String last_name, String first_name, RelationshipStatus status, String password, String phone, Date birth_date,boolean gender) {
-        this.email = email;
-        this.last_name = last_name;
-        this.first_name = first_name;
-        this.status= status;
-        this.password = password;
-        this.phone = phone;
-        this.birth_date = birth_date;
-        this.gender=gender;
-        idCounter++;
-
-    }//main constructor
-    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,boolean gender, Date birth_date) {
-        this.email = email;
-        this.last_name = last_name;
-        this.first_name = first_name;
-        this.status=status;
-        this.password = password;
-        this.birth_date = birth_date;
-        this.gender=gender;
-    }//without phone
-    public User(String email, String last_name, String first_name, String password, String phone ,boolean gender, Date birth_date) {
-        this.email = email;
-        this.last_name = last_name;
-        this.first_name = first_name;
+    public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  boolean gender ,Date birth_date,String phone) {
+        this(email,last_name,first_name,password,status,gender,birth_date);
         this.phone=phone;
-        this.password = password;
-        this.birth_date = birth_date;
-        this.gender=gender;
-    }//without status
+    }
+
+    //without phone
+    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,boolean gender, Date birth_date) {
+      this(email, last_name, first_name, password, gender, birth_date);
+      this.status= status;
+    }
+
+    //without status
+    public User(String email, String last_name, String first_name, String password, String phone ,boolean gender, Date birth_date) {
+        this(email, last_name, first_name, password, gender, birth_date);
+        this.phone=phone;
+    }
+
+    //minimum constructor
     public User(String email, String last_name, String first_name, String password, boolean gender, Date birth_date) {
         this.email = email;
         this.last_name = last_name;
@@ -60,7 +56,9 @@ public class User {
         this.password = password;
         this.birth_date = birth_date;
         this.gender=gender;
-    }//minimum constructor
+        idCounter++;
+
+    }
 
 
 
@@ -117,15 +115,18 @@ public class User {
         return birth_date;
     }
 
-    public void setBirth_date(Date birth_date) {
+    public void setBirth_date(Date birth_date)
+    {
         this.birth_date = birth_date;
     }
 
-    public HashMap<User, Models.FriendType> getFriendType() {
+    public HashMap<User, Models.FriendType> getFriendType()
+    {
         return FriendType;
     }
 
-    public void setFriendType(User user,FriendType type) {
+    public void setFriendType(User user,FriendType type)
+    {
         FriendType.put(user,type);
     }
 
@@ -139,27 +140,38 @@ public class User {
 //        FriendChat.put(user,conv);
 //    }
 
-    public Post[] getPosts() {
+    public ArrayList<Post>  getPosts()
+    {
         return posts;
     }
 
-    public void setPosts(Post[] posts) {
+    public void setPosts(ArrayList<Post> posts)
+    {
         this.posts = posts;
     }
 
-    public Group[] getGroups() {
+    public Group[] getGroups()
+    {
         return groups;
     }
 
-    public void setGroups(Group[] groups) {
+    public void setGroups(Group[] groups)
+    {
         this.groups = groups;
     }
-    protected int getId(){
+    protected int getId()
+    {
         return this.id;
     }
 
 
     //=====================>methods<===================//
+
+    public void createPost()
+    {
+        Post  post   = new Post();
+
+    }
 
 
 
