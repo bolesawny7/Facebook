@@ -167,10 +167,14 @@ public class User {
 
     //=====================>methods<===================//
 
-    public void createPost()
+    public void createPost(User user, Date date,  boolean privacyOption , String content, User[] tagged )
     {
-        Post  post   = new Post();
+        Post  post   = new Post(user, date, privacyOption, content, tagged);
+    }
 
+    public void createPost(User user, Date date,  boolean privacyOption , String content )
+    {
+        Post  post   = new Post(user, date, privacyOption, content);
     }
 
 
