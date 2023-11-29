@@ -13,7 +13,6 @@ public class User {
 
     private static int idCounter=1;
     private static int userPostsCounter=1;
-
     private String email; //done g=32 s=36
     private String first_name;//done g=48 s=52
     private String last_name;//done g=36 g =40
@@ -40,8 +39,8 @@ public class User {
 
     //without phone
     public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,boolean gender, Date birth_date) {
-      this(email, last_name, first_name, password, gender, birth_date);
-      this.status= status;
+        this(email, last_name, first_name, password, gender, birth_date);
+        this.status= status;
     }
 
     //without RelationshipStatus
@@ -180,7 +179,7 @@ public class User {
 
     //=====================>methods<===================//
 
-    public void createPost(User user, Date date,  boolean privacyOption , String content, User[] tagged )
+    public void createPost(User user, Date date,  boolean privacyOption , String content, ArrayList<User> tagged )
     {
         Post  post   = new Post(user, date, privacyOption, content, tagged);
     }
