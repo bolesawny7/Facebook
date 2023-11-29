@@ -1,24 +1,20 @@
 package Models;
 
-import org.w3c.dom.Comment;
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class Post {
     private User createdBy;
     private Date creationDate;
     private String content;
-    protected User[] tagged;
+    //  protected User[] tagged;
     private static int postCounter=1;
     private final int  postId =postCounter;
     private boolean privacyOption; //(0 friends , 1 public)
-    //private React[] reacts;
+    ArrayList<User> tagged = new ArrayList<>();
 
-   // post without tag
+    // post without tag
     public Post(User createdBy, Date creationDate,  boolean privacyOption , String content)
     {
         this.createdBy = createdBy;
@@ -29,7 +25,7 @@ public class Post {
     }
 
     // post with tag
-    public Post(User createdBy, Date creationDate, boolean privacyOption , String content, User[] tagged )
+    public Post(User createdBy, Date creationDate, boolean privacyOption , String content, ArrayList<User> tagged )
     {
         this(createdBy,creationDate,privacyOption,content);
         this.tagged = tagged;
@@ -49,8 +45,20 @@ public class Post {
         this.privacyOption = privacyOption;
     }
 
-//    public void react(React reaction)
-//    {
-//        reacts.push
-//    }
+    public void setTaggedUser(User user)
+    {
+        tagged.add(user);
+    }
+
+    public void removeTaggedUser(User user)
+    {
+        tagged.remove(user);
+    }
+
+    public ArrayList<User> getTaggedUsers()
+    {
+        return tagged;
+    }
+
+
 }
