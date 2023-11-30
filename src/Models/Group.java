@@ -12,7 +12,12 @@ public class Group {
     public ArrayList<Post> posts = new ArrayList<>();
 
 
-    //-----------------------Costructos------------------------------------
+    //-----------------------Constructors------------------------------------///
+
+    Group(String name)
+    {
+        this.name = name;
+    }
 
     Group(String name, String description)
     {
@@ -20,12 +25,9 @@ public class Group {
         this.description = description;
     }
 
-    Group(String name)
-    {
-        this.name = name;
-    }
 
-    //-----------------------Setters------------------------------------
+
+    //-----------------------Setters------------------------------------//
 
     public void editDesc(String description)
     {
