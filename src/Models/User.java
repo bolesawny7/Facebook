@@ -1,10 +1,11 @@
 package Models;
+import Enums.FriendType;
+import Enums.RelationshipStatus;
+
 import  java.util.*;
 
 import java.util.Date;
 import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 //getters=g,setters=s
@@ -96,7 +97,7 @@ public class User {
     }
 
 
-    public HashMap<User, Models.FriendType> getFriendType()
+    public HashMap<User, Enums.FriendType> getFriendType()
     {
         return FriendType;
     }
