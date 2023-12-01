@@ -1,4 +1,4 @@
-import Services.Login;
+import Services.UserServices;
 
 import java.util.Scanner;
 
@@ -16,28 +16,21 @@ public class Main {
                 loginFunction();
                 break;
             case 2:
-
-
         }
-
-
-
-
     }
     public static void loginFunction(){
         Scanner userData=new Scanner(System.in);
         String email =userData.next();
         String password =userData.next();
-        Login login=new Login();
+        UserServices login=new UserServices();
         login.checkValues(email,password);
 
     }public static void signupFunction(){
         Scanner userData=new Scanner(System.in);
         String email =userData.next();
         String password =userData.next();
-        Login login=new Login();
+        UserServices login=new UserServices();
         login.checkValues(email,password);
-
     }
 }
 

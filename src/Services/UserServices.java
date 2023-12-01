@@ -1,11 +1,10 @@
 package Services;
 
-import Models.Group;
 import Models.Users.Client;
 
 import java.util.ArrayList;
 
-public class Login {
+public class UserServices {
     private String email;
     private String password;
     private ArrayList<Client> clients = new java.util.ArrayList<Client>();
@@ -17,6 +16,5 @@ public class Login {
             }
         }
     }
-
 
 }

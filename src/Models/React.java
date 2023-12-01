@@ -13,13 +13,13 @@ public class React {
         this.user = user;
     }
 
-    public void setReact(ReactType react) {
+     public void setReact(ReactType react) {
         this.react = react;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 
     public User getUser() {
         return user;
