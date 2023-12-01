@@ -1,7 +1,8 @@
 package Models;
 
+import Enums.ReactType;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Comment {
     private User user;
