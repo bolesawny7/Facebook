@@ -1,5 +1,6 @@
 package Models.Users;
 
+import Enums.Gender;
 import Enums.RelationshipStatus;
 import Models.Comment;
 import Models.Post;
@@ -10,19 +11,19 @@ import java.util.Date;
 public class Admin extends User {
 
     private static ArrayList<User> bannedUsers = new ArrayList<User>();
-    public Admin(String email, String last_name, String first_name, String password, RelationshipStatus status, boolean gender, Date birth_date, String phone) {
+    public Admin(String email, String last_name, String first_name, String password, RelationshipStatus status, Gender gender, Date birth_date, String phone) {
         super(email, last_name, first_name, password, status, gender, birth_date, phone);
     }
 
-    public Admin(String email, String last_name, String first_name, String password, RelationshipStatus status, boolean gender, Date birth_date) {
+    public Admin(String email, String last_name, String first_name, String password, RelationshipStatus status, Gender gender, Date birth_date) {
         super(email, last_name, first_name, password, status, gender, birth_date);
     }
 
-    public Admin(String email, String last_name, String first_name, String password, String phone, boolean gender, Date birth_date) {
+    public Admin(String email, String last_name, String first_name, String password, String phone, Gender gender, Date birth_date) {
         super(email, last_name, first_name, password, phone, gender, birth_date);
     }
 
-    public Admin(String email, String last_name, String first_name, String password, boolean gender, Date birth_date) {
+    public Admin(String email, String last_name, String first_name, String password, Gender gender, Date birth_date) {
         super(email, last_name, first_name, password, gender, birth_date);
     }
 

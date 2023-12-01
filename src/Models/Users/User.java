@@ -1,5 +1,6 @@
 package Models.Users;
 import Enums.FriendType;
+import Enums.Gender;
 import Enums.RelationshipStatus;
 import Models.Chat.Conversation;
 import Models.Group;
@@ -21,7 +22,7 @@ public abstract class User {
     private String first_name;
     private String last_name;
     private String password;
-    private boolean gender;
+    private Gender gender;
     private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
     private String phone; //done
     private Date birth_date;//done
@@ -33,26 +34,26 @@ public abstract class User {
     private final int id=idCounter;
 
     //constructor func
-    public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  boolean gender ,Date birth_date,String phone) {
+    public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  Gender gender ,Date birth_date,String phone) {
         this(email,last_name,first_name,password,status,gender,birth_date);
         this.phone=phone;
         this.posts = new ArrayList<>();
     }
 
     //without phone
-    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,boolean gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,Gender gender, Date birth_date) {
       this(email, last_name, first_name, password, gender, birth_date);
       this.status= status;
     }
 
     //without RelationshipStatus
-    public User(String email, String last_name, String first_name, String password, String phone ,boolean gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, String phone ,Gender gender, Date birth_date) {
         this(email, last_name, first_name, password, gender, birth_date);
         this.phone=phone;
     }
 
     //minimum constructor
-    public User(String email, String last_name, String first_name, String password, boolean gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, Gender gender, Date birth_date) {
         this.email = email;
         this.last_name = last_name;
         this.first_name = first_name;
@@ -62,8 +63,6 @@ public abstract class User {
         idCounter++;
 
     }
-
-
 
     //================================> getters <==========================================//
     public String getEmail() {
