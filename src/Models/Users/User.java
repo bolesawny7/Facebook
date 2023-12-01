@@ -17,7 +17,6 @@ public abstract class User {
 
     private static int idCounter=1;
     private static int userPostsCounter=1;
-
     private String email;
     private String first_name;
     private String last_name;
