@@ -1,11 +1,12 @@
 package Models;
 
 import Enums.ReactType;
+import Models.Users.User;
 
 import java.util.ArrayList;
 
 public class Comment {
-    private User user;
+    private final User user;
     private String text;
 
     private ArrayList<Comment> replies;

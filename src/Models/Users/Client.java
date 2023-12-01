@@ -1,6 +1,7 @@
-package Models;
+package Models.Users;
 
 import Enums.RelationshipStatus;
+import Models.Users.User;
 
 import java.util.Date;
 
