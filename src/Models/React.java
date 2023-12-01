@@ -1,6 +1,7 @@
 package Models;
 
 import Enums.ReactType;
+import Models.Users.User;
 
 public class React {
     private ReactType react;

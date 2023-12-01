@@ -1,6 +1,9 @@
-package Models;
+package Models.Users;
 import Enums.FriendType;
 import Enums.RelationshipStatus;
+import Models.Conversation;
+import Models.Group;
+import Models.Post;
 
 import  java.util.*;
 

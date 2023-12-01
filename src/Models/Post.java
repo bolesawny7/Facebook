@@ -1,6 +1,7 @@
 package Models;
 
 import Enums.ReactType;
+import Models.Users.User;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Post {
     private static int postCounter=1;
     private final int  postId =postCounter;
     private boolean privacyOption; //(0 friends , 1 public)
-    ArrayList<User> tagged = new ArrayList<>();
+    private ArrayList<User> tagged = new ArrayList<>();
 
     private ArrayList<React> reacts;
 
