@@ -186,7 +186,4 @@ public abstract class User {
     {
         Post  post   = new Post(user, date, privacyOption, content);
     }
-
-
-
 }
