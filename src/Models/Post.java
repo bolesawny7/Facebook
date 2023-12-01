@@ -1,5 +1,7 @@
 package Models;
 
+import Enums.ReactType;
+
 import java.util.Date;
 import java.util.ArrayList;
 
