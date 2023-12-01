@@ -1,11 +1,13 @@
-package Models;
+package Models.Users;
 
 import Enums.RelationshipStatus;
+import Models.Comment;
+import Models.Post;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Admin extends User{
+public class Admin extends User {
 
     private static ArrayList<User> bannedUsers = new ArrayList<User>();
     public Admin(String email, String last_name, String first_name, String password, RelationshipStatus status, boolean gender, Date birth_date, String phone) {

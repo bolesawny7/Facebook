@@ -1,5 +1,7 @@
 package Models;
 
+import Models.Users.User;
+
 import java.util.ArrayList;
 import java.util.Date;
 
