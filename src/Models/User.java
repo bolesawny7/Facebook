@@ -10,33 +10,31 @@ import java.util.ArrayList;
 
 //getters=g,setters=s
 
-public class User {
+public abstract class User {
 
     private static int idCounter=1;
     private static int userPostsCounter=1;
 
-    private String email; //done g=32 s=36
-    private String first_name;//done g=48 s=52
-    private String last_name;//done g=36 g =40
-    //    private boolean martial_status;//enum ( married or single or engaged )
-    private String password;//done g=63,s= 67
-    private boolean gender;//0female 1 male
+    private String email;
+    private String first_name;
+    private String last_name;
+    private String password;
+    private boolean gender;
     private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
     private String phone; //done
     private Date birth_date;//done
     protected HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();//problem
     protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
-//    public Post posts[];
+    public  ArrayList<Post> posts;
 
-    public  ArrayList<Post> posts = new ArrayList<>();
-
-    public Group groups[];
+    public ArrayList<Group> groups = new ArrayList<Group>();
     private final int id=idCounter;
 
     //constructor func
     public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  boolean gender ,Date birth_date,String phone) {
         this(email,last_name,first_name,password,status,gender,birth_date);
         this.phone=phone;
+        this.posts = new ArrayList<>();
     }
 
     //without phone
@@ -118,7 +116,7 @@ public class User {
         return posts;
     }
 
-    public Group[] getGroups()
+    public ArrayList<Group> getGroups()
     {
         return groups;
     }
@@ -170,11 +168,10 @@ public class User {
         this.posts = posts;
     }
 
-    public void setGroups(Group[] groups)
+    public void setGroups(ArrayList<Group> groups)
     {
         this.groups = groups;
     }
-
 
 
     //=====================>methods<===================//
