@@ -1,7 +1,7 @@
 package Models.Users;
 import Enums.FriendType;
 import Enums.RelationshipStatus;
-import Models.Conversation;
+import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
 
