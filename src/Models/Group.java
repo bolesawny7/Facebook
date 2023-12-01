@@ -26,7 +26,6 @@ public class Group {
     }
 
 
-
     //-----------------------Setters------------------------------------//
 
     public void editDesc(String description)
