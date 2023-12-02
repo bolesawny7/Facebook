@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class UserService {
-    Menu menu = new Menu();
+    Dashboard dashboard = new Dashboard();
     private String email;
     private String password;
     private ArrayList<Client> clients = new java.util.ArrayList<Client>();
@@ -39,7 +39,7 @@ public class UserService {
             ans = input.next().toLowerCase();
         } while (!isLogin && ans.equals("y"));
         if (ans.equals("n")) {
-            menu.mainMenu();
+            dashboard.mainMenu();
         }
     }
     public void signUp() {
@@ -61,6 +61,7 @@ public class UserService {
         int day = userData.nextInt();
         Date birthDate = new Date(year, month, day);
         User user = new Client(email, last_name, first_name, password, gender, birthDate);
+        dashboard.userDashboard();
     }
     public void seeFriends() {
     }

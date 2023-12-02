@@ -3,7 +3,8 @@ import Models.Comments;
 import java.util.ArrayList;
 
 public class CommentsService {
-    private ArrayList<Comments> comments = new ArrayList<Comments>();
+    private ArrayList<Comments> dashboard = new ArrayList<Comments>();
+    Dashboard menu = new Dashboard();
 
     public void react() {
 

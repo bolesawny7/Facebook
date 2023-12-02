@@ -1,12 +1,9 @@
 package Services;
 
-import Models.Chat.Conversation;
-import Services.UserService;
-
-import java.util.Collection;
 import java.util.Scanner;
 
-public class Menu {
+public class Dashboard {
+
     Scanner input=new Scanner(System.in);
     UserService userService = new UserService();
     PostService postService = new PostService();

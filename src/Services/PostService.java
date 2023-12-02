@@ -5,7 +5,7 @@ import Models.Post;
 import java.util.ArrayList;
 
 public class PostService {
-    Menu menu = new Menu();
+    Dashboard dashboard = new Dashboard();
 
     private ArrayList<Post> posts = new ArrayList<Post>();
 
@@ -13,7 +13,7 @@ public class PostService {
 
     }
     public void comment() {
-        menu.commentsDashboard();
+        dashboard.commentsDashboard();
     }
     public void share() {
 
