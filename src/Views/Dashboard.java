@@ -39,7 +39,6 @@ public class Dashboard {
         System.out.println("6-write a post");
         System.out.println("7-join a group");
         System.out.println("8-logout");
-
         Scanner input=new Scanner(System.in);
         int y= input.nextInt();
         UserService userService = new UserService();
