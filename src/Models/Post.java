@@ -39,7 +39,6 @@ public class Post {
         this.tagged = tagged;
     }
 
-
     public void editPost(String content , boolean privacyOption ) {
         this.content = content;
         this.privacyOption = privacyOption;
@@ -67,6 +66,10 @@ public class Post {
     public ArrayList<User> getTaggedUsers()
     {
         return tagged;
+    }
+
+    public String getContent(){
+        return content;
     }
 
     //Comments
@@ -99,4 +102,19 @@ public class Post {
         reacts.add(newReact);
     }
 
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public boolean isPrivacyOption() {
+        return privacyOption;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
 }

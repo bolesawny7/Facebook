@@ -1,16 +1,16 @@
 package Services;
 
 import Enums.Gender;
+import Models.Chat.Conversation;
+import Models.Group;
+import Models.Post;
 import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
 
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class UserService {
     Dashboard dashboard = new Dashboard();
@@ -66,20 +66,53 @@ public class UserService {
         dashboard.userDashboard();
     }
     public void seeFriends() {
-        ArrayList<User> friends =account.getFriends();
-        friends.forEach((User friend) -> {
-            System.out.println(friend.getAccountName());
-        });
+        ArrayList<User> friendsName = account.getFriends();
+        ArrayList<Enums.FriendType> friendsType = account.getFriendType();
+//        friendsName.forEach((User friend) -> {
+//            System.out.println(friend.getAccountName() + friend.getFriendType());
+//
+//        });
+
+        for (int i = 0; i < friendsName.size(); i++){
+            System.out.println("user name:" + friendsName.get(i).getAccountName() +" user type:" + friendsType.get(i) + "\n");
+        }
     }
     public void seePosts() {
-
+        ArrayList<Post> posts = account.getPosts();
+        posts.forEach((Post post) -> {
+            System.out.println("created date:" + post.getCreationDate() + "\n");
+            System.out.println("privacy option:" + post.isPrivacyOption() + "\n");
+            System.out.println("created by :" + post.getCreatedBy() + "\n");
+            System.out.println(post.getContent());
+        });
     }
     public void seeGroups() {
-
+        ArrayList<Group> groups = account.getGroups();
+        groups.forEach((Group group) -> {
+            System.out.println("group name :" + group.getName() + "\n");
+            System.out.println("group description:" + group.getDescription() + "\n");
+            System.out.println("members of group:" + group.getMembers() + "\n");
+            System.out.println("posts of group :" + group.getPosts() + "\n");
+        });
     }
     public void seeConversations() {
+            ArrayList<User> friendsName = account.getFriendsConversations();
+            ArrayList<Conversation> friendsConversations = account.getConversations();
 
+            for (int i = 0; i < friendsName.size(); i++){
+                System.out.println( "user name: " + i + 1 + "-" + friendsName.get(i).getAccountName());
+            }
     }
+
+    public void getConversations(int i) {
+
+        ArrayList<User> friendsName = account.getFriendsConversations();
+        ArrayList<Conversation> friendsConversations = account.getConversations();
+
+        System.out.println("user name: "  + friendsName.get(i).getAccountName() + "\n");
+        System.out.println(friendsConversations.get(i));
+    }
+
     public void sendFriendRequest() {
 
     }
