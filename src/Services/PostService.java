@@ -1,6 +1,7 @@
 package Services;
 
 import Models.Post;
+import Views.Dashboard;
 
 import java.util.ArrayList;
 

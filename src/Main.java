@@ -1,4 +1,4 @@
-import Services.Dashboard;
+import Views.Dashboard;
 
 public class Main {
     public static void main(String[] args) {

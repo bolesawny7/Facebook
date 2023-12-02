@@ -1,7 +1,7 @@
 package Services;
 
 import Models.Chat.Conversation;
-import Models.Comments;
+import Views.Dashboard;
 
 import java.util.ArrayList;
 
