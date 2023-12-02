@@ -26,7 +26,7 @@ public abstract class User {
     private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
     private String phone; //done
     private Date birth_date;//done
-    protected HashMap<User, FriendType> FriendType = new HashMap<User, FriendType>();//problem
+    public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
     protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
     public  ArrayList<Post> posts;
 
@@ -122,7 +122,7 @@ public abstract class User {
         return groups;
     }
 
-    protected int getId()
+    public int getId()
     {
         return this.id;
     }
@@ -186,4 +186,16 @@ public abstract class User {
     {
         Post  post   = new Post(user, date, privacyOption, content);
     }
+
+
+//    public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();
+
+    public ArrayList<User> getFriends(){
+        return (ArrayList<User>) FriendType.keySet();
+    }
+    public String getAccountName(){
+        return first_name+" "+last_name;
+    }
+
 }
+

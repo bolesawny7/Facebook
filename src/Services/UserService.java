@@ -1,6 +1,7 @@
 package Services;
 
 import Enums.Gender;
+import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
@@ -9,11 +10,13 @@ import Views.Dashboard;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.Set;
 
 public class UserService {
     Dashboard dashboard = new Dashboard();
     private String email;
     private String password;
+    public User account;
     private ArrayList<Client> clients = new ArrayList<Client>();
     public void login() {
         Scanner input = new Scanner(System.in);
@@ -28,6 +31,7 @@ public class UserService {
                 if (client.getEmail().equals(email) && client.getPassword().equals(password)) {
                     System.out.println("Login successful");
                     isLogin = true;
+                    this.account=client;
                 }
             }
             if (!isLogin) {
@@ -50,7 +54,7 @@ public class UserService {
         String last_name = userData.next();
         System.out.println("enter your password");
         String password = userData.next();
-        System.out.println("enter your gender 0 => male, 1 => female");
+        System.out.println("enter your gender ( male , female )");
         String genderInput = userData.next();
         Gender gender = Gender.valueOf(genderInput.toLowerCase());
         System.out.println("enter your birth_date => year, month, day");
@@ -62,6 +66,10 @@ public class UserService {
         dashboard.userDashboard();
     }
     public void seeFriends() {
+        ArrayList<User> friends =account.getFriends();
+        friends.forEach((User friend) -> {
+            System.out.println(friend.getAccountName());
+        });
     }
     public void seePosts() {
 
