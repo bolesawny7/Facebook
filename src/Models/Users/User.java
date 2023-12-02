@@ -27,7 +27,7 @@ public abstract class User {
     private String phone; //done
     private Date birth_date;//done
     public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
-    protected HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
+    public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
     public  ArrayList<Post> posts;
 
     public ArrayList<Group> groups = new ArrayList<Group>();
@@ -96,10 +96,10 @@ public abstract class User {
     }
 
 
-    public HashMap<User, Enums.FriendType> getFriendType()
-    {
-        return FriendType;
-    }
+//    public HashMap<User, Enums.FriendType> getFriendType()
+//    {
+//        return FriendType;
+//    }
 
 
 //    public HashMap<User, Conversation> getFriendChat() {
@@ -193,6 +193,21 @@ public abstract class User {
     public ArrayList<User> getFriends(){
         return (ArrayList<User>) FriendType.keySet();
     }
+    public ArrayList<Enums.FriendType> getFriendType(){
+        return (ArrayList<Enums.FriendType>) FriendType.values();
+    }
+
+   public ArrayList<User> getFriendsConversations(){
+        return (ArrayList<User>) FriendChat.keySet();
+   }
+    public ArrayList<Conversation> getConversations(){
+       return (ArrayList<Conversation>) FriendChat.values();
+    }
+
+    public Set<Map.Entry<User, Conversation>> getConversatios(){
+         return FriendChat.entrySet();
+    }
+
     public String getAccountName(){
         return first_name+" "+last_name;
     }
