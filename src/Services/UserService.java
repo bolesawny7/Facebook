@@ -14,8 +14,7 @@ public class UserService {
     Dashboard dashboard = new Dashboard();
     private String email;
     private String password;
-    private ArrayList<Client> clients = new java.util.ArrayList<Client>();
-
+    private ArrayList<Client> clients = new ArrayList<Client>();
     public void login() {
         Scanner input = new Scanner(System.in);
         boolean isLogin = false;
@@ -29,7 +28,6 @@ public class UserService {
                 if (client.getEmail().equals(email) && client.getPassword().equals(password)) {
                     System.out.println("Login successful");
                     isLogin = true;
-
                 }
             }
             if (!isLogin) {
@@ -86,6 +84,5 @@ public class UserService {
     public void logout() {
 
     }
-
 
 }
