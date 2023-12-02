@@ -1,5 +1,6 @@
 package Services;
 
+import Models.Chat.Conversation;
 import Services.UserService;
 
 import java.util.Collection;
@@ -10,6 +11,7 @@ public class Menu {
     UserService userService = new UserService();
     PostService postService = new PostService();
     CommentsService commentService = new CommentsService();
+    ConversationService conversationService = new ConversationService();
 
     public void mainMenu() {
         System.out.println("1-login");
@@ -107,6 +109,26 @@ public class Menu {
                 break;
             case 3:
                 postDashboard();
+                break;
+            default:
+                System.out.println("please enter a valid number");
+        }
+    }
+    public void ConversationDashboard() {
+        System.out.println("1-see messages");
+        System.out.println("2-send a message");
+        System.out.println("3-back to user dashboard");
+        Scanner input=new Scanner(System.in);
+        int y= input.nextInt();
+        switch (y){
+            case 1:
+                conversationService.seeMessages();
+                break;
+            case 2:
+                conversationService.sendMessage();
+                break;
+            case 3:
+                userDashboard();
                 break;
             default:
                 System.out.println("please enter a valid number");
