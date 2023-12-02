@@ -92,7 +92,6 @@ public class Menu {
                 System.out.println("please enter a valid number");
         }
     }
-
     public void commentsDashboard() {
         System.out.println("1-like");
         System.out.println("2-reply");
