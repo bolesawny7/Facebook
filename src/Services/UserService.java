@@ -28,8 +28,6 @@ public class UserService {
             System.out.println("Login failed");
         }
     }
-
-
     public void signUp(){
         Scanner userData=new Scanner(System.in);
         System.out.println("enter your email");
@@ -50,4 +48,5 @@ public class UserService {
         Date birthDate = new Date(year,month,day);
         User user = new Client( email,  last_name,  first_name,  password,  gender,  birthDate);
     }
+
 }
