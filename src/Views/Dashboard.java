@@ -1,4 +1,9 @@
-package Services;
+package Views;
+
+import Services.CommentsService;
+import Services.ConversationService;
+import Services.PostService;
+import Services.UserService;
 
 import java.util.Scanner;
 
