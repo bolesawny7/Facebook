@@ -15,8 +15,8 @@ public class PostService {
 
     }
 
-    public void comment(CommentsService commentsService, PostService postService,UserService userService ,User user, Post post) {
-        dashboard.commentsDashboard(commentsService, postService,userService,user,post);
+    public void comment(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
+        dashboard.commentsDashboard(commentsService, postService, userService, user, post);
     }
 
     public void share(User account, Post post) {
