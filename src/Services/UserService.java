@@ -18,7 +18,7 @@ public class UserService {
     private String password;
     public User account;
     private ArrayList<Client> clients = new ArrayList<Client>();
-    public void login() {
+    public void login(UserService userService) {
         Scanner input = new Scanner(System.in);
         boolean isLogin = false;
         String ans;
@@ -41,7 +41,7 @@ public class UserService {
             ans = input.next().toLowerCase();
         } while (!isLogin && ans.equals("y"));
         if (ans.equals("n")) {
-            dashboard.mainMenu();
+            dashboard.mainMenu(userService);
         }
     }
     public void signUp() {
