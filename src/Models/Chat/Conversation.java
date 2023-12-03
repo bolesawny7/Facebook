@@ -16,7 +16,6 @@ public class Conversation {
         this.user1 = user1;
         this.user2 = user2;
     }
-
     // Getters
     public String getId() {
         return id;

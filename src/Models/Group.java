@@ -72,9 +72,13 @@ public class Group {
         return posts;
     }
 
-    public void getGroupData()
+    public String getName()
     {
-        System.out.println("group name : " + this.name +"\n group description: " + description);
+        return name;
+    }
+    public String getDescription()
+    {
+        return description;
     }
 
 
