@@ -1,6 +1,7 @@
 package Services;
 
 import Models.Post;
+import Models.Users.User;
 import Views.Dashboard;
 
 import java.util.ArrayList;
@@ -13,11 +14,13 @@ public class PostService {
     public void like() {
 
     }
-    public void comment() {
-//        dashboard.commentsDashboard();
-    }
-    public void share() {
 
+    public void comment(CommentsService commentsService, PostService postService,UserService userService ,User user, Post post) {
+        dashboard.commentsDashboard(commentsService, postService,userService,user,post);
+    }
+
+    public void share(User account, Post post) {
+        account.sharePost(post);
     }
 
 }

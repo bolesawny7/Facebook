@@ -12,8 +12,7 @@ public class Main {
         ConversationService conversationService = new ConversationService();
 
         Dashboard dashboard = new Dashboard();
-        dashboard.mainMenu(userService);
-
+        dashboard.mainMenu(commentService,postService,userService);
     }
 }
 
