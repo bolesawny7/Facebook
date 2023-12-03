@@ -14,7 +14,7 @@ public class PostService {
 
     }
     public void comment() {
-        dashboard.commentsDashboard();
+//        dashboard.commentsDashboard();
     }
     public void share() {
 

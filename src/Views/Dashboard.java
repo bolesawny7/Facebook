@@ -10,18 +10,14 @@ import java.util.Scanner;
 public class Dashboard {
 
     Scanner input=new Scanner(System.in);
-    UserService userService = new UserService();
-    PostService postService = new PostService();
-    CommentsService commentService = new CommentsService();
-    ConversationService conversationService = new ConversationService();
 
-    public void mainMenu() {
+    public void mainMenu(UserService userService) {
         System.out.println("1-login");
         System.out.println("2-signUP");
         int y= input.nextInt();
         switch (y){
             case 1:
-                userService.login();
+                userService.login(userService);
                 break;
             case 2:
                 userService.signUp();
@@ -71,68 +67,68 @@ public class Dashboard {
                 System.out.println("please enter a valid number");
         }
     }
-    public void postDashboard() {
-        System.out.println("1-like");
-        System.out.println("2-comment");
-        System.out.println("3-share");
-        System.out.println("4-back to user dashboard");
-        Scanner input=new Scanner(System.in);
-        int y= input.nextInt();
-        switch (y){
-            case 1:
-                postService.like();
-                break;
-            case 2:
-                postService.comment();
-                break;
-            case 3:
-                postService.share();
-                break;
-            case 4:
-                userDashboard();
-                break;
-            default:
-                System.out.println("please enter a valid number");
-        }
-    }
-    public void commentsDashboard() {
-        System.out.println("1-like");
-        System.out.println("2-reply");
-        System.out.println("3-back to post dashboard");
-        Scanner input=new Scanner(System.in);
-        int y= input.nextInt();
-        switch (y){
-            case 1:
-                commentService.react();
-                break;
-            case 2:
-                commentService.reply();
-                break;
-            case 3:
-                postDashboard();
-                break;
-            default:
-                System.out.println("please enter a valid number");
-        }
-    }
-    public void ConversationDashboard() {
-        System.out.println("1-see messages");
-        System.out.println("2-send a message");
-        System.out.println("3-back to user dashboard");
-        Scanner input=new Scanner(System.in);
-        int y= input.nextInt();
-        switch (y){
-            case 1:
-                conversationService.seeMessages();
-                break;
-            case 2:
-                conversationService.sendMessage();
-                break;
-            case 3:
-                userDashboard();
-                break;
-            default:
-                System.out.println("please enter a valid number");
-        }
-    }
+//    public void postDashboard() {
+//        System.out.println("1-like");
+//        System.out.println("2-comment");
+//        System.out.println("3-share");
+//        System.out.println("4-back to user dashboard");
+//        Scanner input=new Scanner(System.in);
+//        int y= input.nextInt();
+//        switch (y){
+//            case 1:
+//                postService.like();
+//                break;
+//            case 2:
+//                postService.comment();
+//                break;
+//            case 3:
+//                postService.share();
+//                break;
+//            case 4:
+//                userDashboard();
+//                break;
+//            default:
+//                System.out.println("please enter a valid number");
+//        }
+//    }
+//    public void commentsDashboard() {
+//        System.out.println("1-like");
+//        System.out.println("2-reply");
+//        System.out.println("3-back to post dashboard");
+//        Scanner input=new Scanner(System.in);
+//        int y= input.nextInt();
+//        switch (y){
+//            case 1:
+//                commentService.react();
+//                break;
+//            case 2:
+//                commentService.reply();
+//                break;
+//            case 3:
+//                postDashboard();
+//                break;
+//            default:
+//                System.out.println("please enter a valid number");
+//        }
+//    }
+//    public void ConversationDashboard() {
+//        System.out.println("1-see messages");
+//        System.out.println("2-send a message");
+//        System.out.println("3-back to user dashboard");
+//        Scanner input=new Scanner(System.in);
+//        int y= input.nextInt();
+//        switch (y){
+//            case 1:
+//                conversationService.seeMessages();
+//                break;
+//            case 2:
+//                conversationService.sendMessage();
+//                break;
+//            case 3:
+//                userDashboard();
+//                break;
+//            default:
+//                System.out.println("please enter a valid number");
+//        }
+//    }
 }
