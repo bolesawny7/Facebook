@@ -28,10 +28,11 @@ public abstract class User {
     private Date birth_date;//done
     public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
     public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
-    public  ArrayList<Post> posts;
-
+    public  ArrayList<Post> posts = new ArrayList<Post>();
+    public  ArrayList<User> friendRequest  = new ArrayList<User>();
     public ArrayList<Group> groups = new ArrayList<Group>();
     private final int id=idCounter;
+
 
     //constructor func
     public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  Gender gender ,Date birth_date,String phone) {
@@ -210,6 +211,20 @@ public abstract class User {
 
     public String getAccountName(){
         return first_name+" "+last_name;
+    }
+
+    public void sharePost(Post post) {
+        this.posts.add(post);
+    }
+
+    public void acceptRequest(User user,FriendType friendType){
+        this.FriendType.put(user,friendType);
+    }
+
+    public  void spliceArray(User user){
+
+        user.friendRequest.remove(user);
+
     }
 
 }
