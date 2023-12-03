@@ -96,7 +96,7 @@ public class Dashboard {
                 postService.like();
                 break;
             case 2:
-                postService.comment(commentsService, postService, userService, user, post);
+                commentsDashboard(commentsService, postService, userService, user, post);
                 break;
             case 3:
                 postService.share(user, post);
@@ -112,7 +112,8 @@ public class Dashboard {
     public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-like");
         System.out.println("2-reply");
-        System.out.println("3-back to post dashboard");
+        System.out.println("3-Add comment");
+        System.out.println("4-back to post dashboard");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
@@ -123,6 +124,9 @@ public class Dashboard {
                 commentService.reply();
                 break;
             case 3:
+                commentService.addComment(user, post);
+                break;
+            case 4:
                 postDashboard(commentService, postService, userService, user, post);
                 break;
             default:
