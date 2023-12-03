@@ -20,18 +20,23 @@ public class Dashboard {
         String y = input.next();
         switch (y) {
             case "1":
-                userService.login(commentsService, postService, userService);
+                User currentUser = userService.login();
+                if (currentUser == null)
+                    mainMenu(commentsService, postService, userService);
+                else
+                    userDashboard(commentsService, postService, userService, currentUser);
                 break;
             case "2":
-                userService.signUp(commentsService, postService, userService);
+                userService.signUp();
+                mainMenu(commentsService, postService, userService);
                 break;
             default:
                 System.out.println("please enter 1 or 2");
-                mainMenu(commentsService,postService,userService);
+                mainMenu(commentsService, postService, userService);
         }
     }
 
-    public void userDashboard(CommentsService commentsService, PostService postService,UserService userService, User user) {
+    public void userDashboard(CommentsService commentsService, PostService postService, UserService userService, User user) {
         System.out.println("1-see your friends");
         System.out.println("2-see your posts");
         System.out.println("3-see your groups");
@@ -47,7 +52,11 @@ public class Dashboard {
                 userService.seeFriends();
                 break;
             case 2:
-                userService.seePosts(commentsService, postService,userService);
+                Post post = userService.seePosts();
+                if (post != null)
+                    postDashboard(commentsService, postService, userService, user, post);
+                else
+                    userDashboard(commentsService, postService, userService, user);
                 break;
             case 3:
                 userService.seeGroups();
@@ -65,17 +74,17 @@ public class Dashboard {
                 userService.joinGroup();
                 break;
             case 8:
-                userService.logout(commentsService,postService,userService);
+                mainMenu(commentsService, postService, userService);
                 break;
             case 9:
                 userService.getFriendRequests(user);
-
+                break;
             default:
                 System.out.println("please enter a valid number");
         }
     }
 
-    public void postDashboard(CommentsService commentsService, PostService postService,UserService userService, User user, Post post) {
+    public void postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-like");
         System.out.println("2-comment");
         System.out.println("3-share");
@@ -87,20 +96,20 @@ public class Dashboard {
                 postService.like();
                 break;
             case 2:
-                postService.comment(commentsService, postService, userService,user, post);
+                postService.comment(commentsService, postService, userService, user, post);
                 break;
             case 3:
                 postService.share(user, post);
                 break;
             case 4:
-                userDashboard(commentsService, postService,userService,user);
+                userDashboard(commentsService, postService, userService, user);
                 break;
             default:
                 System.out.println("please enter a valid number");
         }
     }
 
-    public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService,User user, Post post) {
+    public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-like");
         System.out.println("2-reply");
         System.out.println("3-back to post dashboard");
@@ -114,14 +123,14 @@ public class Dashboard {
                 commentService.reply();
                 break;
             case 3:
-                postDashboard(commentService, postService,userService, user, post);
+                postDashboard(commentService, postService, userService, user, post);
                 break;
             default:
                 System.out.println("please enter a valid number");
         }
     }
 
-    public void ConversationDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService,UserService userService,User user) {
+    public void ConversationDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
         System.out.println("1-see messages");
         System.out.println("2-send a message");
         System.out.println("3-back to user dashboard");
@@ -135,7 +144,7 @@ public class Dashboard {
                 conversationService.sendMessage();
                 break;
             case 3:
-                userDashboard(commentsService, postService,userService,user);
+                userDashboard(commentsService, postService, userService, user);
                 break;
             default:
                 System.out.println("please enter a valid number");
