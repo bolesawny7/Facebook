@@ -23,7 +23,6 @@ public class Dashboard {
                 if (currentUser == null)
                     mainMenu(commentsService, postService, userService);
                 else {
-                    postService.setCurrentUser(currentUser);
                     userDashboard(commentsService, postService, userService, currentUser);
                 }
                 break;
@@ -64,21 +63,27 @@ public class Dashboard {
                 break;
             case 3:
                 userService.seeGroups();
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 4:
                 userService.seeConversations();
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 5:
                 userService.sendFriendRequest(user);
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 6:
-                userService.writePost(user);
+                Post newPost=userService.writePost(user);
+                postDashboard(commentsService,postService,userService,user,newPost);
                 break;
             case 7:
                 userService.joinGroup();
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 8:
                 userService.getFriendRequests(user);
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 9:
                 Post chosenPost = userService.seeTimeline();
@@ -96,7 +101,7 @@ public class Dashboard {
     }
 
     public void postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
-        System.out.println("1-like");
+        System.out.println("1-React or change React");
         System.out.println("2-comment");
         System.out.println("3-share");
         System.out.println("4-back to user dashboard");
@@ -104,13 +109,15 @@ public class Dashboard {
         int y = input.nextInt();
         switch (y) {
             case 1:
-                postService.like(post);
+                postService.like(post,user);
+                postDashboard(commentsService,postService,userService,user,post);
                 break;
             case 2:
                 commentsDashboard(commentsService, postService, userService, user, post);
                 break;
             case 3:
                 postService.share(user, post);
+                postDashboard(commentsService,postService,userService,user,post);
                 break;
             case 4:
                 userDashboard(commentsService, postService, userService, user);
@@ -130,12 +137,15 @@ public class Dashboard {
         switch (y) {
             case 1:
                 commentService.react();
+                commentsDashboard(commentService, postService, userService, user, post);
                 break;
             case 2:
                 commentService.reply();
+                commentsDashboard(commentService, postService, userService, user, post);
                 break;
             case 3:
                 commentService.addComment(user, post);
+                commentsDashboard(commentService, postService, userService, user, post);
                 break;
             case 4:
                 postDashboard(commentService, postService, userService, user, post);
