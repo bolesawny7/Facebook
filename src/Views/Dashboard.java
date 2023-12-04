@@ -7,14 +7,13 @@ import Services.ConversationService;
 import Services.PostService;
 import Services.UserService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dashboard {
-
     Scanner input = new Scanner(System.in);
 
-
-    public void mainMenu(CommentsService commentsService, PostService postService, UserService userService) {
+    public void mainMenu( CommentsService commentsService, PostService postService, UserService userService){
         System.out.println("1-login");
         System.out.println("2-signUP");
         String y = input.next();
@@ -23,8 +22,10 @@ public class Dashboard {
                 User currentUser = userService.login();
                 if (currentUser == null)
                     mainMenu(commentsService, postService, userService);
-                else
+                else {
+                    postService.setCurrentUser(currentUser);
                     userDashboard(commentsService, postService, userService, currentUser);
+                }
                 break;
             case "2":
                 userService.signUp();
@@ -44,12 +45,15 @@ public class Dashboard {
         System.out.println("5-send a friend request");
         System.out.println("6-write a post");
         System.out.println("7-join a group");
-        System.out.println("8-logout");
+        System.out.println("8-getFriendRequests");
+        System.out.println("9-see the timeLine");
+        System.out.println("10-logout");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
             case 1:
                 userService.seeFriends();
+                userDashboard(commentsService, postService, userService, user);
                 break;
             case 2:
                 Post post = userService.seePosts();
@@ -74,10 +78,17 @@ public class Dashboard {
                 userService.joinGroup();
                 break;
             case 8:
-                mainMenu(commentsService, postService, userService);
+                userService.getFriendRequests(user);
                 break;
             case 9:
-                userService.getFriendRequests(user);
+                Post chosenPost = userService.seeTimeline();
+                if (chosenPost != null)
+                    postDashboard(commentsService, postService, userService, user, chosenPost);
+                else
+                    userDashboard(commentsService, postService, userService, user);
+                break;
+            case 10:
+                mainMenu(commentsService, postService, userService);
                 break;
             default:
                 System.out.println("please enter a valid number");
@@ -93,7 +104,7 @@ public class Dashboard {
         int y = input.nextInt();
         switch (y) {
             case 1:
-                postService.like();
+                postService.like(post);
                 break;
             case 2:
                 commentsDashboard(commentsService, postService, userService, user, post);
