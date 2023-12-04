@@ -1,7 +1,9 @@
 package Models;
 
+import Enums.PrivacyOption;
 import Models.Users.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,12 +52,12 @@ public class Group {
         members.remove(user);
     }
 
-    public void createPost(User user, Date date, boolean privacyOption , String content, ArrayList<User> tagged )
+    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content, ArrayList<User> tagged )
     {
         Post  post   = new Post(user, date, privacyOption, content, tagged);
     }
 
-    public void createPost(User user, Date date,  boolean privacyOption , String content )
+    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content )
     {
         Post  post   = new Post(user, date, privacyOption, content);
     }

@@ -1,11 +1,13 @@
 package Models.Users;
 import Enums.FriendType;
 import Enums.Gender;
+import Enums.PrivacyOption;
 import Enums.RelationshipStatus;
 import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
 
+import java.time.LocalDateTime;
 import  java.util.*;
 
 import java.util.Date;
@@ -178,12 +180,12 @@ public abstract class User {
 
     //=====================>methods<===================//
 
-    public void createPost(User user, Date date,  boolean privacyOption , String content, ArrayList<User> tagged )
+    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content, ArrayList<User> tagged )
     {
         Post  post   = new Post(user, date, privacyOption, content, tagged);
     }
 
-    public void createPost(User user, Date date,  boolean privacyOption , String content )
+    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content )
     {
         Post  post   = new Post(user, date, privacyOption, content);
     }
