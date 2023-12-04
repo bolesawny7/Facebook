@@ -156,11 +156,9 @@ public class UserService {
         System.out.println(friendsConversations.get(i));
     }
 
-    public void getFriendRequests(User user) {
-
-        for (int i = 0; i < user.friendRequest.size(); i++) {
-
-            System.out.println(user.friendRequest.get(i).getAccountName());
+    public void getFriendRequests(User currentUser) {
+        for (int i = 0; i < currentUser.friendRequest.size(); i++) {
+            System.out.println(currentUser.friendRequest.get(i).getAccountName());
             System.out.println("1-accept Request \n2-reject Request \n3-pass");
             String y = input.next();
             switch (y) {
@@ -168,19 +166,33 @@ public class UserService {
                     System.out.println("restricted or regular");
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
-                    user.acceptRequest(user.friendRequest.get(i), friendType);
-                    user.spliceArray(user.friendRequest.get(i));
+                    currentUser.acceptRequest(currentUser.friendRequest.get(i), friendType);
+                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    break;
                 case "2":
-                    user.spliceArray(user.friendRequest.get(i));
-                case "3":
-                    continue;
+                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    break;
+                default:
+                    break;
             }
-
         }
     }
 
-    public void sendFriendRequest(User user) {
-
+    //Search code to be made
+    public void sendFriendRequest(User currentUser) {
+        for (int i = 0; i < clients.size(); i++) {
+            System.out.println(clients.get(i).getAccountName());
+            System.out.println("1-Send Request \n2-pass");
+            String y = input.next();
+            switch (y) {
+                case "1":
+                    System.out.println("Request sent");
+                    clients.get(i).friendRequest.add(currentUser);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void writePost() {
