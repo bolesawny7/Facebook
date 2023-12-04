@@ -2,6 +2,7 @@ package Services;
 
 import Enums.FriendType;
 import Enums.Gender;
+import Enums.PrivacyOption;
 import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
@@ -11,6 +12,9 @@ import Views.Dashboard;
 import Services.PostService;
 
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UserService {
@@ -179,6 +183,15 @@ public class UserService {
     }
 
     //Search code to be made
+    public ArrayList<User> search(String input){
+        ArrayList <User> possibleUsers=new ArrayList<User>();
+        for(int i=0;i<clients.size();i++){
+            if(clients.get(i).getAccountName().contains(input)){
+                possibleUsers.add(clients.get(i));
+            }
+        }
+        return possibleUsers;
+    }
     public void sendFriendRequest(User currentUser) {
         for (int i = 0; i < clients.size(); i++) {
             System.out.println(clients.get(i).getAccountName());
@@ -194,9 +207,24 @@ public class UserService {
             }
         }
     }
+///search
+    //not done yettttt
 
-    public void writePost() {
-
+    public void writePost(User currentUser) {
+        System.out.println("Select Privacy option (friends ,public)");
+        String privacyOptionInput = input.next().toUpperCase();
+        PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
+        System.out.println("Enter the post content");
+        String postContent=input.next();
+        LocalDateTime now = LocalDateTime.now();
+        Post newPost=new Post(currentUser, now ,privacyOption,postContent);
+        String choice;
+        do {
+            System.out.println("Do you want to tag a friend? y/n");
+            choice=input.next().toLowerCase();
+            newPost.setTaggedUser(currentUser);
+        }while (choice.equals("y"));
+//        Post(User createdBy, Date creationDate, privacyOption , String content)
     }
 
     public void joinGroup() {
