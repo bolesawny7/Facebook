@@ -3,13 +3,12 @@ package Services;
 import Enums.FriendType;
 import Enums.Gender;
 import Models.Chat.Conversation;
-import Models.Comment;
 import Models.Group;
 import Models.Post;
-import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
+import Services.PostService;
 
 
 import java.util.*;
@@ -19,10 +18,10 @@ public class UserService {
     Dashboard dashboard = new Dashboard();
     private String email;
     private String password;
-    public User account;
-    private ArrayList<Client> clients = new ArrayList<Client>();
+    public User currentUser;
+    static ArrayList<Client> clients = new ArrayList<Client>();
 
-    public void login(CommentsService commentsService,PostService postService,UserService userService) {
+    public User login() {
         boolean isLogin = false;
         String ans = new String();
         do {
@@ -34,7 +33,7 @@ public class UserService {
                 if (client.getEmail().equals(email) && client.getPassword().equals(password)) {
                     System.out.println("Login successful");
                     isLogin = true;
-                    this.account = client;
+                    currentUser = client;
                 }
             }
             if (!isLogin) {
@@ -44,12 +43,12 @@ public class UserService {
             }
         } while (!isLogin && ans.equals("y"));
         if (ans.equals("n")) {
-            dashboard.mainMenu(commentsService, postService, userService);
+            return null;
         }
-        dashboard.userDashboard(commentsService,postService,userService, account);
+        return currentUser;
     }
 
-    public void signUp(CommentsService commentsService,PostService postService,UserService userService) {
+    public void signUp() {
         Scanner userData = new Scanner(System.in);
         System.out.println("enter your email");
         String email = userData.next();
@@ -69,43 +68,68 @@ public class UserService {
         Date birthDate = new Date(year, month, day);
         Client user = new Client(email, last_name, first_name, password, gender, birthDate);
         clients.add(user);
-        dashboard.mainMenu(commentsService,postService,userService);
     }
 
     public void seeFriends() {
-        ArrayList<User> friendsName = account.getFriends();
-        ArrayList<Enums.FriendType> friendsType = account.getFriendType();
-//        friendsName.forEach((User friend) -> {
-//            System.out.println(friend.getAccountName() + friend.getFriendType());
-//
-//        });
 
+        ArrayList<User> friendsName = currentUser.getFriends();
+        ArrayList<Enums.FriendType> friendsType = currentUser.getFriendType();
         for (int i = 0; i < friendsName.size(); i++) {
             System.out.println("user name:" + friendsName.get(i).getAccountName() + " user type:" + friendsType.get(i) + "\n");
         }
+        System.out.println("press y or any key to return to UserDashboard ");
+        String ans = input.next();
     }
 
-    public void seePosts(CommentsService commentsService, PostService postService,UserService userService) {
-        ArrayList<Post> posts = account.getPosts();
+    public Post seePosts()
+    {
+        ArrayList<Post> posts = currentUser.getPosts();
         for (int i = 0; i < posts.size(); i++) {
             System.out.println("created date:" + posts.get(i).getCreationDate() + "\n");
             System.out.println("privacy option:" + posts.get(i).isPrivacyOption() + "\n");
             System.out.println("created by :" + posts.get(i).getCreatedBy() + "\n");
             System.out.println(posts.get(i).getContent());
-            System.out.println("Press 1 to choose post, 2 to pass, 3 to return to UserDashboard");
-            int ans = input.nextInt();
+            System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
+            String ans = input.next().toLowerCase();
             switch (ans) {
-                case 1:
-                    dashboard.postDashboard(commentsService, postService, userService,account, posts.get(i));
+                case "1":
+                    return posts.get(i);
+                case "2":
+                    continue;
+                case "3":
+                    return null;
             }
             System.out.println();
-
         }
+        return null;
+    }
 
+    public Post seeTimeline()
+    {
+        ArrayList <Post> timeline =  PostService.Timeline(clients);
+
+        for (int i = 0; i < timeline.size(); i++) {
+            System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
+            System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
+            System.out.println("created by :" + timeline.get(i).getCreatedBy() + "\n");
+            System.out.println(timeline.get(i).getContent());
+            System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
+            String ans = input.next().toLowerCase();
+            switch (ans) {
+                case "1":
+                    return timeline.get(i);
+                case "2":
+                    continue;
+                case "3":
+                    return null;
+            }
+            System.out.println();
+        }
+        return null;
     }
 
     public void seeGroups() {
-        ArrayList<Group> groups = account.getGroups();
+        ArrayList<Group> groups = currentUser.getGroups();
         groups.forEach((Group group) -> {
             System.out.println("group name :" + group.getName() + "\n");
             System.out.println("group description:" + group.getDescription() + "\n");
@@ -115,8 +139,8 @@ public class UserService {
     }
 
     public void seeConversations() {
-        ArrayList<User> friendsName = account.getFriendsConversations();
-        ArrayList<Conversation> friendsConversations = account.getConversations();
+        ArrayList<User> friendsName = currentUser.getFriendsConversations();
+        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
 
         for (int i = 0; i < friendsName.size(); i++) {
             System.out.println("user name: " + i + 1 + "-" + friendsName.get(i).getAccountName());
@@ -125,36 +149,50 @@ public class UserService {
 
     public void getConversations(int i) {
 
-        ArrayList<User> friendsName = account.getFriendsConversations();
-        ArrayList<Conversation> friendsConversations = account.getConversations();
+        ArrayList<User> friendsName = currentUser.getFriendsConversations();
+        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
 
         System.out.println("user name: " + friendsName.get(i).getAccountName() + "\n");
         System.out.println(friendsConversations.get(i));
     }
-    public void  getFriendRequests(User user) {
 
-        for (int i = 0; i < user.friendRequest.size(); i++) {
-
-            System.out.println(user.friendRequest.get(i).getAccountName());
+    public void getFriendRequests(User currentUser) {
+        for (int i = 0; i < currentUser.friendRequest.size(); i++) {
+            System.out.println(currentUser.friendRequest.get(i).getAccountName());
             System.out.println("1-accept Request \n2-reject Request \n3-pass");
-            String y =input.next();
-            switch (y){
+            String y = input.next();
+            switch (y) {
                 case "1":
                     System.out.println("restricted or regular");
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
-                    user.acceptRequest(user.friendRequest.get(i),friendType);
-                    user.spliceArray(user.friendRequest.get(i));
+                    currentUser.acceptRequest(currentUser.friendRequest.get(i), friendType);
+                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    break;
                 case "2":
-                    user.spliceArray(user.friendRequest.get(i));
-                case "3":
-                    continue;
+                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    break;
+                default:
+                    break;
             }
-
         }
     }
-    public void sendFriendRequest(User user) {
 
+    //Search code to be made
+    public void sendFriendRequest(User currentUser) {
+        for (int i = 0; i < clients.size(); i++) {
+            System.out.println(clients.get(i).getAccountName());
+            System.out.println("1-Send Request \n2-pass");
+            String y = input.next();
+            switch (y) {
+                case "1":
+                    System.out.println("Request sent");
+                    clients.get(i).friendRequest.add(currentUser);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void writePost() {
@@ -165,7 +203,4 @@ public class UserService {
 
     }
 
-    public void logout(CommentsService commentsService, PostService postService, UserService userService) {
-        dashboard.mainMenu(commentsService,postService,userService);
-    }
 }
