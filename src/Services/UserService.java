@@ -182,7 +182,6 @@ public class UserService {
         }
     }
 
-    //Search code to be made
     public ArrayList<User> search(String input){
         ArrayList <User> possibleUsers=new ArrayList<User>();
         for(int i=0;i<clients.size();i++){
@@ -207,8 +206,7 @@ public class UserService {
             }
         }
     }
-///search
-    //not done yettttt
+
 
     public void writePost(User currentUser) {
         System.out.println("Select Privacy option (friends ,public)");
