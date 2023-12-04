@@ -47,7 +47,7 @@ public class Dashboard {
         System.out.println("7-join a group");
         System.out.println("8-getFriendRequests");
         System.out.println("9-see the timeLine");
-        System.out.println("10-logout");
+        System.out.println("10- logout");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
