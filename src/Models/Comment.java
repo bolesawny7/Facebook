@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Comment {
     private final User user;
     private String text;
-
     private ArrayList<Comment> replies;
     private ArrayList<React> reacts;
 

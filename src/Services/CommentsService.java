@@ -1,13 +1,16 @@
 package Services;
-import Models.Comments;
+import Models.Post;
+import Models.Users.User;
 import Views.Dashboard;
 
 import java.util.ArrayList;
 
 public class CommentsService {
-    private ArrayList<Comments> dashboard = new ArrayList<Comments>();
     Dashboard menu = new Dashboard();
 
+    public void addComment(User user, Post post) {
+
+    }
     public void react() {
 
     }
