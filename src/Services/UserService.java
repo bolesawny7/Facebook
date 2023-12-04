@@ -3,13 +3,12 @@ package Services;
 import Enums.FriendType;
 import Enums.Gender;
 import Models.Chat.Conversation;
-import Models.Comment;
 import Models.Group;
 import Models.Post;
-import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
+import Services.PostService;
 
 
 import java.util.*;
@@ -20,7 +19,7 @@ public class UserService {
     private String email;
     private String password;
     public User currentUser;
-    private ArrayList<Client> clients = new ArrayList<Client>();
+    static ArrayList<Client> clients = new ArrayList<Client>();
 
     public User login() {
         boolean isLogin = false;
@@ -34,7 +33,7 @@ public class UserService {
                 if (client.getEmail().equals(email) && client.getPassword().equals(password)) {
                     System.out.println("Login successful");
                     isLogin = true;
-                    this.currentUser = client;
+                    currentUser = client;
                 }
             }
             if (!isLogin) {
@@ -72,14 +71,18 @@ public class UserService {
     }
 
     public void seeFriends() {
+
         ArrayList<User> friendsName = currentUser.getFriends();
         ArrayList<Enums.FriendType> friendsType = currentUser.getFriendType();
         for (int i = 0; i < friendsName.size(); i++) {
             System.out.println("user name:" + friendsName.get(i).getAccountName() + " user type:" + friendsType.get(i) + "\n");
         }
+        System.out.println("press y or any key to return to UserDashboard ");
+        String ans = input.next();
     }
 
-    public Post seePosts() {
+    public Post seePosts()
+    {
         ArrayList<Post> posts = currentUser.getPosts();
         for (int i = 0; i < posts.size(); i++) {
             System.out.println("created date:" + posts.get(i).getCreationDate() + "\n");
@@ -91,6 +94,30 @@ public class UserService {
             switch (ans) {
                 case "1":
                     return posts.get(i);
+                case "2":
+                    continue;
+                case "3":
+                    return null;
+            }
+            System.out.println();
+        }
+        return null;
+    }
+
+    public Post seeTimeline()
+    {
+        ArrayList <Post> timeline =  PostService.Timeline(clients);
+
+        for (int i = 0; i < timeline.size(); i++) {
+            System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
+            System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
+            System.out.println("created by :" + timeline.get(i).getCreatedBy() + "\n");
+            System.out.println(timeline.get(i).getContent());
+            System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
+            String ans = input.next().toLowerCase();
+            switch (ans) {
+                case "1":
+                    return timeline.get(i);
                 case "2":
                     continue;
                 case "3":
