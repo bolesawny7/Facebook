@@ -72,11 +72,9 @@ public class UserService {
     }
 
     public void seeFriends() {
-
-        ArrayList<User> friendsName = currentUser.getFriends();
-        ArrayList<Enums.FriendType> friendsType = currentUser.getFriendType();
-        for (int i = 0; i < friendsName.size(); i++) {
-            System.out.println("user name:" + friendsName.get(i).getAccountName() + " user type:" + friendsType.get(i) + "\n");
+        Set<User> friends= currentUser.getFriends();
+        for (User friend : friends) {
+            System.out.println(friend.getAccountName()+'\t'+currentUser.getFriendType(friend));
         }
         System.out.println("press y or any key to return to UserDashboard ");
         String ans = input.next();
@@ -86,11 +84,17 @@ public class UserService {
     {
         ArrayList<Post> posts = currentUser.getPosts();
         for (int i = 0; i < posts.size(); i++) {
-            System.out.println("created date:" + posts.get(i).getCreationDate() + "\n");
-            System.out.println("privacy option:" + posts.get(i).isPrivacyOption() + "\n");
-            System.out.println("created by :" + posts.get(i).getCreatedBy() + "\n");
+            System.out.println("created date:" + posts.get(i).getCreationDate() );
+            System.out.println("privacy option:" + posts.get(i).isPrivacyOption());
+            System.out.print("created by: " + posts.get(i).getCreatedBy().getAccountName() + " ");
+            System.out.print("Tagged: ");
+            posts.get(i).getTaggedUsers().forEach((User user)->{
+                System.out.print(user.getAccountName()+",");
+            });
+            System.out.println();
             System.out.println(posts.get(i).getContent());
-            System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
+
+            System.out.println("Press 1-to choose post\n2-to see next post\n3-to return to UserDashboard");
             String ans = input.next().toLowerCase();
             switch (ans) {
                 case "1":
@@ -168,10 +172,10 @@ public class UserService {
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
                     currentUser.acceptRequest(currentUser.friendRequest.get(i), friendType);
-                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    currentUser.friendRequest.remove(currentUser.friendRequest.get(i));
                     break;
                 case "2":
-                    currentUser.spliceArray(currentUser.friendRequest.get(i));
+                    currentUser.friendRequest.remove(currentUser.friendRequest.get(i));
                     break;
                 default:
                     break;
@@ -205,7 +209,7 @@ public class UserService {
     }
 
 
-    public void writePost(User currentUser) {
+    public Post writePost(User currentUser) {
         System.out.println("Select Privacy option (friends ,public)");
         String privacyOptionInput = input.next().toUpperCase();
         PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
@@ -220,13 +224,26 @@ public class UserService {
             if(choice.equals("y")){
                 System.out.println("Enter Account name");
                 String userName=input.next();
-                ArrayList <User> fortag = userSearch(userName);
-                fortag.forEach((User user)->{
-                    System.out.println(user.getAccountName());
-                });
+                ArrayList <User> users = userSearch(userName);
+                System.out.println(users.size());
+                for(int i=0;i<users.size();i++){
+                    System.out.println( i+1+ "-" + users.get(i).getAccountName());
+                }
+                int index;
+                do {
+                    System.out.println("choose the id of the user you want to tag");
+                    index=input.nextInt();
+                    if(index<=users.size() && index>=1){
+                        newPost.setTaggedUser(users.get(index-1));
+                    }
+                    else{
+                        System.out.println("please enter a valid id");
+                    }
+                }while(index>users.size() && index<1);
             }
         }while (choice.equals("y"));
-//        Post(User createdBy, Date creationDate, privacyOption , String content)
+        currentUser.posts.add(newPost);
+        return newPost;
     }
 
     public void joinGroup() {

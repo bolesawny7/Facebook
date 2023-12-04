@@ -21,7 +21,7 @@ public class Post {
     private PrivacyOption privacyOption; //(0 friends , 1 public)
     private ArrayList<User> tagged = new ArrayList<>();
 
-    private ArrayList<React> reacts;
+    private ArrayList<React> reacts=new ArrayList<>();
 
     private ArrayList<Comment> comments;
 
