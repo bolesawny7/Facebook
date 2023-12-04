@@ -9,12 +9,9 @@ import Models.Post;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
-import Services.PostService;
 
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UserService {
@@ -182,7 +179,7 @@ public class UserService {
         }
     }
 
-    public ArrayList<User> search(String input){
+    public ArrayList<User> userSearch(String input){
         ArrayList <User> possibleUsers=new ArrayList<User>();
         for(int i=0;i<clients.size();i++){
             if(clients.get(i).getAccountName().contains(input)){
@@ -220,7 +217,14 @@ public class UserService {
         do {
             System.out.println("Do you want to tag a friend? y/n");
             choice=input.next().toLowerCase();
-            newPost.setTaggedUser(currentUser);
+            if(choice.equals("y")){
+                System.out.println("Enter Account name");
+                String userName=input.next();
+                ArrayList <User> fortag = userSearch(userName);
+                fortag.forEach((User user)->{
+                    System.out.println(user.getAccountName());
+                });
+            }
         }while (choice.equals("y"));
 //        Post(User createdBy, Date creationDate, privacyOption , String content)
     }
