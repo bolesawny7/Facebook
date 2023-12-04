@@ -68,7 +68,7 @@ public class Dashboard {
                 userService.sendFriendRequest(user);
                 break;
             case 6:
-                userService.writePost();
+                userService.writePost(user);
                 break;
             case 7:
                 userService.joinGroup();

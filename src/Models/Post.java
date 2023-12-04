@@ -1,8 +1,10 @@
 package Models;
 
+import Enums.PrivacyOption;
 import Enums.ReactType;
 import Models.Users.User;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 //import org.w3c.dom.Comment;
@@ -11,12 +13,12 @@ import org.w3c.dom.ls.LSOutput;
 
 public class Post {
     private User createdBy;
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private String content;
     //  protected User[] tagged;
     private static int postCounter=1;
     private final int  postId =postCounter;
-    private boolean privacyOption; //(0 friends , 1 public)
+    private PrivacyOption privacyOption; //(0 friends , 1 public)
     private ArrayList<User> tagged = new ArrayList<>();
 
     private ArrayList<React> reacts;
@@ -25,7 +27,7 @@ public class Post {
 
 
     // post without tag
-    public Post(User createdBy, Date creationDate,  boolean privacyOption , String content) {
+    public Post(User createdBy, LocalDateTime creationDate,  PrivacyOption privacyOption , String content) {
         this.createdBy = createdBy;
         this.creationDate = creationDate;
         this.content = content;
@@ -34,12 +36,12 @@ public class Post {
     }
 
     // post with tag
-    public Post(User createdBy, Date creationDate, boolean privacyOption , String content, ArrayList<User> tagged ) {
+    public Post(User createdBy, LocalDateTime creationDate, PrivacyOption privacyOption , String content, ArrayList<User> tagged ) {
         this(createdBy,creationDate,privacyOption,content);
         this.tagged = tagged;
     }
 
-    public void editPost(String content , boolean privacyOption ) {
+    public void editPost(String content , PrivacyOption privacyOption ) {
         this.content = content;
         this.privacyOption = privacyOption;
     }
@@ -48,7 +50,7 @@ public class Post {
         this.content = content;
     }
 
-    public void editPost(boolean privacyOption )
+    public void editPost(PrivacyOption privacyOption )
     {
         this.privacyOption = privacyOption;
     }
@@ -106,11 +108,11 @@ public class Post {
         return createdBy;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public boolean isPrivacyOption() {
+    public PrivacyOption isPrivacyOption() {
         return privacyOption;
     }
 
