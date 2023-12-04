@@ -98,23 +98,6 @@ public abstract class User {
         return birth_date;
     }
 
-
-//    public HashMap<User, Enums.FriendType> getFriendType()
-//    {
-//        return FriendType;
-//    }
-
-
-//    public HashMap<User, Conversation> getFriendChat() {
-//        return FriendChat;
-//    }
-
-
-    //important
-//    public void setFriendChat(User user,Conversation conv) {
-//        FriendChat.put(user,conv);
-//    }
-
     public ArrayList<Post>  getPosts()
     {
         return posts;
@@ -189,15 +172,11 @@ public abstract class User {
     {
         Post  post   = new Post(user, date, privacyOption, content);
     }
-
-
-//    public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();
-
-    public ArrayList<User> getFriends(){
-        return (ArrayList<User>) FriendType.keySet();
+    public Set<User> getFriends(){
+        return FriendType.keySet();
     }
-    public ArrayList<Enums.FriendType> getFriendType(){
-        return (ArrayList<Enums.FriendType>) FriendType.values();
+    public FriendType getFriendType(User user){
+        return FriendType.get(user);
     }
 
    public ArrayList<User> getFriendsConversations(){
@@ -222,12 +201,5 @@ public abstract class User {
     public void acceptRequest(User user,FriendType friendType){
         this.FriendType.put(user,friendType);
     }
-
-    public  void spliceArray(User user){
-
-        user.friendRequest.remove(user);
-
-    }
-
 }
 

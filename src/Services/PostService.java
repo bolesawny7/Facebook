@@ -17,14 +17,8 @@ public class PostService {
     Dashboard dashboard = new Dashboard();
     Scanner input = new Scanner(System.in);
 
-    public User currentUser;
 
-    public void setCurrentUser(User currentUser)
-    {
-        this.currentUser = currentUser;
-    }
-
-    public void like(Post post)
+    public void like(Post post,User currentUser)
     {
         System.out.println("choose react => like, love, wow, haha, sad, angry, care");
         String reactType = input.next();
