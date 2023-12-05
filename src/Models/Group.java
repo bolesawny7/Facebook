@@ -14,7 +14,15 @@ public class Group {
     private String description;
     public ArrayList<User> members = new ArrayList<>();
     public ArrayList<Post> posts = new ArrayList<>();
+    private ArrayList<User> Admins = new ArrayList<>();
 
+    public ArrayList<User> getAdmins() {
+        return Admins;
+    }
+
+    public void setAdmins(User admin) {
+        Admins.add(admin);
+    }
 
     //-----------------------Constructors------------------------------------///
 
@@ -23,7 +31,7 @@ public class Group {
         this.name = name;
     }
 
-    Group(String name, String description)
+    public Group(String name, String description)
     {
         this(name);
         this.description = description;
