@@ -21,6 +21,7 @@ public class UserService {
     private String password;
     public User currentUser;
     static ArrayList<Client> clients = new ArrayList<Client>();
+    static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
         boolean isLogin = false;
@@ -182,11 +183,10 @@ public class UserService {
             }
         }
     }
-
     public ArrayList<User> userSearch(String input){
         ArrayList <User> possibleUsers=new ArrayList<User>();
         for(int i=0;i<clients.size();i++){
-            if(clients.get(i).getAccountName().contains(input)){
+            if(clients.get(i).getAccountName().contains(input)&&!clients.get(i).getAccountName().equals(currentUser.getAccountName())){
                 possibleUsers.add(clients.get(i));
             }
         }
@@ -246,8 +246,43 @@ public class UserService {
         return newPost;
     }
 
-    public void joinGroup() {
 
+    public ArrayList<Group> groupSearch(String input){
+        ArrayList <Group> possibleGroups=new ArrayList<Group>();
+        for(int i=0;i<clients.size();i++){
+            if(groups.get(i).getName().contains(input)){
+                possibleGroups.add(groups.get(i));
+            }
+        }
+        return possibleGroups;
+    }
+    public void joinGroup() {
+        String groupName=input.next();
+
+        ArrayList <Group> groups= groupSearch(groupName);
+        for(int i=0;i<groups.size();i++){
+            System.out.println( i+1+ "-" + groups.get(i).getName());
+        }
+        int index;
+        do {
+            System.out.println("choose the id of the group you want to join");
+            index=input.nextInt();
+            if(index<=groups.size() && index>=1){
+                currentUser.setGroups(groups.get(index-1));
+            }
+            else{
+                System.out.println("please enter a valid id");
+            }
+        }while(index>groups.size() && index<1);
     }
 
+    public void createGroup(){
+        System.out.println("Enter Group Name");
+        String groupName=input.next();
+        System.out.println("Enter the group description");
+        String groupDescription=input.next();
+        Group newGroup=new Group(groupName,groupDescription);
+        newGroup.setAdmins(currentUser);
+        currentUser.setCreatedGroups(newGroup);
+    }
 }

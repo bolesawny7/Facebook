@@ -33,6 +33,7 @@ public abstract class User {
     public  ArrayList<Post> posts = new ArrayList<Post>();
     public  ArrayList<User> friendRequest  = new ArrayList<User>();
     public ArrayList<Group> groups = new ArrayList<Group>();
+    public ArrayList<Group> createdGroups = new ArrayList<Group>();
     private final int id=idCounter;
 
 
@@ -70,6 +71,9 @@ public abstract class User {
     //================================> getters <==========================================//
     public String getEmail() {
         return email;
+    }
+    public ArrayList<Group> getCreatedGroups() {
+        return createdGroups;
     }
 
     public String getLast_name() {
@@ -119,6 +123,10 @@ public abstract class User {
         this.email = email;
     }
 
+    public void setCreatedGroups(Group createdGroup) {
+        this.createdGroups.add(createdGroup);
+    }
+
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
@@ -155,9 +163,9 @@ public abstract class User {
         this.posts = posts;
     }
 
-    public void setGroups(ArrayList<Group> groups)
+    public void setGroups(Group group)
     {
-        this.groups = groups;
+        this.groups.add(group);
     }
 
 
