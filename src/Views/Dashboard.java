@@ -164,16 +164,21 @@ public class Dashboard {
                 System.out.println("please enter a valid number");
         }
     }
+
     ///// group dashboard to 1-createGroup 2-add admins 3- add posts in the group/////////////////////
-    public void ConversationDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
-        System.out.println("1-see messages");
+    public void ConversationsDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
+        System.out.println("1-see Conversations");
         System.out.println("2-send a message");
         System.out.println("3-back to user dashboard");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
             case 1:
-                conversationService.seeMessages();
+                User chosenUserToChatWith = conversationService.seeConversations(user);
+                if (chosenUserToChatWith != null)
+                    conversationService.seeConversationContent(user,chosenUserToChatWith);
+                else
+                    userDashboard(commentsService,postService,userService,user);
                 break;
             case 2:
                 conversationService.sendMessage();
