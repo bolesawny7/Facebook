@@ -107,6 +107,8 @@ public class UserService {
             }
             System.out.println();
         }
+        System.out.println("press any key to return to user services");
+        String ans = input.next();
         return null;
     }
 
