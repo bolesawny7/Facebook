@@ -8,7 +8,6 @@ public class Conversation {
     private String id;
     private User user1;
     private User user2;
-
     private ArrayList<Message> messages = new ArrayList<Message>();
 
     public Conversation(String id, User user1, User user2) {
@@ -38,11 +37,9 @@ public class Conversation {
     public void setUser1(User user1) {
         this.user1 = user1;
     }
-
     public void setUser2(User user2) {
         this.user2 = user2;
     }
-
     public void sendMessage(User user,Message message) {
         messages.add(message);
     }

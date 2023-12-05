@@ -194,6 +194,10 @@ public abstract class User {
        return (ArrayList<Conversation>) FriendChat.values();
     }
 
+    public Conversation getChosenUserConversation(User chosenUser){
+        return FriendChat.get(chosenUser);
+    }
+
     public Set<Map.Entry<User, Conversation>> getConversatios(){
          return FriendChat.entrySet();
     }
