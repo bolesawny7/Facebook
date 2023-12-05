@@ -1,5 +1,6 @@
 package Views;
 
+import Models.Group;
 import Models.Post;
 import Models.Users.User;
 import Services.CommentsService;
@@ -36,6 +37,8 @@ public class Dashboard {
         }
     }
 
+
+    //done
     public void userDashboard(CommentsService commentsService, PostService postService, UserService userService, User user) {
         System.out.println("1-see your friends");
         System.out.println("2-see your posts");
@@ -43,6 +46,7 @@ public class Dashboard {
         System.out.println("4-see your Conversations");
         System.out.println("5-send a friend request");
         System.out.println("6-write a post");
+        System.out.println("7-join a group");
         System.out.println("7-join a group");
         System.out.println("8-getFriendRequests");
         System.out.println("9-see the timeLine");
@@ -100,6 +104,7 @@ public class Dashboard {
         }
     }
 
+    //done
     public void postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-React or change React");
         System.out.println("2-comment");
@@ -126,6 +131,10 @@ public class Dashboard {
                 System.out.println("please enter a valid number");
         }
     }
+
+
+
+
 
     public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-like");
@@ -154,7 +163,7 @@ public class Dashboard {
                 System.out.println("please enter a valid number");
         }
     }
-
+    ///// group dashboard to 1-createGroup 2-add admins 3- add posts in the group/////////////////////
     public void ConversationDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
         System.out.println("1-see messages");
         System.out.println("2-send a message");
