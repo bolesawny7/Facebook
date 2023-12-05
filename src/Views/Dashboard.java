@@ -1,5 +1,6 @@
 package Views;
 
+import Models.Comment;
 import Models.Group;
 import Models.Post;
 import Models.Users.User;
@@ -107,9 +108,10 @@ public class Dashboard {
     //done
     public void postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-React or change React");
-        System.out.println("2-comment");
-        System.out.println("3-share");
-        System.out.println("4-back to user dashboard");
+        System.out.println("2-add comment");
+        System.out.println("3-get comments");
+        System.out.println("4-share");
+        System.out.println("5-back to user dashboard");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
@@ -118,13 +120,21 @@ public class Dashboard {
                 postDashboard(commentsService,postService,userService,user,post);
                 break;
             case 2:
-                commentsDashboard(commentsService, postService, userService, user, post);
+                postService.writeComment(post,user);
+                postDashboard(commentsService,postService,userService,user,post);
                 break;
             case 3:
+                Comment comment = postService.getComments(post);
+                if (comment != null)
+                    commentsDashboard(commentsService, postService, userService, user, post, comment);
+                else
+                    postDashboard(commentsService, postService, userService, user, post);
+                break;
+            case 4:
                 postService.share(user, post);
                 postDashboard(commentsService,postService,userService,user,post);
                 break;
-            case 4:
+            case 5:
                 userDashboard(commentsService, postService, userService, user);
                 break;
             default:
@@ -132,31 +142,22 @@ public class Dashboard {
         }
     }
 
-
-
-
-
-    public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post) {
-        System.out.println("1-like");
+    public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post, Comment comment) {
+        System.out.println("1-react");
         System.out.println("2-reply");
-        System.out.println("3-Add comment");
-        System.out.println("4-back to post dashboard");
+        System.out.println("3-back to post dashboard");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
             case 1:
-                commentService.react();
-                commentsDashboard(commentService, postService, userService, user, post);
+                commentService.react(user, comment);
+                commentsDashboard(commentService, postService, userService, user, post, comment);
                 break;
             case 2:
-                commentService.reply();
-                commentsDashboard(commentService, postService, userService, user, post);
+                commentService.reply(user, comment);
+                commentsDashboard(commentService, postService, userService, user, post, comment);
                 break;
             case 3:
-                commentService.addComment(user, post);
-                commentsDashboard(commentService, postService, userService, user, post);
-                break;
-            case 4:
                 postDashboard(commentService, postService, userService, user, post);
                 break;
             default:

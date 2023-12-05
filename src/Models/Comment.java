@@ -3,9 +3,11 @@ package Models;
 import Enums.ReactType;
 import Models.Users.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Comment {
+    private LocalDateTime creationDate;
     private final User user;
     private String text;
     private ArrayList<Comment> replies;
@@ -35,10 +37,10 @@ public class Comment {
         return replies;
     }
 
-    public void setReplies(ArrayList<Comment> replies) {
-        this.replies = replies;
+    public void addReply(User user, String text) {
+        Comment newReply = new Comment(user, text);
+        replies.add(newReply);
     }
-
     public ArrayList<React> getReacts() {
         return reacts;
     }
@@ -47,6 +49,12 @@ public class Comment {
         this.reacts = reacts;
     }
 
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
 
     ///--------------------methods------------------------///
     public void addReact(User user, ReactType react) {
