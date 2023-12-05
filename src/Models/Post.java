@@ -20,7 +20,6 @@ public class Post {
     private final int  postId =postCounter;
     private PrivacyOption privacyOption; //(0 friends , 1 public)
     private ArrayList<User> tagged = new ArrayList<>();
-
     private ArrayList<React> reacts=new ArrayList<>();
 
     private ArrayList<Comment> comments;
