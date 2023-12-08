@@ -6,6 +6,7 @@ import Services.ConversationService;
 import Services.PostService;
 import Services.UserService;
 import Views.Dashboard;
+import Views.UserContext;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,17 +23,19 @@ public class Main {
                 ans = dashboard.mainMenu(commentsService,postService,userService);
 
             else if(ans == 2)
-                ans = dashboard.userDashboard(commentsService, postService, userService, dashboard.currentUser);
+                ans = dashboard.userDashboard(commentsService, postService, userService, UserContext.getCurrentUser());
 
             else if(ans == 3)
-                ans = dashboard.postDashboard( commentsService, postService, userService, dashboard.currentUser, dashboard.post);
+                ans = dashboard.postDashboard( commentsService, postService, userService, UserContext.getCurrentUser(), UserContext.getSelectedPost());
 
             else if(ans == 4)
-                ans = dashboard.commentsDashboard(commentsService, postService, userService, dashboard.currentUser, dashboard.post, dashboard.comment);
+                ans = dashboard.commentsDashboard(commentsService, postService, userService, UserContext.getCurrentUser(), UserContext.getSelectedPost(), UserContext.getSelectedComment());
 
             else if(ans == 5)
-                ans = dashboard.ConversationsDashboard( commentsService, postService, conversationService, userService, dashboard.currentUser);
+                ans = dashboard.ConversationsDashboard( commentsService, postService, conversationService, userService, UserContext.getCurrentUser());
         }
+
+
     }
 }
 

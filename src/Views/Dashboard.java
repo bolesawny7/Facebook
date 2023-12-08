@@ -13,11 +13,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dashboard {
-
-    public User currentUser;
-    public Post post;
-    public Comment comment;
-    public User chosenUserToChatWith;
     Scanner input = new Scanner(System.in);
 
     public int mainMenu( CommentsService commentsService, PostService postService, UserService userService){
@@ -26,8 +21,8 @@ public class Dashboard {
         String y = input.next();
         switch (y) {
             case "1":
-                 currentUser = userService.login();
-                if (currentUser == null)
+                UserContext.setCurrentUser(userService.login());
+                if (UserContext.getCurrentUser() == null)
                     return 1;
                 else
                     return 2;
@@ -63,8 +58,8 @@ public class Dashboard {
                 userService.seeFriends();
                 return 2;
             case 2:
-                post = userService.seePosts();
-                if (post != null)
+                UserContext.setSelectedPost(userService.seePosts()); ;
+                if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
                     return 2;
@@ -78,7 +73,7 @@ public class Dashboard {
                 userService.sendFriendRequest(user);
                 return 2;
             case 6:
-                post = userService.writePost(user);
+                UserContext.setSelectedPost(userService.writePost(user)); ;
                 return 3;
             case 7:
                 userService.joinGroup();
@@ -87,8 +82,8 @@ public class Dashboard {
                 userService.getFriendRequests(user);
                 return 2;
             case 9:
-                 post = userService.seeTimeline();
-                if (post != null)
+                UserContext.setSelectedPost(userService.seeTimeline());
+                if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
                     return 2;
@@ -121,8 +116,8 @@ public class Dashboard {
                 postService.writeComment(post,user);
                 return 3;
             case 3:
-                comment = postService.getComments(post);
-                if (comment != null)
+                UserContext.setSelectedComment(postService.getComments(post)); ;
+                if (UserContext.getSelectedComment() != null)
                     return 4;
                 else
                     return 3;
@@ -167,7 +162,7 @@ public class Dashboard {
         int y = input.nextInt();
         switch (y) {
             case 1:
-                chosenUserToChatWith = conversationService.seeConversations(user);
+                User chosenUserToChatWith = conversationService.seeConversations(user);
                 if (chosenUserToChatWith != null) {
                     conversationService.seeConversationContent(user, chosenUserToChatWith);
                     return 5;
