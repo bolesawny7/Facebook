@@ -73,24 +73,23 @@ public class UserService {
     }
 
     public void seeFriends() {
-        Set<User> friends= currentUser.getFriends();
+        Set<User> friends = currentUser.getFriends();
         for (User friend : friends) {
-            System.out.println(friend.getAccountName()+'\t'+currentUser.getFriendType(friend));
+            System.out.println(friend.getAccountName() + '\t' + currentUser.getFriendType(friend));
         }
         System.out.println("press y or any key to return to UserDashboard ");
         String ans = input.next();
     }
 
-    public Post seePosts()
-    {
+    public Post seePosts() {
         ArrayList<Post> posts = currentUser.getPosts();
         for (int i = 0; i < posts.size(); i++) {
-            System.out.println("created date:" + posts.get(i).getCreationDate() );
+            System.out.println("created date:" + posts.get(i).getCreationDate());
             System.out.println("privacy option:" + posts.get(i).isPrivacyOption());
             System.out.print("created by: " + posts.get(i).getCreatedBy().getAccountName() + " ");
             System.out.print("Tagged: ");
-            posts.get(i).getTaggedUsers().forEach((User user)->{
-                System.out.print(user.getAccountName()+",");
+            posts.get(i).getTaggedUsers().forEach((User user) -> {
+                System.out.print(user.getAccountName() + ",");
             });
             System.out.println();
             System.out.println(posts.get(i).getContent());
@@ -112,9 +111,8 @@ public class UserService {
         return null;
     }
 
-    public Post seeTimeline()
-    {
-        ArrayList <Post> timeline =  PostService.Timeline(clients);
+    public Post seeTimeline() {
+        ArrayList<Post> timeline = PostService.Timeline(clients);
 
         for (int i = 0; i < timeline.size(); i++) {
             System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
@@ -185,15 +183,17 @@ public class UserService {
             }
         }
     }
-    public ArrayList<User> userSearch(String input){
-        ArrayList <User> possibleUsers=new ArrayList<User>();
-        for(int i=0;i<clients.size();i++){
-            if(clients.get(i).getAccountName().contains(input)&&!clients.get(i).getAccountName().equals(currentUser.getAccountName())){
+
+    public ArrayList<User> userSearch(String input) {
+        ArrayList<User> possibleUsers = new ArrayList<User>();
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getAccountName().contains(input) && !clients.get(i).getAccountName().equals(currentUser.getAccountName())) {
                 possibleUsers.add(clients.get(i));
             }
         }
         return possibleUsers;
     }
+
     public void sendFriendRequest(User currentUser) {
         for (int i = 0; i < clients.size(); i++) {
             System.out.println(clients.get(i).getAccountName());
@@ -216,75 +216,128 @@ public class UserService {
         String privacyOptionInput = input.next().toUpperCase();
         PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
         System.out.println("Enter the post content");
-        String postContent=input.next();
+        String postContent = input.next();
         LocalDateTime now = LocalDateTime.now();
-        Post newPost=new Post(currentUser, now ,privacyOption,postContent);
+        Post newPost = new Post(currentUser, now, privacyOption, postContent);
         String choice;
         do {
             System.out.println("Do you want to tag a friend? y/n");
-            choice=input.next().toLowerCase();
-            if(choice.equals("y")){
+            choice = input.next().toLowerCase();
+            if (choice.equals("y")) {
                 System.out.println("Enter Account name");
-                String userName=input.next();
-                ArrayList <User> users = userSearch(userName);
+                String userName = input.next();
+                ArrayList<User> users = userSearch(userName);
                 System.out.println(users.size());
-                for(int i=0;i<users.size();i++){
-                    System.out.println( i+1+ "-" + users.get(i).getAccountName());
+                for (int i = 0; i < users.size(); i++) {
+                    System.out.println(i + 1 + "-" + users.get(i).getAccountName());
                 }
                 int index;
                 do {
                     System.out.println("choose the id of the user you want to tag");
-                    index=input.nextInt();
-                    if(index<=users.size() && index>=1){
-                        newPost.setTaggedUser(users.get(index-1));
-                    }
-                    else{
+                    index = input.nextInt();
+                    if (index <= users.size() && index >= 1) {
+                        newPost.setTaggedUser(users.get(index - 1));
+                    } else {
                         System.out.println("please enter a valid id");
                     }
-                }while(index>users.size() && index<1);
+                } while (index > users.size() && index < 1);
             }
-        }while (choice.equals("y"));
+        } while (choice.equals("y"));
         currentUser.posts.add(newPost);
         return newPost;
     }
 
 
-    public ArrayList<Group> groupSearch(String input){
-        ArrayList <Group> possibleGroups=new ArrayList<Group>();
-        for(int i=0;i<clients.size();i++){
-            if(groups.get(i).getName().contains(input)){
+    public ArrayList<Group> groupSearch(String input) {
+        ArrayList<Group> possibleGroups = new ArrayList<Group>();
+        for (int i = 0; i < clients.size(); i++) {
+            if (groups.get(i).getName().contains(input)) {
                 possibleGroups.add(groups.get(i));
             }
         }
         return possibleGroups;
     }
-    public void joinGroup() {
-        String groupName=input.next();
 
-        ArrayList <Group> groups= groupSearch(groupName);
-        for(int i=0;i<groups.size();i++){
-            System.out.println( i+1+ "-" + groups.get(i).getName());
+    public void joinGroup() {
+        String groupName = input.next();
+
+        ArrayList<Group> groups = groupSearch(groupName);
+        for (int i = 0; i < groups.size(); i++) {
+            System.out.println(i + 1 + "-" + groups.get(i).getName());
         }
         int index;
         do {
             System.out.println("choose the id of the group you want to join");
-            index=input.nextInt();
-            if(index<=groups.size() && index>=1){
-                currentUser.setGroups(groups.get(index-1));
-            }
-            else{
+            index = input.nextInt();
+            if (index <= groups.size() && index >= 1) {
+                currentUser.setGroups(groups.get(index - 1));
+            } else {
                 System.out.println("please enter a valid id");
             }
-        }while(index>groups.size() && index<1);
+        } while (index > groups.size() && index < 1);
     }
 
-    public void createGroup(){
+    public void createGroup() {
         System.out.println("Enter Group Name");
-        String groupName=input.next();
+        String groupName = input.next();
         System.out.println("Enter the group description");
-        String groupDescription=input.next();
-        Group newGroup=new Group(groupName,groupDescription);
+        String groupDescription = input.next();
+        Group newGroup = new Group(groupName, groupDescription);
         newGroup.setAdmins(currentUser);
         currentUser.setCreatedGroups(newGroup);
+    }
+
+    public void getFriendship(User currentUser) {
+        //get the user
+        System.out.println("Enter Account name");
+        String userName = input.next();
+        ArrayList<User> users = userSearch(userName);
+        for (int i = 0; i < users.size(); i++) {
+            System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+        }
+        System.out.println("Enter the number of the user you want to get friendship with");
+        int index = input.nextInt();
+        User friend = users.get(index - 1);
+
+        //get the friendship
+        ArrayList<Post> commonPosts = new ArrayList<>();
+        currentUser.getTaggedPostsWithFriend(friend).forEach((Post post) -> {
+            commonPosts.add(post);
+        });
+        friend.getTaggedPostsWithFriend(currentUser).forEach((Post post) -> {
+            commonPosts.add(post);
+        });
+        for (int i = 0; i < commonPosts.size(); i++) {
+            System.out.println("created date:" + commonPosts.get(i).getCreationDate() + "\n");
+            System.out.println("privacy option:" + commonPosts.get(i).isPrivacyOption() + "\n");
+            System.out.println("created by :" + commonPosts.get(i).getCreatedBy() + "\n");
+            System.out.println(commonPosts.get(i).getContent());
+            System.out.println("Press any key to return to UserDashboard");
+            String ans = input.next().toLowerCase();
+        }
+    }
+
+    public void getMutualFriends(User currentUser) {
+        //get the user
+        System.out.println("Enter Account name");
+        String userName = input.next();
+        ArrayList<User> users = userSearch(userName);
+        for (int i = 0; i < users.size(); i++) {
+            System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+        }
+        System.out.println("Enter the number of the user you want to get mutual friends with");
+        int index = input.nextInt();
+        User friend = users.get(index - 1);
+
+        //get the mutual
+        ArrayList<User> commonFriends = new ArrayList<>();
+        currentUser.getMutual(friend).forEach((User commonfriend) -> {
+            commonFriends.add(commonfriend);
+        });
+        for (int i = 0; i < commonFriends.size(); i++) {
+            System.out.println(commonFriends.get(i).getAccountName());
+        }
+        System.out.println("Press any key to return to UserDashboard");
+        String ans = input.next().toLowerCase();
     }
 }

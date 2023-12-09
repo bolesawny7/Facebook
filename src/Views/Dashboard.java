@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Dashboard {
     Scanner input = new Scanner(System.in);
 
-    public int mainMenu(UserService userService){
+    public int mainMenu(UserService userService) {
         System.out.println("1-login");
         System.out.println("2-signUP");
         String y = input.next();
@@ -47,8 +47,10 @@ public class Dashboard {
         System.out.println("8-getFriendRequests");
         System.out.println("9-see the timeLine");
         System.out.println("10-conversations");
-        System.out.println("11- logout");
-        System.out.println("12- close app");
+        System.out.println("11-see friendship");
+        System.out.println("12-see mutual friends");
+        System.out.println("13- logout");
+        System.out.println("14- close app");
 
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
@@ -57,7 +59,8 @@ public class Dashboard {
                 userService.seeFriends();
                 return 2;
             case 2:
-                UserContext.setSelectedPost(userService.seePosts()); ;
+                UserContext.setSelectedPost(userService.seePosts());
+                ;
                 if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
@@ -72,7 +75,8 @@ public class Dashboard {
                 userService.sendFriendRequest(user);
                 return 2;
             case 6:
-                UserContext.setSelectedPost(userService.writePost(user)); ;
+                UserContext.setSelectedPost(userService.writePost(user));
+                ;
                 return 3;
             case 7:
                 userService.joinGroup();
@@ -89,8 +93,14 @@ public class Dashboard {
             case 10:
                 return 5;
             case 11:
-                return 1;
+                userService.getFriendship(user);
+                return 2;
             case 12:
+                userService.getMutualFriends(user);
+                return 2;
+            case 13:
+                return 1;
+            case 14:
                 return 6;
             default:
                 System.out.println("please enter a valid number");
@@ -112,10 +122,11 @@ public class Dashboard {
                 postService.like(post, user);
                 return 3;
             case 2:
-                postService.writeComment(post,user);
+                postService.writeComment(post, user);
                 return 3;
             case 3:
-                UserContext.setSelectedComment(postService.getComments(post)); ;
+                UserContext.setSelectedComment(postService.getComments(post));
+                ;
                 if (UserContext.getSelectedComment() != null)
                     return 4;
                 else
@@ -165,8 +176,7 @@ public class Dashboard {
                 if (chosenUserToChatWith != null) {
                     conversationService.seeConversationContent(user, chosenUserToChatWith);
                     return 5;
-                }
-                else
+                } else
                     return 2;
             case 2:
                 conversationService.sendMessage();
