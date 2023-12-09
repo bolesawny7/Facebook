@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Dashboard {
     Scanner input = new Scanner(System.in);
 
-    public int mainMenu( CommentsService commentsService, PostService postService, UserService userService){
+    public int mainMenu(UserService userService){
         System.out.println("1-login");
         System.out.println("2-signUP");
         String y = input.next();
@@ -35,8 +35,7 @@ public class Dashboard {
         }
     }
 
-    //done
-    public int userDashboard(CommentsService commentsService, PostService postService, UserService userService, User user) {
+    public int userDashboard(UserService userService, User user) {
         System.out.println("1-see your friends");
         System.out.println("2-see your posts");
         System.out.println("3-see your groups");
@@ -100,7 +99,7 @@ public class Dashboard {
     }
 
     //done
-    public int postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
+    public int postDashboard(PostService postService, User user, Post post) {
         System.out.println("1-React or change React");
         System.out.println("2-add comment");
         System.out.println("3-get comments");
@@ -132,7 +131,7 @@ public class Dashboard {
         }
     }
 
-    public int commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post, Comment comment) {
+    public int commentsDashboard(CommentsService commentService, User user, Post post, Comment comment) {
         System.out.println("1-react");
         System.out.println("2-reply");
         System.out.println("3-back to post dashboard");
@@ -154,7 +153,7 @@ public class Dashboard {
     }
 
     ///// group dashboard to 1-createGroup 2-add admins 3- add posts in the group/////////////////////
-    public int ConversationsDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
+    public int ConversationsDashboard(ConversationService conversationService, User user) {
         System.out.println("1-see Conversations");
         System.out.println("2-send a message");
         System.out.println("3-back to user dashboard");
