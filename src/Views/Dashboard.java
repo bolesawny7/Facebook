@@ -15,32 +15,28 @@ import java.util.Scanner;
 public class Dashboard {
     Scanner input = new Scanner(System.in);
 
-    public void mainMenu( CommentsService commentsService, PostService postService, UserService userService){
+    public int mainMenu( CommentsService commentsService, PostService postService, UserService userService){
         System.out.println("1-login");
         System.out.println("2-signUP");
         String y = input.next();
         switch (y) {
             case "1":
-                User currentUser = userService.login();
-                if (currentUser == null)
-                    mainMenu(commentsService, postService, userService);
-                else {
-                    userDashboard(commentsService, postService, userService, currentUser);
-                }
-                break;
+                UserContext.setCurrentUser(userService.login());
+                if (UserContext.getCurrentUser() == null)
+                    return 1;
+                else
+                    return 2;
             case "2":
                 userService.signUp();
-                mainMenu(commentsService, postService, userService);
-                break;
+                return 1;
             default:
                 System.out.println("please enter 1 or 2");
-                mainMenu(commentsService, postService, userService);
+                return 1;
         }
     }
 
-
     //done
-    public void userDashboard(CommentsService commentsService, PostService postService, UserService userService, User user) {
+    public int userDashboard(CommentsService commentsService, PostService postService, UserService userService, User user) {
         System.out.println("1-see your friends");
         System.out.println("2-see your posts");
         System.out.println("3-see your groups");
@@ -51,62 +47,60 @@ public class Dashboard {
         System.out.println("7-join a group");
         System.out.println("8-getFriendRequests");
         System.out.println("9-see the timeLine");
-        System.out.println("10- logout");
+        System.out.println("10-conversations");
+        System.out.println("11- logout");
+        System.out.println("12- close app");
+
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
             case 1:
                 userService.seeFriends();
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 2:
-                Post post = userService.seePosts();
-                if (post != null)
-                    postDashboard(commentsService, postService, userService, user, post);
+                UserContext.setSelectedPost(userService.seePosts()); ;
+                if (UserContext.getSelectedPost() != null)
+                    return 3;
                 else
-                    userDashboard(commentsService, postService, userService, user);
-                break;
+                    return 2;
             case 3:
                 userService.seeGroups();
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 4:
                 userService.seeConversations();
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 5:
                 userService.sendFriendRequest(user);
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 6:
-                Post newPost=userService.writePost(user);
-                postDashboard(commentsService,postService,userService,user,newPost);
-                break;
+                UserContext.setSelectedPost(userService.writePost(user)); ;
+                return 3;
             case 7:
                 userService.joinGroup();
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 8:
                 userService.getFriendRequests(user);
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             case 9:
-                Post chosenPost = userService.seeTimeline();
-                if (chosenPost != null)
-                    postDashboard(commentsService, postService, userService, user, chosenPost);
+                UserContext.setSelectedPost(userService.seeTimeline());
+                if (UserContext.getSelectedPost() != null)
+                    return 3;
                 else
-                    userDashboard(commentsService, postService, userService, user);
-                break;
+                    return 2;
             case 10:
-                mainMenu(commentsService, postService, userService);
-                break;
+                return 5;
+            case 11:
+                return 1;
+            case 12:
+                return 6;
             default:
                 System.out.println("please enter a valid number");
+                return 2;
         }
     }
 
     //done
-    public void postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
+    public int postDashboard(CommentsService commentsService, PostService postService, UserService userService, User user, Post post) {
         System.out.println("1-React or change React");
         System.out.println("2-add comment");
         System.out.println("3-get comments");
@@ -116,33 +110,29 @@ public class Dashboard {
         int y = input.nextInt();
         switch (y) {
             case 1:
-                postService.like(post,user);
-                postDashboard(commentsService,postService,userService,user,post);
-                break;
+                postService.like(post, user);
+                return 3;
             case 2:
                 postService.writeComment(post,user);
-                postDashboard(commentsService,postService,userService,user,post);
-                break;
+                return 3;
             case 3:
-                Comment comment = postService.getComments(post);
-                if (comment != null)
-                    commentsDashboard(commentsService, postService, userService, user, post, comment);
+                UserContext.setSelectedComment(postService.getComments(post)); ;
+                if (UserContext.getSelectedComment() != null)
+                    return 4;
                 else
-                    postDashboard(commentsService, postService, userService, user, post);
-                break;
+                    return 3;
             case 4:
                 postService.share(user, post);
-                postDashboard(commentsService,postService,userService,user,post);
-                break;
+                return 3;
             case 5:
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             default:
                 System.out.println("please enter a valid number");
+                return 3;
         }
     }
 
-    public void commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post, Comment comment) {
+    public int commentsDashboard(CommentsService commentService, PostService postService, UserService userService, User user, Post post, Comment comment) {
         System.out.println("1-react");
         System.out.println("2-reply");
         System.out.println("3-back to post dashboard");
@@ -151,22 +141,20 @@ public class Dashboard {
         switch (y) {
             case 1:
                 commentService.react(user, comment);
-                commentsDashboard(commentService, postService, userService, user, post, comment);
-                break;
+                return 4;
             case 2:
                 commentService.reply(user, comment);
-                commentsDashboard(commentService, postService, userService, user, post, comment);
-                break;
+                return 4;
             case 3:
-                postDashboard(commentService, postService, userService, user, post);
-                break;
+                return 3;
             default:
                 System.out.println("please enter a valid number");
+                return 4;
         }
     }
 
     ///// group dashboard to 1-createGroup 2-add admins 3- add posts in the group/////////////////////
-    public void ConversationsDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
+    public int ConversationsDashboard(CommentsService commentsService, PostService postService, ConversationService conversationService, UserService userService, User user) {
         System.out.println("1-see Conversations");
         System.out.println("2-send a message");
         System.out.println("3-back to user dashboard");
@@ -175,19 +163,20 @@ public class Dashboard {
         switch (y) {
             case 1:
                 User chosenUserToChatWith = conversationService.seeConversations(user);
-                if (chosenUserToChatWith != null)
-                    conversationService.seeConversationContent(user,chosenUserToChatWith);
+                if (chosenUserToChatWith != null) {
+                    conversationService.seeConversationContent(user, chosenUserToChatWith);
+                    return 5;
+                }
                 else
-                    userDashboard(commentsService,postService,userService,user);
-                break;
+                    return 2;
             case 2:
                 conversationService.sendMessage();
-                break;
+                return 5;
             case 3:
-                userDashboard(commentsService, postService, userService, user);
-                break;
+                return 2;
             default:
                 System.out.println("please enter a valid number");
+                return 5;
         }
     }
 }
