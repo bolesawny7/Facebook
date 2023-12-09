@@ -76,7 +76,6 @@ public class Dashboard {
                 return 2;
             case 6:
                 UserContext.setSelectedPost(userService.writePost(user));
-                ;
                 return 3;
             case 7:
                 userService.joinGroup();
@@ -108,7 +107,6 @@ public class Dashboard {
         }
     }
 
-    //done
     public int postDashboard(PostService postService, User user, Post post) {
         System.out.println("1-React or change React");
         System.out.println("2-add comment");
@@ -126,7 +124,6 @@ public class Dashboard {
                 return 3;
             case 3:
                 UserContext.setSelectedComment(postService.getComments(post));
-                ;
                 if (UserContext.getSelectedComment() != null)
                     return 4;
                 else
@@ -163,7 +160,6 @@ public class Dashboard {
         }
     }
 
-    ///// group dashboard to 1-createGroup 2-add admins 3- add posts in the group/////////////////////
     public int ConversationsDashboard(ConversationService conversationService, User user) {
         System.out.println("1-see Conversations");
         System.out.println("2-send a message");
