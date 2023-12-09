@@ -19,20 +19,25 @@ public class Main {
 
         int ans = 1;
         while(true){
-            if(ans == 1)
-                ans = dashboard.mainMenu(commentsService,postService,userService);
+            if(ans == 1) {
+                ans = dashboard.mainMenu(userService);
+            }
 
-            else if(ans == 2)
-                ans = dashboard.userDashboard(commentsService, postService, userService, UserContext.getCurrentUser());
+            else if(ans == 2) {
+                ans = dashboard.userDashboard(userService, UserContext.getCurrentUser());
+            }
 
-            else if(ans == 3)
-                ans = dashboard.postDashboard( commentsService, postService, userService, UserContext.getCurrentUser(), UserContext.getSelectedPost());
+            else if(ans == 3) {
+                ans = dashboard.postDashboard( postService, UserContext.getCurrentUser(), UserContext.getSelectedPost());
+            }
 
-            else if(ans == 4)
-                ans = dashboard.commentsDashboard(commentsService, postService, userService, UserContext.getCurrentUser(), UserContext.getSelectedPost(), UserContext.getSelectedComment());
+            else if(ans == 4) {
+                ans = dashboard.commentsDashboard(commentsService, UserContext.getCurrentUser(), UserContext.getSelectedPost(), UserContext.getSelectedComment());
+            }
 
-            else if(ans == 5)
-                ans = dashboard.ConversationsDashboard( commentsService, postService, conversationService, userService, UserContext.getCurrentUser());
+            else if(ans == 5) {
+                ans = dashboard.ConversationsDashboard( conversationService, UserContext.getCurrentUser());
+            }
         }
 
 
