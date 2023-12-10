@@ -11,10 +11,14 @@ import Models.Users.User;
 import Views.Dashboard;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class UserService {
+    FileService fileService=new FileService();//should be refactored ( boules should do it )
+
     Scanner input = new Scanner(System.in);
     Dashboard dashboard = new Dashboard();
     private String email;
@@ -24,6 +28,10 @@ public class UserService {
     static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
+
+        if(clients.size()==0){
+            readUsers();
+        }
         boolean isLogin = false;
         String ans = new String();
         do {
@@ -51,6 +59,9 @@ public class UserService {
     }
 
     public void signUp() {
+        if(clients.size()==0){
+            readUsers();
+        }
         Scanner userData = new Scanner(System.in);
         System.out.println("enter your email");
         String email = userData.next();
@@ -63,13 +74,14 @@ public class UserService {
         System.out.println("enter your gender ( male , female )");
         String genderInput = userData.next();
         Gender gender = Gender.valueOf(genderInput.toLowerCase());
-        System.out.println("enter your birth_date => year, month, day");
-        int year = userData.nextInt();
-        int month = userData.nextInt();
-        int day = userData.nextInt();
-        Date birthDate = new Date(year, month, day);
+        System.out.println("enter your birth_date => yyyy-mm-dd");
+        String date= input.next();
+        String pattern = "yyyy-MM-dd";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        LocalDate birthDate = LocalDate.parse(date, formatter);
         Client user = new Client(email, last_name, first_name, password, gender, birthDate);
         clients.add(user);
+        saveUsers(clients);
     }
 
     public void seeFriends() {
@@ -339,5 +351,23 @@ public class UserService {
         }
         System.out.println("Press any key to return to UserDashboard");
         String ans = input.next().toLowerCase();
+    }
+    public void readUsers(){
+        ArrayList<String> usersData=fileService.ReadAllUsers();
+        String pattern = "yyyy-MM-dd";
+
+        for(int i=0;i<usersData.size();i++){
+            String[] user= usersData.get(i).split(" ");
+            //to get date pattern
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+            LocalDate birthDate = LocalDate.parse(user[5], formatter);
+            //to get gender
+            Gender gender = Gender.valueOf(user[4].toLowerCase());
+            Client newUser=new Client(user[0],user[1],user[2],user[3],gender,birthDate);
+            clients.add(newUser);
+        }
+    }
+    public void saveUsers(ArrayList<Client> clients){
+        fileService.saveAllUsers(clients);
     }
 }

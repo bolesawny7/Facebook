@@ -7,7 +7,9 @@ import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import  java.util.*;
 
 import java.util.Date;
@@ -27,7 +29,7 @@ public abstract class User {
     private Gender gender;
     private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
     private String phone; //done
-    private Date birth_date;//done
+    private LocalDate birth_date;//done
     public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
     public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
     public  ArrayList<Post> posts = new ArrayList<Post>();
@@ -38,26 +40,27 @@ public abstract class User {
 
 
     //constructor func
-    public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  Gender gender ,Date birth_date,String phone) {
+    public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  Gender gender ,LocalDate birth_date,String phone) {
         this(email,last_name,first_name,password,status,gender,birth_date);
         this.phone=phone;
         this.posts = new ArrayList<>();
     }
 
     //without phone
-    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,Gender gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, RelationshipStatus status ,Gender gender, LocalDate birth_date) {
       this(email, last_name, first_name, password, gender, birth_date);
       this.status= status;
     }
 
     //without RelationshipStatus
-    public User(String email, String last_name, String first_name, String password, String phone ,Gender gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, String phone ,Gender gender, LocalDate birth_date) {
         this(email, last_name, first_name, password, gender, birth_date);
         this.phone=phone;
     }
 
+
     //minimum constructor
-    public User(String email, String last_name, String first_name, String password, Gender gender, Date birth_date) {
+    public User(String email, String last_name, String first_name, String password, Gender gender, LocalDate birth_date) {
         this.email = email;
         this.last_name = last_name;
         this.first_name = first_name;
@@ -98,7 +101,8 @@ public abstract class User {
         return phone;
     }
 
-    public Date getBirth_date() {
+    public LocalDate getBirth_date() {
+        String pattern = "yyyy-MM-dd";
         return birth_date;
     }
 
@@ -116,7 +120,9 @@ public abstract class User {
     {
         return this.id;
     }
-
+    public Gender getGender() {
+        return gender;
+    }
     //=====================>Setters<===================//
 
     public void setEmail(String email) {
@@ -148,7 +154,7 @@ public abstract class User {
     }
 
 
-    public void setBirth_date(Date birth_date)
+    public void setBirth_date(LocalDate birth_date)
     {
         this.birth_date = birth_date;
     }

@@ -100,6 +100,7 @@ public class Dashboard {
             case 13:
                 return 1;
             case 14:
+                //it does nothing
                 return 6;
             default:
                 System.out.println("please enter a valid number");
