@@ -43,7 +43,6 @@ public class Dashboard {
         System.out.println("5-send a friend request");
         System.out.println("6-write a post");
         System.out.println("7-join a group");
-        System.out.println("7-join a group");
         System.out.println("8-getFriendRequests");
         System.out.println("9-see the timeLine");
         System.out.println("10-conversations");
@@ -60,7 +59,6 @@ public class Dashboard {
                 return 2;
             case 2:
                 UserContext.setSelectedPost(userService.seePosts());
-                ;
                 if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
