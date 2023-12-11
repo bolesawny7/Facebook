@@ -1,10 +1,7 @@
 import Models.Post;
 import Models.React;
 import Models.Users.User;
-import Services.CommentsService;
-import Services.ConversationService;
-import Services.PostService;
-import Services.UserService;
+import Services.*;
 import Views.Dashboard;
 import Views.UserContext;
 
@@ -37,6 +34,9 @@ public class Main {
 
             else if(ans == 5) {
                 ans = dashboard.ConversationsDashboard( conversationService, UserContext.getCurrentUser());
+            }
+            if (ans==6){
+                break;
             }
         }
 
