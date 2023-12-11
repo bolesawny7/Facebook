@@ -1,9 +1,12 @@
 import Models.Post;
 import Models.React;
+import Models.Users.Client;
 import Models.Users.User;
 import Services.*;
 import Views.Dashboard;
 import Views.UserContext;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,6 +14,8 @@ public class Main {
         PostService postService = new PostService();
         CommentsService commentsService = new CommentsService();
         ConversationService conversationService = new ConversationService();
+        FileService fileService=new FileService();
+        ArrayList<Client> clients=userService.getClients();
 
         Dashboard dashboard = new Dashboard();
 
@@ -36,6 +41,7 @@ public class Main {
                 ans = dashboard.ConversationsDashboard( conversationService, UserContext.getCurrentUser());
             }
             if (ans==6){
+                fileService.saveAllUsers(clients);
                 break;
             }
         }

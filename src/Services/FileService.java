@@ -5,6 +5,7 @@ import Models.Users.User;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class FileService {
 
@@ -42,5 +43,24 @@ public class FileService {
             }
         }
         return usersData;
+    }
+
+    public void saveALlFriends(ArrayList<Client> users){
+        BufferedWriter writer;
+        for(Client user:users) {
+            {
+                Set <User>friends=user.getFriends();
+                try {
+                    writer = new BufferedWriter(new FileWriter("friends.txt"));
+                    for (User friend : friends) {
+                        writer.write(friend.getId()+' ');
+                    }
+                    writer.write('\n');
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }

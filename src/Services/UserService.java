@@ -259,7 +259,15 @@ public class UserService {
         return newPost;
     }
 
-
+    public Client idSearch(int input) {
+        Client clientfound = null;
+        for (int i = 0; i < clients.size(); i++) {
+            if (clients.get(i).getId()==input) {
+                clientfound=clients.get(i);
+            }
+        }
+        return clientfound;
+    }
     public ArrayList<Group> groupSearch(String input) {
         ArrayList<Group> possibleGroups = new ArrayList<Group>();
         for (int i = 0; i < clients.size(); i++) {
@@ -351,6 +359,9 @@ public class UserService {
         }
         System.out.println("Press any key to return to UserDashboard");
         String ans = input.next().toLowerCase();
+    }
+    public ArrayList<Client> getClients(){
+        return clients;
     }
     public void readUsers(){
         ArrayList<String> usersData=fileService.ReadAllUsers();
