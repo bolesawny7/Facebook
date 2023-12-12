@@ -63,4 +63,21 @@ public class FileService {
             }
         }
     }
+
+    public ArrayList<Client> readAllFriendsFromFile(ArrayList<Client> users) {
+        ArrayList<Client> readUsers = users;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("friends.txt"))) {
+            int i = 0;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] friendIds = line.split(" ");
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
 }
