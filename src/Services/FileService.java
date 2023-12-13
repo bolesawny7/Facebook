@@ -1,7 +1,9 @@
 package Services;
 
+import Enums.FriendType;
 import Models.Users.Client;
 import Models.Users.User;
+import Views.UserContext;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -46,38 +48,56 @@ public class FileService {
     }
 
     public void saveALlFriends(ArrayList<Client> users){
-        BufferedWriter writer;
-        for(Client user:users) {
-            {
-                Set <User>friends=user.getFriends();
-                try {
-                    writer = new BufferedWriter(new FileWriter("friends.txt"));
+        try {
+            BufferedWriter writer;
+            writer = new BufferedWriter(new FileWriter("friends.txt"));
+
+
+            for (Client user : users) {
+                {
+                    Set<User> friends = user.getFriends();
+                    writer.write(user.getId() + " ");
                     for (User friend : friends) {
-                        writer.write(friend.getId()+' ');
+                        writer.write(friend.getId() + " " + user.getFriendType(friend)+" ");
                     }
-                    writer.write('\n');
-                    writer.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    writer.write("\n");
                 }
             }
-        }
-    }
-
-    public ArrayList<Client> readAllFriendsFromFile(ArrayList<Client> users) {
-        ArrayList<Client> readUsers = users;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader("friends.txt"))) {
-            int i = 0;
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] friendIds = line.split(" ");
-
-            }
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
-        return users;
+    public void readUserFrinends(ArrayList <Client> clients) {
+        String[] friendIds = null;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("friends.txt"));
+            String line;
+            for(Client user:clients) {
+                int id = user.getId();
+                while ((line = reader.readLine()) != null) {
+                    friendIds = line.split(" ");
+                    int thisId = Integer.parseInt(friendIds[0]);
+                    if (thisId == id) {
+                        System.out.println(thisId);
+                        break;
+                    }
+                }
+                for(int i=1;i<friendIds.length;i++){
+                    System.out.println(friendIds[i]);
+                }
+                System.out.println();
+                for(int i=1;i<friendIds.length;i+=2){
+                    int friendId=Integer.parseInt(friendIds[i]);
+                    FriendType friendType = FriendType.valueOf(friendIds[i+1].toLowerCase());
+                   clients.get(id-1).setFriendType(clients.get(friendId-1),friendType);
+                }
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            return;
+        }
     }
 }

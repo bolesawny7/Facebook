@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static Views.UserContext.setCurrentUser;
+
 public class UserService {
     FileService fileService=new FileService();//should be refactored ( boules should do it )
 
@@ -24,7 +26,7 @@ public class UserService {
     private String email;
     private String password;
     public User currentUser;
-    static ArrayList<Client> clients = new ArrayList<Client>();
+    public static  ArrayList<Client> clients = new ArrayList<Client>();
     static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
@@ -55,6 +57,9 @@ public class UserService {
         if (ans.equals("n")) {
             return null;
         }
+        setCurrentUser(currentUser);
+        fileService.readUserFrinends(clients);
+
         return currentUser;
     }
 
@@ -185,6 +190,7 @@ public class UserService {
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
                     currentUser.acceptRequest(currentUser.friendRequest.get(i), friendType);
+                    currentUser.friendRequest.get(i).acceptRequest(currentUser,FriendType.regular);
                     currentUser.friendRequest.remove(currentUser.friendRequest.get(i));
                     break;
                 case "2":
@@ -382,3 +388,13 @@ public class UserService {
         fileService.saveAllUsers(clients);
     }
 }
+
+
+
+
+
+
+
+
+
+
