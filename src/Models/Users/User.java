@@ -33,7 +33,8 @@ public abstract class User {
     public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
     public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
     public  ArrayList<Post> posts = new ArrayList<Post>();
-    public  ArrayList<User> friendRequest  = new ArrayList<User>();
+    public  ArrayList<User> ReceivedFriendRequests  = new ArrayList<User>();
+    public  ArrayList<User> sentFriendRequests  = new ArrayList<User>();
     public ArrayList<Group> groups = new ArrayList<Group>();
     public ArrayList<Group> createdGroups = new ArrayList<Group>();
     private final int id=idCounter;
@@ -68,7 +69,6 @@ public abstract class User {
         this.birth_date = birth_date;
         this.gender=gender;
         idCounter++;
-
     }
 
     //================================> getters <==========================================//
@@ -181,7 +181,6 @@ public abstract class User {
     {
         Post  post   = new Post(user, date, privacyOption, content, tagged);
     }
-
     public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content )
     {
         Post  post   = new Post(user, date, privacyOption, content);
@@ -192,46 +191,61 @@ public abstract class User {
     public FriendType getFriendType(User user){
         return FriendType.get(user);
     }
-
    public ArrayList<User> getFriendsConversations(){
         return (ArrayList<User>) FriendChat.keySet();
    }
     public ArrayList<Conversation> getConversations(){
        return (ArrayList<Conversation>) FriendChat.values();
     }
-
     public Conversation getChosenUserConversation(User chosenUser){
         return FriendChat.get(chosenUser);
     }
-
     public Set<Map.Entry<User, Conversation>> getConversatios(){
          return FriendChat.entrySet();
     }
-
     public String getAccountName(){
         return first_name+" "+last_name;
     }
-
     public void sharePost(Post post) {
         this.posts.add(post);
     }
-
-    public void acceptRequest(User user,FriendType friendType){
+    public void acceptRequest(User user,FriendType friendType)
+    {
         this.FriendType.put(user,friendType);
     }
-
-    public ArrayList<Post> getTaggedPostsWithFriend(User friend){
+    public ArrayList<User> getSentFriendRequests()
+    {
+        return sentFriendRequests;
+    }
+    public void SentFriendRequest(User user)
+    {
+        sentFriendRequests.add(user);
+    }
+    public void removeSentFriendRequest(User user)
+    {
+        for(User friendRequest: sentFriendRequests)
+        {
+            if(friendRequest.getId() == user.getId())
+            {
+                sentFriendRequests.remove(friendRequest);
+                break;
+            }
+        }
+    }
+    public ArrayList<Post> getTaggedPostsWithFriend(User friend) {
         ArrayList<Post> taggedPosts = new ArrayList<>();
-        for (Post post : posts) {
+        for (Post post : posts)
+        {
             if (post.getTaggedUsers().contains(friend))
                 taggedPosts.add(post);
         }
         return taggedPosts;
     }
-
-    public ArrayList<User> getMutual(User user){
+    public ArrayList<User> getMutual(User user)
+    {
         ArrayList<User> mutualFriends = new ArrayList<>();
-        for (User friend : user.getFriends()) {
+        for (User friend : user.getFriends())
+        {
             if (friend.getFriends().contains(user))
                 mutualFriends.add(friend);
         }
