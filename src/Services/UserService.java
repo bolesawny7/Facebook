@@ -180,8 +180,8 @@ public class UserService {
     }
 
     public void getFriendRequests(User currentUser) {
-        for (int i = 0; i < currentUser.friendRequest.size(); i++) {
-            System.out.println(currentUser.friendRequest.get(i).getAccountName());
+        for (int i = 0; i < currentUser.ReceivedFriendRequests.size(); i++) {
+            System.out.println(currentUser.ReceivedFriendRequests.get(i).getAccountName());
             System.out.println("1-accept Request \n2-reject Request \n3-pass");
             String y = input.next();
             switch (y) {
@@ -189,17 +189,26 @@ public class UserService {
                     System.out.println("restricted or regular");
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
-                    currentUser.acceptRequest(currentUser.friendRequest.get(i), friendType);
-                    currentUser.friendRequest.get(i).acceptRequest(currentUser,FriendType.regular);
-                    currentUser.friendRequest.remove(currentUser.friendRequest.get(i));
+                    currentUser.acceptRequest(currentUser.ReceivedFriendRequests.get(i), friendType);
+                    currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser,FriendType.regular);
+                    currentUser.ReceivedFriendRequests.get(i).removeSentFriendRequest(currentUser);
+                    currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
                     break;
                 case "2":
-                    currentUser.friendRequest.remove(currentUser.friendRequest.get(i));
+                    currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    public void getSentFriendRequests(User currentUser) {
+        for (User user: currentUser.sentFriendRequests) {
+            System.out.println(user.getAccountName() + "\n");
+        }
+        System.out.println("press any key to return to user services");
+        String ans = input.next();
     }
 
     public ArrayList<User> userSearch(String input) {
@@ -213,14 +222,56 @@ public class UserService {
     }
 
     public void sendFriendRequest(User currentUser) {
+        Set<User>currentUserFriends = currentUser.getFriends();
+        ArrayList <User> sentFriendRequests = currentUser.getSentFriendRequests();
+        ArrayList <User> ReceivedFriendRequests = currentUser.ReceivedFriendRequests;
+
+        boolean notAllowedFriend;
         for (int i = 0; i < clients.size(); i++) {
+            notAllowedFriend = false;
+
+            // It's not allowed to send friend request to youself
+            if(currentUser.getId() == clients.get(i).getId())
+                continue;
+
+            // It's not allowed to send friend request to your friends
+            for(User friend: currentUserFriends)
+            {
+                if(friend.getId() == clients.get(i).getId())
+                {
+                    notAllowedFriend = true;
+                    break;
+                }
+            };
+            // It's not allowed to send a request to a friend you already sent a request to
+            for(User friend: sentFriendRequests)
+            {
+                if(friend.getId() == clients.get(i).getId())
+                {
+                    notAllowedFriend = true;
+                    break;
+                }
+            };
+            // It's not allowed to send a request to a friend he already sent a request to you
+            for(User friend: ReceivedFriendRequests)
+            {
+                if(friend.getId() == clients.get(i).getId())
+                {
+                    notAllowedFriend = true;
+                    break;
+                }
+            };
+
+            if(notAllowedFriend == true)
+                continue;
             System.out.println(clients.get(i).getAccountName());
             System.out.println("1-Send Request \n2-pass");
             String y = input.next();
             switch (y) {
                 case "1":
                     System.out.println("Request sent");
-                    clients.get(i).friendRequest.add(currentUser);
+                    clients.get(i).ReceivedFriendRequests.add(currentUser);
+                    currentUser.SentFriendRequest(clients.get(i));
                     break;
                 default:
                     break;

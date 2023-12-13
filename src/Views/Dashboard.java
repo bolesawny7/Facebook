@@ -40,16 +40,17 @@ public class Dashboard {
         System.out.println("2-see your posts");
         System.out.println("3-see your groups");
         System.out.println("4-see your Conversations");
-        System.out.println("5-send a friend request");
+        System.out.println("5-send a friend requests");
         System.out.println("6-write a post");
         System.out.println("7-join a group");
-        System.out.println("8-getFriendRequests");
-        System.out.println("9-see the timeLine");
-        System.out.println("10-conversations");
-        System.out.println("11-see friendship");
-        System.out.println("12-see mutual friends");
-        System.out.println("13- logout");
-        System.out.println("14- close app");
+        System.out.println("8-Received Friend Requests");
+        System.out.println("9-sent Friend Requests");
+        System.out.println("10-see the timeLine");
+        System.out.println("11-conversations");
+        System.out.println("12-see friendship");
+        System.out.println("13-see mutual friends");
+        System.out.println("14- logout");
+        System.out.println("15- close app");
 
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
@@ -82,22 +83,25 @@ public class Dashboard {
                 userService.getFriendRequests(user);
                 return 2;
             case 9:
+                userService.getSentFriendRequests(user);
+                return 2;
+            case 10:
                 UserContext.setSelectedPost(userService.seeTimeline());
                 if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
                     return 2;
-            case 10:
-                return 5;
             case 11:
+                return 5;
+            case 12:
                 userService.getFriendship(user);
                 return 2;
-            case 12:
+            case 13:
                 userService.getMutualFriends(user);
                 return 2;
-            case 13:
-                return 1;
             case 14:
+                return 1;
+            case 15:
                 //it does nothing
                 return 6;
             default:
