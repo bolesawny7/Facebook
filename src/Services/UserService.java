@@ -11,6 +11,9 @@ import Models.Users.User;
 import Views.Dashboard;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +27,7 @@ public class UserService {
     public User currentUser;
     public static ArrayList<Client> clients = new ArrayList<Client>();
     static ArrayList<Group> groups = new ArrayList<Group>();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public User login() {
         if (clients.size() == 0) {
@@ -275,7 +279,12 @@ public class UserService {
         String privacyOptionInput = input.next().toUpperCase();
         PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
         System.out.println("Enter the post content");
-        String postContent = input.next();
+        String postContent = null;
+        try {
+            postContent = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         LocalDateTime now = LocalDateTime.now();
         Post newPost = new Post(currentUser, now, privacyOption, postContent);
         String choice;
