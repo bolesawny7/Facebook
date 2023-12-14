@@ -24,6 +24,10 @@ public class Conversation {
         return user1;
     }
 
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
+
     public User getUser2() {
         return user2;
     }

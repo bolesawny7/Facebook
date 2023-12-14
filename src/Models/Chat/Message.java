@@ -1,32 +1,37 @@
 package Models.Chat;
 
+import Models.Users.User;
+
+import java.time.LocalDateTime;
+
 public class Message {
     private String content;
-    private String date;
-    private String sender;
-    private String receiver;
+    private LocalDateTime date;
+    private User sender;
+    private User receiver;
 
-    public Message(String content, String date, String sender, String receiver) {
+    public Message(String content, LocalDateTime date, User sender, User receiver) {
         this.content = content;
         this.date = date;
         this.sender = sender;
         this.receiver = receiver;
     }
 
+
     // Getters
     public String getContent() {
         return content;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public String getSender() {
+    public User getSender() {
         return sender;
     }
 
-    public String getReceiver() {
+    public User getReceiver() {
         return receiver;
     }
 
@@ -36,15 +41,15 @@ public class Message {
         this.content = content;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public void setSender(String sender) {
+    public void setSender(User sender) {
         this.sender = sender;
     }
 
-    public void setReceiver(String receiver) {
+    public void setReceiver(User receiver) {
         this.receiver = receiver;
     }
 }

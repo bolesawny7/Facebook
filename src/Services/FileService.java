@@ -3,6 +3,8 @@ package Services;
 import Enums.FriendType;
 import Enums.PrivacyOption;
 import Enums.ReactType;
+import Models.Chat.Conversation;
+import Models.Chat.Message;
 import Models.Comment;
 import Models.Post;
 import Models.React;
@@ -13,9 +15,102 @@ import Views.UserContext;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 public class FileService {
+
+    public void saveAllMessages() {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter("Messages.txt"));
+            for (User user : UserService.clients) {
+                for (Conversation conversation : user.getConversations()) {
+                    writer.write(conversation.getId() + " " + conversation.getUser1().getId() + " " + conversation.getUser2().getId() + " " + conversation.getMessages().size() + " ");
+                    for (int i = 0; i < conversation.getMessages().size(); i++) {
+                        writer.write(conversation.getMessages().get(i).getSender().getId() + " " + conversation.getMessages().get(i).getReceiver().getId() + " " + conversation.getMessages().get(i).getContent() + " " + conversation.getMessages().get(i).getDate() + " ");
+                    }
+                    writer.write("\n");
+                }
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readAllMessages() {
+        BufferedReader reader;
+        String message;
+        try {
+            reader = new BufferedReader(new FileReader("Messages.txt"));
+            while ((message = reader.readLine()) != null) {
+                String[] messageInfo = message.split(" ");
+                int conversationId = Integer.parseInt(messageInfo[0]);
+                int user1Id = Integer.parseInt(messageInfo[1]);
+                int user2Id = Integer.parseInt(messageInfo[2]);
+                int messagesSize = Integer.parseInt(messageInfo[3]);
+                ArrayList<Message> messages = new ArrayList<>();
+                for (int i = 0; i < messagesSize; i++) {
+                    int senderId = Integer.parseInt(messageInfo[5 + 5 * i]);
+                    int receiverId = Integer.parseInt(messageInfo[6 + 5 * i]);
+                    String content = messageInfo[7 + 5 * i];
+                    LocalDateTime date = LocalDateTime.parse(messageInfo[8 + 5 * i]);
+                    messages.add(new Message(content, date, UserService.clients.get(senderId - 1), UserService.clients.get(receiverId - 1)));
+                }
+                Conversation conversation = new Conversation(String.valueOf(conversationId), UserService.clients.get(user1Id - 1), UserService.clients.get(user2Id - 1));
+                conversation.setMessages(messages);
+                UserService.clients.get(user1Id - 1).getConversations().add(conversation);
+            }
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void saveAllConversation() {
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new FileWriter("Conversations.txt"));
+            for (User user : UserService.clients) {
+                writer.write(user.getId() + " " + user.getConversations().size() + " ");
+                for (Conversation conversation : user.getConversations()) {
+                    writer.write(conversation.getId() + " " + conversation.getId() + " " + conversation.getMessages().size() + " ");
+                }
+                writer.write("\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readAllConversations() {
+        BufferedReader reader;
+        String conversation;
+        try {
+            reader = new BufferedReader(new FileReader("Conversations.txt"));
+            while ((conversation = reader.readLine()) != null) {
+                String[] conversationInfo = conversation.split(" ");
+                int userId = Integer.parseInt(conversationInfo[0]);
+                int conversationsSize = Integer.parseInt(conversationInfo[1]);
+                HashMap<User, Conversation> friendChat = new HashMap<>();
+                for (int i = 0; i < conversationsSize; i++) {
+                    int conversationId = Integer.parseInt(conversationInfo[2 + 3 * i]);
+                    int friendId = Integer.parseInt(conversationInfo[3 + 3 * i]);
+                    int messagesSize = Integer.parseInt(conversationInfo[4 + 3 * i]);
+                    Conversation conv = new Conversation(String.valueOf(conversationId), UserService.clients.get(userId - 1), UserService.clients.get(friendId - 1));
+                    friendChat.put(UserService.clients.get(friendId - 1), conv);
+                }
+                UserService.clients.get(userId - 1).setFriendChat(friendChat);
+            }
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void saveAllPosts(UserService userService) {
         BufferedWriter writer;
@@ -97,8 +192,7 @@ public class FileService {
                 UserService.clients.get(userId - 1).getPosts().add(post1);
             }
             reader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

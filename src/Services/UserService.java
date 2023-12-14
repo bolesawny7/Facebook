@@ -30,9 +30,6 @@ public class UserService {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public User login() {
-        if (clients.size() == 0) {
-            readUsers();
-        }
         boolean isLogin = false;
         String ans = new String();
         do {
@@ -57,8 +54,6 @@ public class UserService {
             return null;
         }
         setCurrentUser(currentUser);
-        fileService.readUserFrinends(clients);
-        FileService.readAllPosts();
         return currentUser;
     }
 
@@ -191,6 +186,7 @@ public class UserService {
         System.out.println("user name: " + friendsName.get(i).getAccountName() + "\n");
         System.out.println(friendsConversations.get(i));
     }
+
 
     public void getFriendRequests(User currentUser) {
         try{
