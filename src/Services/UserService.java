@@ -460,9 +460,13 @@ public class UserService {
        }catch (NullPointerException e){
            e.printStackTrace();
        }
-        for (int i = 0; i < commonFriends.size(); i++) {
-            System.out.println(commonFriends.get(i).getAccountName());
-        }
+       try{
+           for (int i = 0; i < commonFriends.size(); i++) {
+               System.out.println(commonFriends.get(i).getAccountName());
+           }
+       }catch (NullPointerException e){
+           e.printStackTrace();
+       }
         System.out.println("Press any key to return to UserDashboard");
         String ans = input.next().toLowerCase();
     }
@@ -474,16 +478,20 @@ public class UserService {
     public void readUsers() {
         ArrayList<String> usersData = fileService.ReadAllUsers();
         String pattern = "yyyy-MM-dd";
+        try{
+            for (int i = 0; i < usersData.size(); i++) {
+                String[] user = usersData.get(i).split(" ");
+                //to get date pattern
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                LocalDate birthDate = LocalDate.parse(user[5], formatter);
+                //to get gender
+                Gender gender = Gender.valueOf(user[4].toLowerCase());
+                Client newUser = new Client(user[0], user[1], user[2], user[3], gender, birthDate);
+                clients.add(newUser);
+            }
 
-        for (int i = 0; i < usersData.size(); i++) {
-            String[] user = usersData.get(i).split(" ");
-            //to get date pattern
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-            LocalDate birthDate = LocalDate.parse(user[5], formatter);
-            //to get gender
-            Gender gender = Gender.valueOf(user[4].toLowerCase());
-            Client newUser = new Client(user[0], user[1], user[2], user[3], gender, birthDate);
-            clients.add(newUser);
+        }catch (ArrayIndexOutOfBoundsException indexOutOfBoundsException){
+            throw new RuntimeException(indexOutOfBoundsException);
         }
     }
 
