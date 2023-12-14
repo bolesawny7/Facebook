@@ -232,15 +232,7 @@ public abstract class User {
             }
         }
     }
-    public ArrayList<Post> getTaggedPostsWithFriend(User friend) {
-        ArrayList<Post> taggedPosts = new ArrayList<>();
-        for (Post post : posts)
-        {
-            if (post.getTaggedUsers().contains(friend))
-                taggedPosts.add(post);
-        }
-        return taggedPosts;
-    }
+    public abstract ArrayList<Post> getTaggedPostsWithFriend(User friend);
     public ArrayList<User> getMutual(User user)
     {
         ArrayList<User> mutualFriends = new ArrayList<>();
