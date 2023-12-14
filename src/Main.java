@@ -43,11 +43,10 @@ public class Main {
             if (ans==6){
                 fileService.saveAllUsers(clients);
                 fileService.saveALlFriends(clients);
+                fileService.saveAllPosts(userService);
                 break;
             }
         }
-
-
     }
 }
 

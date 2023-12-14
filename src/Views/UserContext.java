@@ -37,5 +37,6 @@ public class UserContext {
     public static void setSelectedComment(Comment comment) {
         currentComment = comment;
     }
+
 }
 

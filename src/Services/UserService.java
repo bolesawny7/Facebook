@@ -19,19 +19,19 @@ import java.util.*;
 import static Views.UserContext.setCurrentUser;
 
 public class UserService {
-    FileService fileService=new FileService();//should be refactored ( boules should do it )
+    FileService fileService = new FileService();//should be refactored ( boules should do it )
 
     Scanner input = new Scanner(System.in);
     Dashboard dashboard = new Dashboard();
     private String email;
     private String password;
     public User currentUser;
-    public static  ArrayList<Client> clients = new ArrayList<Client>();
+    public static ArrayList<Client> clients = new ArrayList<Client>();
     static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
 
-        if(clients.size()==0){
+        if (clients.size() == 0) {
             readUsers();
         }
         boolean isLogin = false;
@@ -59,12 +59,12 @@ public class UserService {
         }
         setCurrentUser(currentUser);
         fileService.readUserFrinends(clients);
-
+        FileService.readAllPosts();
         return currentUser;
     }
 
     public void signUp() {
-        if(clients.size()==0){
+        if (clients.size() == 0) {
             readUsers();
         }
         Scanner userData = new Scanner(System.in);
@@ -80,7 +80,7 @@ public class UserService {
         String genderInput = userData.next();
         Gender gender = Gender.valueOf(genderInput.toLowerCase());
         System.out.println("enter your birth_date => yyyy-mm-dd");
-        String date= input.next();
+        String date = input.next();
         String pattern = "yyyy-MM-dd";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate birthDate = LocalDate.parse(date, formatter);
@@ -130,11 +130,10 @@ public class UserService {
 
     public Post seeTimeline() {
         ArrayList<Post> timeline = PostService.Timeline(clients);
-
         for (int i = 0; i < timeline.size(); i++) {
             System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
             System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
-            System.out.println("created by :" + timeline.get(i).getCreatedBy() + "\n");
+            System.out.println("created by :" + timeline.get(i).getCreatedBy().getAccountName() + "\n");
             System.out.println(timeline.get(i).getContent());
             System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
             String ans = input.next().toLowerCase();
@@ -190,7 +189,7 @@ public class UserService {
                     String FriendTypeInput = input.next();
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
                     currentUser.acceptRequest(currentUser.ReceivedFriendRequests.get(i), friendType);
-                    currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser,FriendType.regular);
+                    currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser, FriendType.regular);
                     currentUser.ReceivedFriendRequests.get(i).removeSentFriendRequest(currentUser);
                     currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
                     break;
@@ -204,7 +203,7 @@ public class UserService {
     }
 
     public void getSentFriendRequests(User currentUser) {
-        for (User user: currentUser.sentFriendRequests) {
+        for (User user : currentUser.sentFriendRequests) {
             System.out.println(user.getAccountName() + "\n");
         }
         System.out.println("press any key to return to user services");
@@ -222,48 +221,44 @@ public class UserService {
     }
 
     public void sendFriendRequest(User currentUser) {
-        Set<User>currentUserFriends = currentUser.getFriends();
-        ArrayList <User> sentFriendRequests = currentUser.getSentFriendRequests();
-        ArrayList <User> ReceivedFriendRequests = currentUser.ReceivedFriendRequests;
+        Set<User> currentUserFriends = currentUser.getFriends();
+        ArrayList<User> sentFriendRequests = currentUser.getSentFriendRequests();
+        ArrayList<User> ReceivedFriendRequests = currentUser.ReceivedFriendRequests;
 
         boolean notAllowedFriend;
         for (int i = 0; i < clients.size(); i++) {
             notAllowedFriend = false;
 
-            // It's not allowed to send friend request to youself
-            if(currentUser.getId() == clients.get(i).getId())
+            // It's not allowed to send friend request to yourself
+            if (currentUser.getId() == clients.get(i).getId())
                 continue;
 
             // It's not allowed to send friend request to your friends
-            for(User friend: currentUserFriends)
-            {
-                if(friend.getId() == clients.get(i).getId())
-                {
+            for (User friend : currentUserFriends) {
+                if (friend.getId() == clients.get(i).getId()) {
                     notAllowedFriend = true;
                     break;
                 }
-            };
-            // It's not allowed to send a request to a friend you already sent a request to
-            for(User friend: sentFriendRequests)
-            {
-                if(friend.getId() == clients.get(i).getId())
-                {
-                    notAllowedFriend = true;
-                    break;
-                }
-            };
-            // It's not allowed to send a request to a friend he already sent a request to you
-            for(User friend: ReceivedFriendRequests)
-            {
-                if(friend.getId() == clients.get(i).getId())
-                {
-                    notAllowedFriend = true;
-                    break;
-                }
-            };
+            }
 
-            if(notAllowedFriend == true)
+            // It's not allowed to send a request to a friend you already sent a request to
+            for (User friend : sentFriendRequests) {
+                if (friend.getId() == clients.get(i).getId()) {
+                    notAllowedFriend = true;
+                    break;
+                }
+            }
+            // It's not allowed to send a request to a friend he already sent a request to you
+            for (User friend : ReceivedFriendRequests) {
+                if (friend.getId() == clients.get(i).getId()) {
+                    notAllowedFriend = true;
+                    break;
+                }
+            }
+
+            if (notAllowedFriend) {
                 continue;
+            }
             System.out.println(clients.get(i).getAccountName());
             System.out.println("1-Send Request \n2-pass");
             String y = input.next();
@@ -319,12 +314,13 @@ public class UserService {
     public Client idSearch(int input) {
         Client clientfound = null;
         for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getId()==input) {
-                clientfound=clients.get(i);
+            if (clients.get(i).getId() == input) {
+                clientfound = clients.get(i);
             }
         }
         return clientfound;
     }
+
     public ArrayList<Group> groupSearch(String input) {
         ArrayList<Group> possibleGroups = new ArrayList<Group>();
         for (int i = 0; i < clients.size(); i++) {
@@ -417,25 +413,28 @@ public class UserService {
         System.out.println("Press any key to return to UserDashboard");
         String ans = input.next().toLowerCase();
     }
-    public ArrayList<Client> getClients(){
+
+    public ArrayList<Client> getClients() {
         return clients;
     }
-    public void readUsers(){
-        ArrayList<String> usersData=fileService.ReadAllUsers();
+
+    public void readUsers() {
+        ArrayList<String> usersData = fileService.ReadAllUsers();
         String pattern = "yyyy-MM-dd";
 
-        for(int i=0;i<usersData.size();i++){
-            String[] user= usersData.get(i).split(" ");
+        for (int i = 0; i < usersData.size(); i++) {
+            String[] user = usersData.get(i).split(" ");
             //to get date pattern
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
             LocalDate birthDate = LocalDate.parse(user[5], formatter);
             //to get gender
             Gender gender = Gender.valueOf(user[4].toLowerCase());
-            Client newUser=new Client(user[0],user[1],user[2],user[3],gender,birthDate);
+            Client newUser = new Client(user[0], user[1], user[2], user[3], gender, birthDate);
             clients.add(newUser);
         }
     }
-    public void saveUsers(ArrayList<Client> clients){
+
+    public void saveUsers(ArrayList<Client> clients) {
         fileService.saveAllUsers(clients);
     }
 }

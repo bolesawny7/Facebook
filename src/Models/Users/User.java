@@ -30,8 +30,8 @@ public abstract class User {
     private RelationshipStatus status;//m4 final momken ytlk aw yseeb sahbeto aw yfrke4 el5twba
     private String phone; //done
     private LocalDate birth_date;//done
-    public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();//problem
-    public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();//problem
+    public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();
+    public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();
     public  ArrayList<Post> posts = new ArrayList<Post>();
     public  ArrayList<User> ReceivedFriendRequests  = new ArrayList<User>();
     public  ArrayList<User> sentFriendRequests  = new ArrayList<User>();

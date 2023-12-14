@@ -22,8 +22,19 @@ public class Post {
     private ArrayList<User> tagged = new ArrayList<>();
     private ArrayList<React> reacts=new ArrayList<>();
 
-    private ArrayList<Comment> comments;
+    private ArrayList<Comment> comments = new ArrayList<>();
 
+    public void setReacts(ArrayList<React> reacts) {
+        this.reacts = reacts;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
 
     // post without tag
     public Post(User createdBy, LocalDateTime creationDate,  PrivacyOption privacyOption , String content) {
@@ -81,6 +92,7 @@ public class Post {
     public void removeComment(Comment comment) {
         comments.remove(comment);
     }
+
     public void editComment(Comment comment, String text) {
         this.comments.forEach((Comment c) -> {
             if (c.equals(comment)) {
@@ -96,6 +108,10 @@ public class Post {
                 r.setReact(react);
             }
         });
+    }
+
+    public ArrayList<React> getReacts() {
+        return reacts;
     }
 
     public void addReact(User user, ReactType react) {
@@ -116,6 +132,7 @@ public class Post {
     }
 
     public ArrayList<Comment> getComments() {
+
         return comments;
     }
 }

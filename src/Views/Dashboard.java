@@ -44,7 +44,7 @@ public class Dashboard {
         System.out.println("6-write a post");
         System.out.println("7-join a group");
         System.out.println("8-Received Friend Requests");
-        System.out.println("9-sent Friend Requests");
+        System.out.println("9-pending Friend Requests");
         System.out.println("10-see the timeLine");
         System.out.println("11-conversations");
         System.out.println("12-see friendship");
@@ -114,8 +114,9 @@ public class Dashboard {
         System.out.println("1-React or change React");
         System.out.println("2-add comment");
         System.out.println("3-get comments");
-        System.out.println("4-share");
-        System.out.println("5-back to user dashboard");
+        System.out.println("4-get reacts");
+        System.out.println("5-share");
+        System.out.println("6-back to user dashboard");
         Scanner input = new Scanner(System.in);
         int y = input.nextInt();
         switch (y) {
@@ -132,9 +133,12 @@ public class Dashboard {
                 else
                     return 3;
             case 4:
-                postService.share(user, post);
+                postService.getReacts(post);
                 return 3;
             case 5:
+                postService.share(user, post);
+                return 3;
+            case 6:
                 return 2;
             default:
                 System.out.println("please enter a valid number");

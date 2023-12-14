@@ -4,6 +4,7 @@ import Enums.Gender;
 import Enums.ReactType;
 import Models.Comment;
 import Models.Post;
+import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
 import Views.Dashboard;
@@ -38,16 +39,36 @@ public class PostService {
         String ans = input.next();
         post.addComment(user, ans);
     }
-
+    public ArrayList<React> getReacts(Post post) {
+        ArrayList<React> reacts = post.getReacts();
+        for (int i = 0; i < reacts.size(); i++) {
+            System.out.println(i + 1 + "\n- created by: " + reacts.get(i).getUser().getAccountName());
+            System.out.println("\n -React: " + reacts.get(i).getReact());
+            System.out.println("1-to choose react\n2-to see next react\n3-to return to postDashboard");
+            String ans = input.next().toLowerCase();
+            switch (ans) {
+                case "1":
+                    return reacts;
+                case "2":
+                    continue;
+                case "3":
+                    return null;
+            }
+            System.out.println();
+        }
+        System.out.println("press any key to return to postServices");
+        String ans = input.next();
+        return null;
+    }
     public Comment getComments(Post post)
     {
         ArrayList<Comment> comments = post.getComments();
 
         for(int i = 0; i < comments.size(); i++){
-            System.out.println( i + " - created by :" + comments.get(i).getUser());
-            System.out.println("\n creation Date :" + comments.get(i).getCreationDate());
-            System.out.println("\n" + comments.get(i).getText());
-            System.out.println("Press 1-to choose comment\n2-to see next comment\n3-to return to postDashboard");
+            System.out.println( i + 1  + "\n- created by: " + comments.get(i).getUser().getAccountName());
+            System.out.println("\n -creation Date: " + comments.get(i).getCreationDate());
+            System.out.println("\n -Content: " + comments.get(i).getText());
+            System.out.println("1-to choose comment\n2-to see next comment\n3-to return to postDashboard");
             String ans = input.next().toLowerCase();
             switch (ans) {
                 case "1":

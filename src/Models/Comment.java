@@ -7,16 +7,24 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Comment {
+    private static int commentCounter = 1;
+    private int commentID = commentCounter;
     private LocalDateTime creationDate;
     private final User user;
     private String text;
-    private ArrayList<Comment> replies;
-    private ArrayList<React> reacts;
+    private ArrayList<Comment> replies = new ArrayList<>();
+    private ArrayList<React> reacts = new ArrayList<>();
 
     ///--------------------constructor------------------------///
     public Comment(User user, String text) {
         this.user = user;
         this.text = text;
+        this.creationDate = LocalDateTime.now();
+        commentCounter += 1;
+    }
+
+    public int getCommentID() {
+        return commentID;
     }
 
     ///--------------------getters && Setters------------------------///
