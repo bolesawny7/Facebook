@@ -26,9 +26,6 @@ public class UserService {
     static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
-        if (clients.size() == 0) {
-            readUsers();
-        }
         boolean isLogin = false;
         String ans = new String();
         do {
@@ -53,8 +50,6 @@ public class UserService {
             return null;
         }
         setCurrentUser(currentUser);
-        fileService.readUserFrinends(clients);
-        FileService.readAllPosts();
         return currentUser;
     }
 
@@ -155,23 +150,14 @@ public class UserService {
         });
     }
 
-    public void seeConversations() {
-        ArrayList<User> friendsName = currentUser.getFriendsConversations();
-        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
-
-        for (int i = 0; i < friendsName.size(); i++) {
-            System.out.println("user name: " + i + 1 + "-" + friendsName.get(i).getAccountName());
-        }
-    }
-
-    public void getConversations(int i) {
-
-        ArrayList<User> friendsName = currentUser.getFriendsConversations();
-        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
-
-        System.out.println("user name: " + friendsName.get(i).getAccountName() + "\n");
-        System.out.println(friendsConversations.get(i));
-    }
+//    public void seeConversations() {
+//        Set<User> friendsNames = currentUser.getFriendsConversations();
+//        Set<Conversation> friendsConversations = currentUser.getConversations();
+//
+//        for (User user: friendsNames) {
+//            System.out.println( user.getId() + "- user name: " + user.getAccountName());
+//        }
+//    }
 
     public void getFriendRequests(User currentUser) {
         for (int i = 0; i < currentUser.ReceivedFriendRequests.size(); i++) {

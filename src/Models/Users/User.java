@@ -31,13 +31,17 @@ public abstract class User {
     private String phone; //done
     private LocalDate birth_date;//done
     public HashMap<User , FriendType> FriendType = new HashMap<User, FriendType>();
-    public HashMap<User, Conversation> FriendChat = new HashMap<User, Conversation>();
+    public HashMap<User,Conversation> FriendChat = new HashMap<User, Conversation>();
     public  ArrayList<Post> posts = new ArrayList<Post>();
     public  ArrayList<User> ReceivedFriendRequests  = new ArrayList<User>();
     public  ArrayList<User> sentFriendRequests  = new ArrayList<User>();
     public ArrayList<Group> groups = new ArrayList<Group>();
     public ArrayList<Group> createdGroups = new ArrayList<Group>();
     private final int id=idCounter;
+
+    public void setFriendChat(HashMap<User, Conversation> friendChat) {
+        FriendChat = friendChat;
+    }
 
 
     //constructor func
@@ -191,11 +195,11 @@ public abstract class User {
     public FriendType getFriendType(User user){
         return FriendType.get(user);
     }
-   public ArrayList<User> getFriendsConversations(){
-        return (ArrayList<User>) FriendChat.keySet();
+   public Set<User> getFriendsConversations(){
+        return (Set<User>) FriendChat.keySet();
    }
-    public ArrayList<Conversation> getConversations(){
-       return (ArrayList<Conversation>) FriendChat.values();
+    public Set<Conversation> getConversations(){
+       return (Set<Conversation>) FriendChat.values();
     }
     public Conversation getChosenUserConversation(User chosenUser){
         return FriendChat.get(chosenUser);
