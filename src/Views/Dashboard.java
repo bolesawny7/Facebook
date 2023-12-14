@@ -47,61 +47,62 @@ public class Dashboard {
         System.out.println("9-pending Friend Requests");
         System.out.println("10-see the timeLine");
         System.out.println("11-conversations");
-        System.out.println("12-see friendship");
-        System.out.println("13-see mutual friends");
+        System.out.println(" + -see friendship");
+        System.out.println(" & -see mutual friends");
         System.out.println("14- logout");
         System.out.println("15- close app");
 
         Scanner input = new Scanner(System.in);
-        int y = input.nextInt();
+        String y = input.next();
+
         switch (y) {
-            case 1:
+            case "1":
                 userService.seeFriends();
                 return 2;
-            case 2:
+            case "2":
                 UserContext.setSelectedPost(userService.seePosts());
                 if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
                     return 2;
-            case 3:
+            case "3":
                 userService.seeGroups();
                 return 2;
-            case 4:
+            case "4":
                 userService.seeConversations();
                 return 2;
-            case 5:
+            case "5":
                 userService.sendFriendRequest(user);
                 return 2;
-            case 6:
+            case "6":
                 UserContext.setSelectedPost(userService.writePost(user));
                 return 3;
-            case 7:
+            case "7":
                 userService.joinGroup();
                 return 2;
-            case 8:
+            case "8":
                 userService.getFriendRequests(user);
                 return 2;
-            case 9:
+            case "9":
                 userService.getSentFriendRequests(user);
                 return 2;
-            case 10:
+            case "10":
                 UserContext.setSelectedPost(userService.seeTimeline());
                 if (UserContext.getSelectedPost() != null)
                     return 3;
                 else
                     return 2;
-            case 11:
+            case "11":
                 return 5;
-            case 12:
+            case "+":
                 userService.getFriendship(user);
                 return 2;
-            case 13:
+            case "&":
                 userService.getMutualFriends(user);
                 return 2;
-            case 14:
+            case "14":
                 return 1;
-            case 15:
+            case "15":
                 //it does nothing
                 return 6;
             default:

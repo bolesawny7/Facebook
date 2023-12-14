@@ -291,7 +291,6 @@ public class UserService {
                 System.out.println("Enter Account name");
                 String userName = input.next();
                 ArrayList<User> users = userSearch(userName);
-                System.out.println(users.size());
                 for (int i = 0; i < users.size(); i++) {
                     System.out.println(i + 1 + "-" + users.get(i).getAccountName());
                 }
@@ -311,15 +310,6 @@ public class UserService {
         return newPost;
     }
 
-    public Client idSearch(int input) {
-        Client clientfound = null;
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getId() == input) {
-                clientfound = clients.get(i);
-            }
-        }
-        return clientfound;
-    }
 
     public ArrayList<Group> groupSearch(String input) {
         ArrayList<Group> possibleGroups = new ArrayList<Group>();
@@ -383,7 +373,7 @@ public class UserService {
         for (int i = 0; i < commonPosts.size(); i++) {
             System.out.println("created date:" + commonPosts.get(i).getCreationDate() + "\n");
             System.out.println("privacy option:" + commonPosts.get(i).isPrivacyOption() + "\n");
-            System.out.println("created by :" + commonPosts.get(i).getCreatedBy() + "\n");
+            System.out.println("created by :" + commonPosts.get(i).getCreatedBy().getAccountName() + "\n");
             System.out.println(commonPosts.get(i).getContent());
             System.out.println("Press any key to return to UserDashboard");
             String ans = input.next().toLowerCase();

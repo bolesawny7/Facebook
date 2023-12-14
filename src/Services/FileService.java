@@ -21,7 +21,6 @@ public class FileService {
         BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter("Posts.txt"));
-            System.out.println("saving posts");
             for (User user : userService.getClients()) {
                 for (int i = 0; i < user.getPosts().size(); i++) {
                     writer.write(user.getPosts().get(i).getPostId() + " " + user.getPosts().get(i).getCreatedBy().getId() + " " + user.getPosts().get(i).getCreationDate() + " " + user.getPosts().get(i).isPrivacyOption() + " " + user.getPosts().get(i).getContent() + " " + user.getPosts().get(i).getTaggedUsers().size() + " ");
