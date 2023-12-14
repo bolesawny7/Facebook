@@ -4,6 +4,7 @@ import Models.Chat.Conversation;
 import Models.Users.User;
 import Views.Dashboard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;

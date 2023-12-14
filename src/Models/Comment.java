@@ -3,6 +3,7 @@ package Models;
 import Enums.ReactType;
 import Models.Users.User;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -71,11 +72,18 @@ public class Comment {
     }
 
     public void changeReact(User user, ReactType react) {
+
         this.reacts.forEach((React r) -> {
-            if (r.getUser().equals(user) && r.getReact() != react) {
-                r.setReact(react);
+            try {
+                if (r.getUser().equals(user) && r.getReact() != react) {
+                    r.setReact(react);
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         });
+
+
     }
 
 }

@@ -15,10 +15,16 @@ public class CommentsService {
 
     public void react(User user,Comment comment)
     {
-        System.out.println("choose react => like, love, wow, haha, sad, angry, care");
-        String reactType = input.next();
-        ReactType react = ReactType.valueOf(reactType.toLowerCase());
-        comment.addReact(user, react);
+        try {
+            System.out.println("Choose react => like, love, wow, haha, sad, angry, care");
+            String reactType = input.next();
+            ReactType react = ReactType.valueOf(reactType.toLowerCase());
+            comment.addReact(user, react);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Enter a valid react.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void reply( User user,Comment comment)

@@ -118,21 +118,22 @@ public class FileService {
             writer = new BufferedWriter(new FileWriter("Posts.txt"));
             for (User user : userService.getClients()) {
                 for (int i = 0; i < user.getPosts().size(); i++) {
-                    writer.write(user.getPosts().get(i).getPostId() + " " + user.getPosts().get(i).getCreatedBy().getId() + " " + user.getPosts().get(i).getCreationDate() + " " + user.getPosts().get(i).isPrivacyOption() + " " + user.getPosts().get(i).getContent() + " " + user.getPosts().get(i).getTaggedUsers().size() + " ");
+                    writer.write(user.getPosts().get(i).getPostId() + "~" + user.getPosts().get(i).getCreatedBy().getId() + "~" + user.getPosts().get(i).getCreationDate() + "~" + user.getPosts().get(i).isPrivacyOption() + "~" + user.getPosts().get(i).getContent() + "~" + user.getPosts().get(i).getTaggedUsers().size() + "~");
                     for (int j = 0; j < user.getPosts().get(i).getTaggedUsers().size(); j++) {
-                        writer.write(user.getPosts().get(i).getTaggedUsers().get(j).getId() + " ");
+                        writer.write(user.getPosts().get(i).getTaggedUsers().get(j).getId() + "~");
                     }
-                    writer.write(user.getPosts().get(i).getReacts().size() + " ");
+                    writer.write(user.getPosts().get(i).getReacts().size() + "~");
                     for (int j = 0; j < user.getPosts().get(i).getReacts().size(); j++) {
-                        writer.write(user.getPosts().get(i).getReacts().get(j).getReact() + " " + user.getPosts().get(i).getReacts().get(j).getUser().getId() + " ");
+                        writer.write(user.getPosts().get(i).getReacts().get(j).getReact() + "~" + user.getPosts().get(i).getReacts().get(j).getUser().getId() + "~");
                     }
-                    writer.write(user.getPosts().get(i).getComments().size() + " ");
+                    writer.write(user.getPosts().get(i).getComments().size() + "~");
                     for (int j = 0; j < user.getPosts().get(i).getComments().size(); j++) {
-                        writer.write(user.getPosts().get(i).getComments().get(j).getCommentID() + " " + user.getPosts().get(i).getComments().get(j).getUser().getId() + " " + user.getPosts().get(i).getPostId() + " " + user.getPosts().get(i).getComments().get(j).getText() + " " + user.getPosts().get(i).getComments().get(j).getReacts().size() + " ");
+                        writer.write(user.getPosts().get(i).getComments().get(j).getCommentID() + "~" + user.getPosts().get(i).getComments().get(j).getUser().getId() + "~" + user.getPosts().get(i).getPostId() + "~" + user.getPosts().get(i).getComments().get(j).getText() + "~" + user.getPosts().get(i).getComments().get(j).getReacts().size() + "~");
                         for (int k = 0; k < user.getPosts().get(i).getComments().get(j).getReacts().size(); k++) {
-                            writer.write(user.getPosts().get(i).getComments().get(j).getReacts().get(k).getReact() + " " + user.getPosts().get(i).getComments().get(j).getReacts().get(k).getUser().getId() + " ");
+                            writer.write(user.getPosts().get(i).getComments().get(j).getReacts().get(k).getReact() + "~" + user.getPosts().get(i).getComments().get(j).getReacts().get(k).getUser().getId() + "~");
                         }
                     }
+                    writer.write("\n");
                 }
             }
             writer.close();
@@ -142,13 +143,14 @@ public class FileService {
 
     }
 
+
     public static void readAllPosts() {
         BufferedReader reader;
         String post;
         try {
             reader = new BufferedReader(new FileReader("Posts.txt"));
             while ((post = reader.readLine()) != null) {
-                String[] postInfo = post.split(" ");
+                String[] postInfo = post.split("~");
                 int postId = Integer.parseInt(postInfo[0]);
                 int userId = Integer.parseInt(postInfo[1]);
                 String creationDate = postInfo[2];
@@ -194,8 +196,6 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
-
-
     public void saveAllUsers(ArrayList<Client> users) {
         BufferedWriter writer;
         {

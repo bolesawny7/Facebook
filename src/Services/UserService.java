@@ -11,6 +11,9 @@ import Models.Users.User;
 import Views.Dashboard;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +27,7 @@ public class UserService {
     public User currentUser;
     public static ArrayList<Client> clients = new ArrayList<Client>();
     static ArrayList<Group> groups = new ArrayList<Group>();
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public User login() {
         boolean isLogin = false;
@@ -90,28 +94,33 @@ public class UserService {
 
     public Post seePosts() {
         ArrayList<Post> posts = currentUser.getPosts();
-        for (int i = 0; i < posts.size(); i++) {
-            System.out.println("created date:" + posts.get(i).getCreationDate());
-            System.out.println("privacy option:" + posts.get(i).isPrivacyOption());
-            System.out.print("created by: " + posts.get(i).getCreatedBy().getAccountName() + " ");
-            System.out.print("Tagged: ");
-            posts.get(i).getTaggedUsers().forEach((User user) -> {
-                System.out.print(user.getAccountName() + ",");
-            });
-            System.out.println();
-            System.out.println(posts.get(i).getContent());
+        try{
+            for (int i = 0; i < posts.size(); i++) {
+                System.out.println("created date:" + posts.get(i).getCreationDate());
+                System.out.println("privacy option:" + posts.get(i).isPrivacyOption());
+                System.out.print("created by: " + posts.get(i).getCreatedBy().getAccountName() + " ");
+                System.out.print("Tagged: ");
+                posts.get(i).getTaggedUsers().forEach((User user) -> {
+                    System.out.print(user.getAccountName() + ",");
+                });
+                System.out.println();
+                System.out.println(posts.get(i).getContent());
 
-            System.out.println("Press 1-to choose post\n2-to see next post\n3-to return to UserDashboard");
-            String ans = input.next().toLowerCase();
-            switch (ans) {
-                case "1":
-                    return posts.get(i);
-                case "2":
-                    continue;
-                case "3":
-                    return null;
+                System.out.println("Press 1-to choose post\n2-to see next post\n3-to return to UserDashboard");
+                String ans = input.next().toLowerCase();
+                switch (ans) {
+                    case "1":
+                        return posts.get(i);
+                    case "2":
+                        continue;
+                    case "3":
+                        return null;
+                }
+                System.out.println();
             }
-            System.out.println();
+
+        } catch (NullPointerException e){
+            e.printStackTrace();
         }
         System.out.println("press any key to return to user services");
         String ans = input.next();
@@ -120,22 +129,27 @@ public class UserService {
 
     public Post seeTimeline() {
         ArrayList<Post> timeline = PostService.Timeline(clients);
-        for (int i = 0; i < timeline.size(); i++) {
-            System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
-            System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
-            System.out.println("created by :" + timeline.get(i).getCreatedBy().getAccountName() + "\n");
-            System.out.println(timeline.get(i).getContent());
-            System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
-            String ans = input.next().toLowerCase();
-            switch (ans) {
-                case "1":
-                    return timeline.get(i);
-                case "2":
-                    continue;
-                case "3":
-                    return null;
+        try{
+            for (int i = 0; i < timeline.size(); i++) {
+                System.out.println("created date:" + timeline.get(i).getCreationDate() + "\n");
+                System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
+                System.out.println("created by :" + timeline.get(i).getCreatedBy().getAccountName() + "\n");
+                System.out.println(timeline.get(i).getContent());
+                System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
+                String ans = input.next().toLowerCase();
+                switch (ans) {
+                    case "1":
+                        return timeline.get(i);
+                    case "2":
+                        continue;
+                    case "3":
+                        return null;
+                }
+                System.out.println();
             }
-            System.out.println();
+
+        } catch(NullPointerException e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -150,36 +164,56 @@ public class UserService {
         });
     }
 
-//    public void seeConversations() {
-//        Set<User> friendsNames = currentUser.getFriendsConversations();
-//        Set<Conversation> friendsConversations = currentUser.getConversations();
-//
-//        for (User user: friendsNames) {
-//            System.out.println( user.getId() + "- user name: " + user.getAccountName());
-//        }
-//    }
+    public void seeConversations() {
+        ArrayList<User> friendsName = currentUser.getFriendsConversations();
+        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
+
+        try{
+            for (int i = 0; i < friendsName.size(); i++) {
+                System.out.println("user name: " + i + 1 + "-" + friendsName.get(i).getAccountName());
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println(e);
+        }
+
+    }
+
+    public void getConversations(int i) {
+
+        ArrayList<User> friendsName = currentUser.getFriendsConversations();
+        ArrayList<Conversation> friendsConversations = currentUser.getConversations();
+
+        System.out.println("user name: " + friendsName.get(i).getAccountName() + "\n");
+        System.out.println(friendsConversations.get(i));
+    }
+
 
     public void getFriendRequests(User currentUser) {
-        for (int i = 0; i < currentUser.ReceivedFriendRequests.size(); i++) {
-            System.out.println(currentUser.ReceivedFriendRequests.get(i).getAccountName());
-            System.out.println("1-accept Request \n2-reject Request \n3-pass");
-            String y = input.next();
-            switch (y) {
-                case "1":
-                    System.out.println("restricted or regular");
-                    String FriendTypeInput = input.next();
-                    FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
-                    currentUser.acceptRequest(currentUser.ReceivedFriendRequests.get(i), friendType);
-                    currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser, FriendType.regular);
-                    currentUser.ReceivedFriendRequests.get(i).removeSentFriendRequest(currentUser);
-                    currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
-                    break;
-                case "2":
-                    currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
-                    break;
-                default:
-                    break;
+        try{
+            for (int i = 0; i < currentUser.ReceivedFriendRequests.size(); i++) {
+                System.out.println(currentUser.ReceivedFriendRequests.get(i).getAccountName());
+                System.out.println("1-accept Request \n2-reject Request \n3-pass");
+                String y = input.next();
+                switch (y) {
+                    case "1":
+                        System.out.println("restricted or regular");
+                        String FriendTypeInput = input.next();
+                        FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
+                        currentUser.acceptRequest(currentUser.ReceivedFriendRequests.get(i), friendType);
+                        currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser, FriendType.regular);
+                        currentUser.ReceivedFriendRequests.get(i).removeSentFriendRequest(currentUser);
+                        currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
+                        break;
+                    case "2":
+                        currentUser.ReceivedFriendRequests.remove(currentUser.ReceivedFriendRequests.get(i));
+                        break;
+                    default:
+                        break;
+                }
             }
+
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
     }
 
@@ -193,10 +227,15 @@ public class UserService {
 
     public ArrayList<User> userSearch(String input) {
         ArrayList<User> possibleUsers = new ArrayList<User>();
-        for (int i = 0; i < clients.size(); i++) {
-            if (clients.get(i).getAccountName().contains(input) && !clients.get(i).getAccountName().equals(currentUser.getAccountName())) {
-                possibleUsers.add(clients.get(i));
+        try{
+            for (int i = 0; i < clients.size(); i++) {
+                if (clients.get(i).getAccountName().contains(input) && !clients.get(i).getAccountName().equals(currentUser.getAccountName())) {
+                    possibleUsers.add(clients.get(i));
+                }
             }
+
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
         return possibleUsers;
     }
@@ -207,51 +246,56 @@ public class UserService {
         ArrayList<User> ReceivedFriendRequests = currentUser.ReceivedFriendRequests;
 
         boolean notAllowedFriend;
-        for (int i = 0; i < clients.size(); i++) {
-            notAllowedFriend = false;
+        try{
+            for (int i = 0; i < clients.size(); i++) {
+                notAllowedFriend = false;
 
-            // It's not allowed to send friend request to yourself
-            if (currentUser.getId() == clients.get(i).getId())
-                continue;
+                // It's not allowed to send friend request to yourself
+                if (currentUser.getId() == clients.get(i).getId())
+                    continue;
 
-            // It's not allowed to send friend request to your friends
-            for (User friend : currentUserFriends) {
-                if (friend.getId() == clients.get(i).getId()) {
-                    notAllowedFriend = true;
-                    break;
+                // It's not allowed to send friend request to your friends
+                for (User friend : currentUserFriends) {
+                    if (friend.getId() == clients.get(i).getId()) {
+                        notAllowedFriend = true;
+                        break;
+                    }
+                }
+
+                // It's not allowed to send a request to a friend you already sent a request to
+                for (User friend : sentFriendRequests) {
+                    if (friend.getId() == clients.get(i).getId()) {
+                        notAllowedFriend = true;
+                        break;
+                    }
+                }
+                // It's not allowed to send a request to a friend he already sent a request to you
+                for (User friend : ReceivedFriendRequests) {
+                    if (friend.getId() == clients.get(i).getId()) {
+                        notAllowedFriend = true;
+                        break;
+                    }
+                }
+
+                if (notAllowedFriend) {
+                    continue;
+                }
+                System.out.println(clients.get(i).getAccountName());
+                System.out.println("1-Send Request \n2-pass");
+                String y = input.next();
+                switch (y) {
+                    case "1":
+                        System.out.println("Request sent");
+                        clients.get(i).ReceivedFriendRequests.add(currentUser);
+                        currentUser.SentFriendRequest(clients.get(i));
+                        break;
+                    default:
+                        break;
                 }
             }
 
-            // It's not allowed to send a request to a friend you already sent a request to
-            for (User friend : sentFriendRequests) {
-                if (friend.getId() == clients.get(i).getId()) {
-                    notAllowedFriend = true;
-                    break;
-                }
-            }
-            // It's not allowed to send a request to a friend he already sent a request to you
-            for (User friend : ReceivedFriendRequests) {
-                if (friend.getId() == clients.get(i).getId()) {
-                    notAllowedFriend = true;
-                    break;
-                }
-            }
-
-            if (notAllowedFriend) {
-                continue;
-            }
-            System.out.println(clients.get(i).getAccountName());
-            System.out.println("1-Send Request \n2-pass");
-            String y = input.next();
-            switch (y) {
-                case "1":
-                    System.out.println("Request sent");
-                    clients.get(i).ReceivedFriendRequests.add(currentUser);
-                    currentUser.SentFriendRequest(clients.get(i));
-                    break;
-                default:
-                    break;
-            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
     }
 
@@ -261,7 +305,12 @@ public class UserService {
         String privacyOptionInput = input.next().toUpperCase();
         PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
         System.out.println("Enter the post content");
-        String postContent = input.next();
+        String postContent = null;
+        try {
+            postContent = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         LocalDateTime now = LocalDateTime.now();
         Post newPost = new Post(currentUser, now, privacyOption, postContent);
         String choice;
@@ -306,8 +355,12 @@ public class UserService {
         String groupName = input.next();
 
         ArrayList<Group> groups = groupSearch(groupName);
-        for (int i = 0; i < groups.size(); i++) {
-            System.out.println(i + 1 + "-" + groups.get(i).getName());
+        try{
+            for (int i = 0; i < groups.size(); i++) {
+                System.out.println(i + 1 + "-" + groups.get(i).getName());
+            }
+        } catch (NullPointerException e){
+            e.printStackTrace();
         }
         int index;
         do {
@@ -336,8 +389,12 @@ public class UserService {
         System.out.println("Enter Account name");
         String userName = input.next();
         ArrayList<User> users = userSearch(userName);
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+        try{
+            for (int i = 0; i < users.size(); i++) {
+                System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+            }
+        }catch (ArrayIndexOutOfBoundsException indexOutOfBoundsException){
+            throw new RuntimeException(indexOutOfBoundsException);
         }
         System.out.println("Enter the number of the user you want to get friendship with");
         int index = input.nextInt();
@@ -345,19 +402,32 @@ public class UserService {
 
         //get the friendship
         ArrayList<Post> commonPosts = new ArrayList<>();
-        currentUser.getTaggedPostsWithFriend(friend).forEach((Post post) -> {
-            commonPosts.add(post);
-        });
-        friend.getTaggedPostsWithFriend(currentUser).forEach((Post post) -> {
-            commonPosts.add(post);
-        });
-        for (int i = 0; i < commonPosts.size(); i++) {
-            System.out.println("created date:" + commonPosts.get(i).getCreationDate() + "\n");
-            System.out.println("privacy option:" + commonPosts.get(i).isPrivacyOption() + "\n");
-            System.out.println("created by :" + commonPosts.get(i).getCreatedBy().getAccountName() + "\n");
-            System.out.println(commonPosts.get(i).getContent());
-            System.out.println("Press any key to return to UserDashboard");
-            String ans = input.next().toLowerCase();
+        try{
+            currentUser.getTaggedPostsWithFriend(friend).forEach((Post post) -> {
+                commonPosts.add(post);
+            });
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
+       try{
+           friend.getTaggedPostsWithFriend(currentUser).forEach((Post post) -> {
+               commonPosts.add(post);
+           });
+       } catch (NullPointerException e){
+           e.printStackTrace();
+       }
+        try{
+            for (int i = 0; i < commonPosts.size(); i++) {
+                System.out.println("created date:" + commonPosts.get(i).getCreationDate() + "\n");
+                System.out.println("privacy option:" + commonPosts.get(i).isPrivacyOption() + "\n");
+                System.out.println("created by :" + commonPosts.get(i).getCreatedBy().getAccountName() + "\n");
+                System.out.println(commonPosts.get(i).getContent());
+                System.out.println("Press any key to return to UserDashboard");
+                String ans = input.next().toLowerCase();
+            }
+        }catch (ArrayIndexOutOfBoundsException indexOutOfBoundsException){
+            throw new RuntimeException(indexOutOfBoundsException);
         }
     }
 
@@ -366,8 +436,12 @@ public class UserService {
         System.out.println("Enter Account name");
         String userName = input.next();
         ArrayList<User> users = userSearch(userName);
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+        try{
+            for (int i = 0; i < users.size(); i++) {
+                System.out.println(i + 1 + "-" + users.get(i).getAccountName());
+            }
+        }catch (ArrayIndexOutOfBoundsException indexOutOfBoundsException){
+            throw new RuntimeException(indexOutOfBoundsException);
         }
         System.out.println("Enter the number of the user you want to get mutual friends with");
         int index = input.nextInt();
@@ -375,12 +449,20 @@ public class UserService {
 
         //get the mutual
         ArrayList<User> commonFriends = new ArrayList<>();
-        currentUser.getMutual(friend).forEach((User commonfriend) -> {
-            commonFriends.add(commonfriend);
-        });
-        for (int i = 0; i < commonFriends.size(); i++) {
-            System.out.println(commonFriends.get(i).getAccountName());
-        }
+       try{
+           currentUser.getMutual(friend).forEach((User commonfriend) -> {
+               commonFriends.add(commonfriend);
+           });
+       }catch (NullPointerException e){
+           e.printStackTrace();
+       }
+       try{
+           for (int i = 0; i < commonFriends.size(); i++) {
+               System.out.println(commonFriends.get(i).getAccountName());
+           }
+       }catch (NullPointerException e){
+           e.printStackTrace();
+       }
         System.out.println("Press any key to return to UserDashboard");
         String ans = input.next().toLowerCase();
     }
@@ -392,16 +474,20 @@ public class UserService {
     public void readUsers() {
         ArrayList<String> usersData = fileService.ReadAllUsers();
         String pattern = "yyyy-MM-dd";
+        try{
+            for (int i = 0; i < usersData.size(); i++) {
+                String[] user = usersData.get(i).split(" ");
+                //to get date pattern
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+                LocalDate birthDate = LocalDate.parse(user[5], formatter);
+                //to get gender
+                Gender gender = Gender.valueOf(user[4].toLowerCase());
+                Client newUser = new Client(user[0], user[1], user[2], user[3], gender, birthDate);
+                clients.add(newUser);
+            }
 
-        for (int i = 0; i < usersData.size(); i++) {
-            String[] user = usersData.get(i).split(" ");
-            //to get date pattern
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-            LocalDate birthDate = LocalDate.parse(user[5], formatter);
-            //to get gender
-            Gender gender = Gender.valueOf(user[4].toLowerCase());
-            Client newUser = new Client(user[0], user[1], user[2], user[3], gender, birthDate);
-            clients.add(newUser);
+        }catch (ArrayIndexOutOfBoundsException indexOutOfBoundsException){
+            throw new RuntimeException(indexOutOfBoundsException);
         }
     }
 

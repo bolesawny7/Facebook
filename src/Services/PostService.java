@@ -10,6 +10,9 @@ import Models.Users.User;
 import Views.Dashboard;
 import Services.UserService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -18,15 +21,24 @@ import java.util.Scanner;
 public class PostService {
     Dashboard dashboard = new Dashboard();
     Scanner input = new Scanner(System.in);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
 
 
     public void like(Post post,User currentUser)
     {
-        System.out.println("choose react => like, love, wow, haha, sad, angry, care");
-        String reactType = input.next();
-        ReactType react = ReactType.valueOf(reactType.toLowerCase());
-        post.addReact(currentUser, react);
+        try {
+            System.out.println("choose react => like, love, wow, haha, sad, angry, care");
+            String reactType = input.next();
+            ReactType react = ReactType.valueOf(reactType.toLowerCase());
+            post.addReact(currentUser, react);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Enter a valid react.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void share(User account, Post post)
     {
@@ -36,25 +48,36 @@ public class PostService {
     public void writeComment(Post post, User user)
     {
         System.out.println("content :");
-        String ans = input.next();
+        String ans = null;
+        try {
+            ans = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         post.addComment(user, ans);
     }
     public ArrayList<React> getReacts(Post post) {
         ArrayList<React> reacts = post.getReacts();
-        for (int i = 0; i < reacts.size(); i++) {
-            System.out.println(i + 1 + "\n- created by: " + reacts.get(i).getUser().getAccountName());
-            System.out.println("\n -React: " + reacts.get(i).getReact());
-            System.out.println("1-to choose react\n2-to see next react\n3-to return to postDashboard");
-            String ans = input.next().toLowerCase();
-            switch (ans) {
-                case "1":
-                    return reacts;
-                case "2":
-                    continue;
-                case "3":
-                    return null;
+
+        try{
+            for (int i = 0; i < reacts.size(); i++) {
+                System.out.println(i + 1 + "\n- created by: " + reacts.get(i).getUser().getAccountName());
+                System.out.println("\n -React: " + reacts.get(i).getReact());
+                System.out.println("1-to choose react\n2-to see next react\n3-to return to postDashboard");
+                String ans = input.next().toLowerCase();
+                switch (ans) {
+                    case "1":
+                        return reacts;
+                    case "2":
+                        continue;
+                    case "3":
+                        return null;
+                }
+                System.out.println();
             }
-            System.out.println();
+
+        } catch (NullPointerException e){
+            e.printStackTrace();
         }
         System.out.println("press any key to return to postServices");
         String ans = input.next();
@@ -63,22 +86,26 @@ public class PostService {
     public Comment getComments(Post post)
     {
         ArrayList<Comment> comments = post.getComments();
-
-        for(int i = 0; i < comments.size(); i++){
-            System.out.println( i + 1  + "\n- created by: " + comments.get(i).getUser().getAccountName());
-            System.out.println("\n -creation Date: " + comments.get(i).getCreationDate());
-            System.out.println("\n -Content: " + comments.get(i).getText());
-            System.out.println("1-to choose comment\n2-to see next comment\n3-to return to postDashboard");
-            String ans = input.next().toLowerCase();
-            switch (ans) {
-                case "1":
-                    return comments.get(i);
-                case "2":
-                    continue;
-                case "3":
-                    return null;
+        try{
+            for(int i = 0; i < comments.size(); i++){
+                System.out.println( i + 1  + "\n- created by: " + comments.get(i).getUser().getAccountName());
+                System.out.println("\n -creation Date: " + comments.get(i).getCreationDate());
+                System.out.println("\n -Content: " + comments.get(i).getText());
+                System.out.println("1-to choose comment\n2-to see next comment\n3-to return to postDashboard");
+                String ans = input.next().toLowerCase();
+                switch (ans) {
+                    case "1":
+                        return comments.get(i);
+                    case "2":
+                        continue;
+                    case "3":
+                        return null;
+                }
+                System.out.println();
             }
-            System.out.println();
+
+        } catch (NullPointerException e){
+            e.printStackTrace();
         }
         System.out.println("press any key to return to postServices");
         String ans = input.next();
