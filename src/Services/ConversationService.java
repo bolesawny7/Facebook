@@ -4,6 +4,7 @@ import Models.Chat.Conversation;
 import Models.Users.User;
 import Views.Dashboard;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -14,9 +15,14 @@ public class ConversationService {
     Scanner input = new Scanner(System.in);
     public User seeConversations(User user) {
         ArrayList<User> users = user.getFriendsConversations();
-        for (int i = 0; i < users.size(); i++) {
-            System.out.println(i + ' ' + users.get(i).getAccountName());
-        }
+
+          for (int i = 0; i < users.size(); i++) {
+              try {
+                  System.out.println(i + ' ' + users.get(i).getAccountName());
+              }catch (ArrayIndexOutOfBoundsException e){
+                  throw new RuntimeException(e);
+              }
+      }
         User chosenUser;
         System.out.println("Do you want to chat? y/n");
         String answer = input.next();

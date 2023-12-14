@@ -4,6 +4,7 @@ import Enums.PrivacyOption;
 import Enums.ReactType;
 import Models.Users.User;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
@@ -94,20 +95,28 @@ public class Post {
     }
 
     public void editComment(Comment comment, String text) {
-        this.comments.forEach((Comment c) -> {
-            if (c.equals(comment)) {
-                c.setText(text);
-            }
-        });
+       try {
+           this.comments.forEach((Comment c) -> {
+               if (c.equals(comment)) {
+                   c.setText(text);
+               }
+           });
+       } catch (NullPointerException e ) {
+           e.printStackTrace();
+       }
     }
 
     //React
     public void changeReact(User user, ReactType react) {
-        this.reacts.forEach((React r) -> {
-            if (r.getUser().equals(user) && r.getReact() != react) {
-                r.setReact(react);
-            }
-        });
+       try{
+           this.reacts.forEach((React r) -> {
+               if (r.getUser().equals(user) && r.getReact() != react) {
+                   r.setReact(react);
+               }
+           });
+       } catch(NullPointerException e){
+           e.printStackTrace();
+       }
     }
 
     public ArrayList<React> getReacts() {
