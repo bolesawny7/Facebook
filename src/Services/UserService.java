@@ -20,17 +20,12 @@ import static Views.UserContext.setCurrentUser;
 
 public class UserService {
     FileService fileService = new FileService();//should be refactored ( boules should do it )
-
     Scanner input = new Scanner(System.in);
-    Dashboard dashboard = new Dashboard();
-    private String email;
-    private String password;
     public User currentUser;
     public static ArrayList<Client> clients = new ArrayList<Client>();
     static ArrayList<Group> groups = new ArrayList<Group>();
 
     public User login() {
-
         if (clients.size() == 0) {
             readUsers();
         }
