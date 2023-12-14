@@ -1,1 +1,4 @@
-1 1 2023-12-14T02:19:32.603405 PUBLIC test 2 2 4 2 like 3 love 1 2 1 4 1 testComment 0 2 4 1 testComment2 0 
+1~1~2023-12-14T02:19:32.603405~PUBLIC~test~2~2~4~2~like~3~love~1~2~1~4~1~testComment~0~2~4~1~testComment2~0~
+2~2~2023-12-14T05:05:55.204004300~FRIENDS~more than 1 word~1~2~0~0~
+3~2~2023-12-14T06:49:33.477148800~PUBLIC~write this pls~0~0~0~
+4~2~2023-12-14T18:03:38.640151400~FRIENDS~fixed problem~0~0~0~

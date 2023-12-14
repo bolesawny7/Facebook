@@ -10,6 +10,9 @@ import Models.Users.User;
 import Views.Dashboard;
 import Services.UserService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -18,6 +21,8 @@ import java.util.Scanner;
 public class PostService {
     Dashboard dashboard = new Dashboard();
     Scanner input = new Scanner(System.in);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
 
 
     public void like(Post post,User currentUser)
@@ -36,7 +41,12 @@ public class PostService {
     public void writeComment(Post post, User user)
     {
         System.out.println("content :");
-        String ans = input.next();
+        String ans = null;
+        try {
+            ans = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         post.addComment(user, ans);
     }
     public ArrayList<React> getReacts(Post post) {
