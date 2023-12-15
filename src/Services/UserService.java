@@ -86,6 +86,10 @@ public class UserService {
         String password = userData.next();
         System.out.println("enter your gender ( male , female )");
         String genderInput = userData.next();
+        while(!genderInput.equalsIgnoreCase("male")&&!genderInput.equalsIgnoreCase("female")){
+            System.out.println("choose only male or female,please");
+            genderInput = input.next();
+        }
         Gender gender = Gender.valueOf(genderInput.toLowerCase());
         System.out.println("enter your birth_date => yyyy-mm-dd");
         String date = input.next();
@@ -207,6 +211,10 @@ public class UserService {
                 case "1":
                     System.out.println("restricted or regular");
                     String FriendTypeInput = input.next();
+                    while(!FriendTypeInput.equalsIgnoreCase("regular")&&!FriendTypeInput.equalsIgnoreCase("restricted")){
+                        System.out.println("choose only restricted or regular,please");
+                        FriendTypeInput = input.next();
+                    }
                     FriendType friendType = Enums.FriendType.valueOf(FriendTypeInput.toLowerCase());
                     currentUser.acceptRequest(currentUser.ReceivedFriendRequests.get(i), friendType);
                     currentUser.ReceivedFriendRequests.get(i).acceptRequest(currentUser, FriendType.regular);
@@ -335,8 +343,12 @@ public class UserService {
      */
     public Post writePost(User currentUser) {
         System.out.println("Select Privacy option (friends ,public)");
-        String privacyOptionInput = input.next().toUpperCase();
-        PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput);
+        String privacyOptionInput = input.next();
+        while(!privacyOptionInput.equalsIgnoreCase("friends")&&!privacyOptionInput.equalsIgnoreCase("public")){
+            System.out.println("choose only (friends ,public),please");
+            privacyOptionInput = input.next();
+        }
+        PrivacyOption privacyOption = Enums.PrivacyOption.valueOf(privacyOptionInput.toUpperCase());
         System.out.println("Enter the post content");
         String postContent = null;
         try {
