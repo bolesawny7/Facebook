@@ -8,7 +8,7 @@ import Views.Dashboard;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CommentsService implements Interfaces.ReactInterface {
+public class CommentsService {
 
     Scanner input = new Scanner(System.in);
 
