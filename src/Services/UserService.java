@@ -262,18 +262,27 @@ public class UserService {
         Set<User> currentUserFriends = currentUser.getFriends();
         ArrayList<User> sentFriendRequests = currentUser.getSentFriendRequests();
         ArrayList<User> ReceivedFriendRequests = currentUser.ReceivedFriendRequests;
+        String ans;
+        System.out.println("write userName");
+        try {
+            ans = reader.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ArrayList<User> friendsSearch =  userSearch(ans);
 
         boolean notAllowedFriend;
-        for (int i = 0; i < clients.size(); i++) {
+        for (int i = 0; i < friendsSearch.size(); i++) {
             notAllowedFriend = false;
 
             // It's not allowed to send friend request to yourself
-            if (currentUser.getId() == clients.get(i).getId())
+            if (currentUser.getId() == friendsSearch.get(i).getId())
                 continue;
 
             // It's not allowed to send friend request to your friends
             for (User friend : currentUserFriends) {
-                if (friend.getId() == clients.get(i).getId()) {
+                if (friend.getId() == friendsSearch.get(i).getId()) {
                     notAllowedFriend = true;
                     break;
                 }
@@ -281,14 +290,14 @@ public class UserService {
 
             // It's not allowed to send a request to a friend you already sent a request to
             for (User friend : sentFriendRequests) {
-                if (friend.getId() == clients.get(i).getId()) {
+                if (friend.getId() == friendsSearch.get(i).getId()) {
                     notAllowedFriend = true;
                     break;
                 }
             }
             // It's not allowed to send a request to a friend he already sent a request to you
             for (User friend : ReceivedFriendRequests) {
-                if (friend.getId() == clients.get(i).getId()) {
+                if (friend.getId() == friendsSearch.get(i).getId()) {
                     notAllowedFriend = true;
                     break;
                 }
@@ -297,18 +306,21 @@ public class UserService {
             if (notAllowedFriend) {
                 continue;
             }
-            System.out.println(clients.get(i).getAccountName());
-            System.out.println("1-Send Request \n2-pass");
-            String y = input.next();
-            switch (y) {
-                case "1":
-                    System.out.println("Request sent");
-                    clients.get(i).ReceivedFriendRequests.add(currentUser);
-                    currentUser.SentFriendRequest(clients.get(i));
-                    break;
-                default:
-                    break;
-            }
+            System.out.println( friendsSearch.get(i).getId()+ " " + friendsSearch.get(i).getAccountName() );
+        }
+        System.out.println("1-add friend\n2-return to userDashBoard");
+        int id;
+        String y = input.next();
+        switch (y) {
+            case "1":
+                System.out.println("choose id");
+                id = input.nextInt();
+                System.out.println("Request sent");
+                clients.get(id - 1).ReceivedFriendRequests.add(currentUser);
+                currentUser.SentFriendRequest(clients.get(id - 1));
+                break;
+            default:
+                break;
         }
     }
 
