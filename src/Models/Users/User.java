@@ -6,6 +6,8 @@ import Enums.RelationshipStatus;
 import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
+import Models.Users.Managements.FriendManagement;
+import Models.Users.Managements.PostManagement;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,8 +20,7 @@ import java.util.ArrayList;
 
 //getters=g,setters=s
 
-public abstract class User {
-
+public abstract class User implements FriendManagement, PostManagement {
     private static int idCounter=1;
     private String email;
     private String first_name;
