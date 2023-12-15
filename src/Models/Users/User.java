@@ -201,6 +201,11 @@ public abstract class User {
     public Conversation getConversations(User user){
         return FriendChat.get(user);
     }
+    public HashMap<User, Conversation> getConversations(){
+        return FriendChat;
+    }
+
+
     public Conversation getChosenUserConversation(User chosenUser){
         return FriendChat.get(chosenUser);
     }

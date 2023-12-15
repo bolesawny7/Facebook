@@ -20,6 +20,7 @@ public class Main {
         Dashboard dashboard = new Dashboard();
         if (UserService.clients.isEmpty()) {
             userService.readUsers();
+            fileService.readAllMessages();
         }
         fileService.readUserFrinends(clients);
         FileService.readAllPosts();
@@ -49,6 +50,7 @@ public class Main {
                 fileService.saveAllUsers(clients);
                 fileService.saveALlFriends(clients);
                 fileService.saveAllPosts(userService);
+                fileService.saveAllMessages();
                 break;
             }
         }
