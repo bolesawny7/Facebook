@@ -1,11 +1,13 @@
 package Models.Users;
 
 import Enums.Gender;
+import Enums.PrivacyOption;
 import Enums.RelationshipStatus;
 import Models.Post;
 import Models.Users.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 

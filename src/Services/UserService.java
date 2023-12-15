@@ -124,6 +124,8 @@ public class UserService {
             System.out.println("privacy option:" + timeline.get(i).isPrivacyOption() + "\n");
             System.out.println("created by :" + timeline.get(i).getCreatedBy().getAccountName() + "\n");
             System.out.println(timeline.get(i).getContent());
+            System.out.println("reacts number :" + timeline.get(i).getReacts().size() + "\n");
+            System.out.println("comments number :" + timeline.get(i).getComments().size()  + "\n");
             System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
             String ans = input.next().toLowerCase();
             switch (ans) {

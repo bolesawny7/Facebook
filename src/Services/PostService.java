@@ -1,12 +1,15 @@
 package Services;
 
+import Enums.FriendType;
 import Enums.Gender;
+import Enums.PrivacyOption;
 import Enums.ReactType;
 import Models.Comment;
 import Models.Post;
 import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
+import Utils.UserContext;
 import Views.Dashboard;
 import Services.UserService;
 
@@ -117,7 +120,17 @@ public class PostService {
 
         clients.forEach((User user) -> {
             ArrayList<Post> userPosts = user.getPosts();
-            timeline.addAll(userPosts);
+            if(UserContext.getCurrentUser().FriendType.get(user) != null){
+                if(UserContext.getCurrentUser().FriendType.get(user) != FriendType.restricted){
+                    timeline.addAll(userPosts);
+                }
+            }else{
+                for(Post post: userPosts){
+                    if(post.isPrivacyOption() != PrivacyOption.FRIENDS){
+                        timeline.add(post);
+                    }
+                }
+            }
         });
         Collections.shuffle(timeline);
 
