@@ -16,11 +16,11 @@ public class Post {
     private User createdBy;
     private LocalDateTime creationDate;
     private String content;
-    private static int postCounter=1;
-    private final int  postId =postCounter;
+    private static int postCounter = 1;
+    private final int postId = postCounter;
     private PrivacyOption privacyOption;
     private ArrayList<User> tagged = new ArrayList<>();
-    private ArrayList<React> reacts=new ArrayList<>();
+    private ArrayList<React> reacts = new ArrayList<>();
 
     private ArrayList<Comment> comments = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class Post {
     }
 
     // post without tag
-    public Post(User createdBy, LocalDateTime creationDate,  PrivacyOption privacyOption , String content) {
+    public Post(User createdBy, LocalDateTime creationDate, PrivacyOption privacyOption, String content) {
         this.createdBy = createdBy;
         this.creationDate = creationDate;
         this.content = content;
@@ -46,23 +46,21 @@ public class Post {
     }
 
     // post with tag
-    public Post(User createdBy, LocalDateTime creationDate, PrivacyOption privacyOption , String content, ArrayList<User> tagged ) {
-        this(createdBy,creationDate,privacyOption,content);
+    public Post(User createdBy, LocalDateTime creationDate, PrivacyOption privacyOption, String content, ArrayList<User> tagged) {
+        this(createdBy, creationDate, privacyOption, content);
         this.tagged = tagged;
     }
 
-    public void setTaggedUser(User user)
-    {
+    public void setTaggedUser(User user) {
         tagged.add(user);
     }
 
 
-    public ArrayList<User> getTaggedUsers()
-    {
+    public ArrayList<User> getTaggedUsers() {
         return tagged;
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 

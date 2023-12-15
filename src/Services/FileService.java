@@ -17,8 +17,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * This class provides services related to file operations.
+ * It includes methods for saving and reading messages, posts, users, and friends.
+ */
 public class FileService {
 
+    /**
+     * This method saves all messages to a file.
+     * It writes each conversation's details and messages to the file.
+     */
     public void saveAllMessages() {
         BufferedWriter writer;
         try {
@@ -38,6 +46,10 @@ public class FileService {
         }
     }
 
+    /**
+     * This method reads all messages from a file.
+     * It parses each line of the file to create a conversation and its messages.
+     */
     public void readAllMessages() {
         BufferedReader reader;
         String message;
@@ -55,12 +67,12 @@ public class FileService {
                     int receiverId = Integer.parseInt(messageInfo[5 + 4 * i]);
                     String content = messageInfo[6 + 4 * i];
                     LocalDateTime date = LocalDateTime.parse(messageInfo[7 + 4 * i]);
-                    messages.add(new Message(content, date,UserService.clients.get(senderId - 1), UserService.clients.get(receiverId - 1)));
+                    messages.add(new Message(content, date, UserService.clients.get(senderId - 1), UserService.clients.get(receiverId - 1)));
                 }
                 Conversation conversation = new Conversation(UserService.clients.get(user1Id - 1), UserService.clients.get(user2Id - 1));
                 conversation.setMessages(messages);
-                UserService.clients.get(user1Id - 1).getConversations().put(UserService.clients.get(user2Id-1),conversation);
-                UserService.clients.get(user2Id - 1).getConversations().put(UserService.clients.get(user1Id-1),conversation);
+                UserService.clients.get(user1Id - 1).getConversations().put(UserService.clients.get(user2Id - 1), conversation);
+                UserService.clients.get(user2Id - 1).getConversations().put(UserService.clients.get(user1Id - 1), conversation);
             }
             reader.close();
         } catch (IOException e) {
@@ -68,6 +80,12 @@ public class FileService {
         }
     }
 
+    /**
+     * This method saves all posts to a file.
+     * It writes each user's posts and their details to the file.
+     *
+     * @param userService The service that provides the users whose posts are to be saved
+     */
     public void saveAllPosts(UserService userService) {
         BufferedWriter writer;
         try {
@@ -99,7 +117,10 @@ public class FileService {
 
     }
 
-
+    /**
+     * This method reads all posts from a file.
+     * It parses each line of the file to create a post and its details.
+     */
     public static void readAllPosts() {
         BufferedReader reader;
         String post;
@@ -152,6 +173,13 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method saves all users to a file.
+     * It writes each user's details to the file.
+     *
+     * @param users The users to be saved
+     */
     public void saveAllUsers(ArrayList<Client> users) {
         BufferedWriter writer;
         {
@@ -168,6 +196,12 @@ public class FileService {
         }
     }
 
+    /**
+     * This method reads all users from a file.
+     * It reads each line of the file and adds it to a list of user data.
+     *
+     * @return A list of user data
+     */
     public ArrayList<String> ReadAllUsers() {
         BufferedReader reader;
         String user;
@@ -188,6 +222,12 @@ public class FileService {
         return usersData;
     }
 
+    /**
+     * This method saves all friends to a file.
+     * It writes each user's friends and their types to the file.
+     *
+     * @param users The users whose friends are to be saved
+     */
     public void saveALlFriends(ArrayList<Client> users) {
         try {
             BufferedWriter writer;
@@ -210,6 +250,12 @@ public class FileService {
         }
     }
 
+    /**
+     * This method reads all friends from a file.
+     * It parses each line of the file to set the friends and their types for each user.
+     *
+     * @param clients The users whose friends are to be read
+     */
     public void readUserFrinends(ArrayList<Client> clients) {
         String[] friendIds = null;
         try {

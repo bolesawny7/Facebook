@@ -18,9 +18,8 @@ public class Client extends User {
 
     public ArrayList<Post> getTaggedPostsWithFriend(User friend) {
         ArrayList<Post> taggedPosts = new ArrayList<>();
-        for (Post post : super.posts)
-        {
-            if (post.getTaggedUsers().contains(friend)){
+        for (Post post : super.posts) {
+            if (post.getTaggedUsers().contains(friend)) {
                 taggedPosts.add(post);
             }
         }

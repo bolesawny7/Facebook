@@ -50,6 +50,7 @@ public class Comment {
         Comment newReply = new Comment(user, text);
         replies.add(newReply);
     }
+
     public ArrayList<React> getReacts() {
         return reacts;
     }

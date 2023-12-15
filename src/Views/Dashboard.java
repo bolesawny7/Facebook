@@ -11,9 +11,20 @@ import Utils.UserContext;
 
 import java.util.Scanner;
 
+/**
+ * This class provides the dashboard for the user.
+ * It includes methods for displaying the main menu, user dashboard, post dashboard, comments dashboard, and conversations dashboard.
+ */
 public class Dashboard {
     Scanner input = new Scanner(System.in);
 
+    /**
+     * This method displays the main menu.
+     * It provides options for the user to login or sign up.
+     *
+     * @param userService The service that provides user operations
+     * @return The next state of the application
+     */
     public int mainMenu(UserService userService) {
         System.out.println("1-login");
         System.out.println("2-signUP");
@@ -34,6 +45,14 @@ public class Dashboard {
         }
     }
 
+    /**
+     * This method displays the user dashboard.
+     * It provides options for the user to see their friends, posts, groups, friend requests, timeline, conversations, friendship, mutual friends, logout, or close the app.
+     *
+     * @param userService The service that provides user operations
+     * @param user        The user who is viewing the dashboard
+     * @return The next state of the application
+     */
     public int userDashboard(UserService userService, User user) {
         System.out.println("1-see your friends");
         System.out.println("2-see your posts");
@@ -105,6 +124,15 @@ public class Dashboard {
         }
     }
 
+    /**
+     * This method displays the post dashboard.
+     * It provides options for the user to react to the post, add a comment, get comments, get reactions, share the post, or go back to the user dashboard.
+     *
+     * @param postService The service that provides post operations
+     * @param user        The user who is viewing the dashboard
+     * @param post        The post that is being viewed
+     * @return The next state of the application
+     */
     public int postDashboard(PostService postService, User user, Post post) {
         System.out.println("1-React or change React");
         System.out.println("2-add comment");
@@ -141,6 +169,16 @@ public class Dashboard {
         }
     }
 
+    /**
+     * This method displays the comments dashboard.
+     * It provides options for the user to react to the comment, reply to the comment, or go back to the post dashboard.
+     *
+     * @param commentService The service that provides comment operations
+     * @param user           The user who is viewing the dashboard
+     * @param post           The post that the comment belongs to
+     * @param comment        The comment that is being viewed
+     * @return The next state of the application
+     */
     public int commentsDashboard(CommentsService commentService, User user, Post post, Comment comment) {
         System.out.println("1-react");
         System.out.println("2-reply");
@@ -162,6 +200,14 @@ public class Dashboard {
         }
     }
 
+    /**
+     * This method displays the conversations dashboard.
+     * It provides options for the user to see their conversations, send a message, or go back to the user dashboard.
+     *
+     * @param conversationService The service that provides conversation operations
+     * @param user                The user who is viewing the dashboard
+     * @return The next state of the application
+     */
     public int ConversationsDashboard(ConversationService conversationService, User user) {
         System.out.println("1-see Conversations");
         System.out.println("2-send a message");

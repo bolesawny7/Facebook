@@ -19,6 +19,10 @@ import java.util.*;
 
 import static Utils.UserContext.setCurrentUser;
 
+/**
+ * This class provides methods for reading and writing data.
+ * It includes methods for reading users, messages, friends, and posts from files, and for saving users, friends, posts, and messages to files.
+ */
 public class UserService {
     FileService fileService = new FileService();//should be refactored ( boules should do it )
     Scanner input = new Scanner(System.in);
@@ -27,6 +31,15 @@ public class UserService {
     static ArrayList<Group> groups = new ArrayList<Group>();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+
+    /**
+     * This method allows a user to login.
+     * It prompts the user to enter their email and password, then checks if the entered credentials match any client's credentials.
+     * If the credentials match, it sets the current user to the client and returns the client.
+     * If the credentials do not match, it prompts the user to try again or stop trying.
+     *
+     * @return The client who logged in, or null if the user chose to stop trying
+     */
     public User login() {
         boolean isLogin = false;
         String ans = new String();
@@ -55,6 +68,12 @@ public class UserService {
         return currentUser;
     }
 
+
+    /**
+     * This method allows a user to sign up.
+     * It prompts the user to enter their email, first name, last name, password, gender, and birth date, then creates a new client with the entered details and adds the client to the list of clients.
+     * It then saves the list of clients.
+     */
     public void signUp() {
         Scanner userData = new Scanner(System.in);
         System.out.println("enter your email");
@@ -78,6 +97,11 @@ public class UserService {
         saveUsers(clients);
     }
 
+    /**
+     * This method allows a user to see their friends.
+     * It prints each friend's account name and the type of friendship with the friend.
+     * It then prompts the user to press any key to return to the user dashboard.
+     */
     public void seeFriends() {
         Set<User> friends = currentUser.getFriends();
         for (User friend : friends) {
@@ -87,6 +111,12 @@ public class UserService {
         String ans = input.next();
     }
 
+    /**
+     * This method allows a user to see their posts.
+     * It prints the details of each post and provides options for the user to choose a post, see the next post, or return to the user dashboard.
+     *
+     * @return The chosen post, or null if the user chose to return to the user dashboard
+     */
     public Post seePosts() {
         ArrayList<Post> posts = currentUser.getPosts();
         for (int i = 0; i < posts.size(); i++) {
@@ -117,6 +147,12 @@ public class UserService {
         return null;
     }
 
+    /**
+     * This method allows a user to see their timeline.
+     * It retrieves the timeline of posts from all clients, then prints the details of each post and provides options for the user to choose a post, see the next post, or return to the user dashboard.
+     *
+     * @return The chosen post, or null if the user chose to return to the user dashboard
+     */
     public Post seeTimeline() {
         ArrayList<Post> timeline = PostService.Timeline(clients);
         for (int i = 0; i < timeline.size(); i++) {
@@ -125,7 +161,7 @@ public class UserService {
             System.out.println("created by :" + timeline.get(i).getCreatedBy().getAccountName() + "\n");
             System.out.println(timeline.get(i).getContent());
             System.out.println("reacts number :" + timeline.get(i).getReacts().size() + "\n");
-            System.out.println("comments number :" + timeline.get(i).getComments().size()  + "\n");
+            System.out.println("comments number :" + timeline.get(i).getComments().size() + "\n");
             System.out.println("Press 1 to choose post, 2 to see next post, 3 to return to UserDashboard");
             String ans = input.next().toLowerCase();
             switch (ans) {
@@ -141,6 +177,10 @@ public class UserService {
         return null;
     }
 
+    /**
+     * This method allows a user to see their groups.
+     * It prints the details of each group the user is a member of.
+     */
     public void seeGroups() {
         ArrayList<Group> groups = currentUser.getGroups();
         groups.forEach((Group group) -> {
@@ -152,6 +192,12 @@ public class UserService {
     }
 
 
+    /**
+     * This method allows a user to handle their received friend requests.
+     * It prints the account name of each user who sent a friend request to the user, then provides options for the user to accept the request, reject the request, or pass.
+     * If the user chooses to accept the request, it prompts the user to enter the type of friendship, then adds the user who sent the request to the user's friends and removes the request.
+     * If the user chooses to reject the request, it removes the request.
+     */
     public void getFriendRequests(User currentUser) {
         for (int i = 0; i < currentUser.ReceivedFriendRequests.size(); i++) {
             System.out.println(currentUser.ReceivedFriendRequests.get(i).getAccountName());
@@ -176,6 +222,11 @@ public class UserService {
         }
     }
 
+    /**
+     * This method allows a user to see their sent friend requests.
+     * It prints the account name of each user to whom the user sent a friend request.
+     * It then prompts the user to press any key to return to the user services.
+     */
     public void getSentFriendRequests(User currentUser) {
         for (User user : currentUser.sentFriendRequests) {
             System.out.println(user.getAccountName() + "\n");
@@ -184,6 +235,13 @@ public class UserService {
         String ans = input.next();
     }
 
+    /**
+     * This method allows a user to search for other users.
+     * It finds all clients whose account name contains the input string and adds them to a list of possible users.
+     *
+     * @param input The string to search for in account names
+     * @return A list of possible users
+     */
     public ArrayList<User> userSearch(String input) {
         ArrayList<User> possibleUsers = new ArrayList<User>();
         for (int i = 0; i < clients.size(); i++) {
@@ -194,6 +252,12 @@ public class UserService {
         return possibleUsers;
     }
 
+    /**
+     * This method allows a user to send a friend request.
+     * It finds all clients who are not the user, are not already friends with the user, have not already received a friend request from the user, and have not already sent a friend request to the user.
+     * It then prints the account name of each possible client and provides options for the user to send a friend request to the client or pass.
+     * If the user chooses to send a friend request, it adds the client to the user's sent friend requests and adds the user to the client's received friend requests.
+     */
     public void sendFriendRequest(User currentUser) {
         Set<User> currentUserFriends = currentUser.getFriends();
         ArrayList<User> sentFriendRequests = currentUser.getSentFriendRequests();
@@ -249,6 +313,14 @@ public class UserService {
     }
 
 
+    /**
+     * This method allows a user to write a post.
+     * It prompts the user to enter the privacy option and content of the post, then creates a new post with the entered details and the current date and time.
+     * It then prompts the user to tag friends in the post.
+     *
+     * @param currentUser The user who is writing the post
+     * @return The new post
+     */
     public Post writePost(User currentUser) {
         System.out.println("Select Privacy option (friends ,public)");
         String privacyOptionInput = input.next().toUpperCase();
@@ -290,6 +362,13 @@ public class UserService {
     }
 
 
+    /**
+     * This method allows a user to search for groups.
+     * It finds all groups whose name contains the input string and adds them to a list of possible groups.
+     *
+     * @param input The string to search for in group names
+     * @return A list of possible groups
+     */
     public ArrayList<Group> groupSearch(String input) {
         ArrayList<Group> possibleGroups = new ArrayList<Group>();
         for (int i = 0; i < clients.size(); i++) {
@@ -300,6 +379,11 @@ public class UserService {
         return possibleGroups;
     }
 
+    /**
+     * This method allows a user to join a group.
+     * It prompts the user to enter the name of the group, then finds all groups whose name contains the entered string and prints the name of each possible group.
+     * It then prompts the user to choose a group to join and adds the user to the chosen group's members.
+     */
     public void joinGroup() {
         String groupName = input.next();
 
@@ -319,6 +403,11 @@ public class UserService {
         } while (index > groups.size() && index < 1);
     }
 
+    /**
+     * This method allows a user to create a group.
+     * It prompts the user to enter the name and description of the group, then creates a new group with the entered details and the user as the admin.
+     * It then adds the new group to the user's created groups.
+     */
     public void createGroup() {
         System.out.println("Enter Group Name");
         String groupName = input.next();
@@ -329,6 +418,14 @@ public class UserService {
         currentUser.setCreatedGroups(newGroup);
     }
 
+    /**
+     * This method allows a user to get their friendship with another user.
+     * It prompts the user to enter the account name of the other user, then finds all users whose account name contains the entered string and prints the account name of each possible user.
+     * It then prompts the user to choose a user and retrieves all posts in which the user and the chosen user are tagged.
+     * It then prints the details of each post and provides an option for the user to return to the user dashboard.
+     *
+     * @param currentUser The user who is getting the friendship
+     */
     public void getFriendship(User currentUser) {
         //get the user
         System.out.println("Enter Account name");
@@ -360,6 +457,14 @@ public class UserService {
         }
     }
 
+    /**
+     * This method allows a user to get their mutual friends with another user.
+     * It prompts the user to enter the account name of the other user, then finds all users whose account name contains the entered string and prints the account name of each possible user.
+     * It then prompts the user to choose a user and retrieves all mutual friends of the user and the chosen user.
+     * It then prints the account name of each mutual friend and provides an option for the user to return to the user dashboard.
+     *
+     * @param currentUser The user who is getting the mutual friends
+     */
     public void getMutualFriends(User currentUser) {
         //get the user
         System.out.println("Enter Account name");
@@ -384,10 +489,19 @@ public class UserService {
         String ans = input.next().toLowerCase();
     }
 
+    /**
+     * This method retrieves the list of clients.
+     *
+     * @return The list of clients
+     */
     public ArrayList<Client> getClients() {
         return clients;
     }
 
+    /**
+     * This method reads all users from a file.
+     * It retrieves a list of user data from the file, then parses each data to create a client and adds the client to the list of clients.
+     */
     public void readUsers() {
         ArrayList<String> usersData = fileService.ReadAllUsers();
         String pattern = "yyyy-MM-dd";
@@ -404,6 +518,12 @@ public class UserService {
         }
     }
 
+    /**
+     * This method saves all users to a file.
+     * It writes each client's details to the file.
+     *
+     * @param clients The clients to be saved
+     */
     public void saveUsers(ArrayList<Client> clients) {
         fileService.saveAllUsers(clients);
     }

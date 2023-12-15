@@ -12,9 +12,11 @@ public class React {
         this.react = react;
         this.user = user;
     }
+
     public User getUser() {
         return user;
     }
+
     public ReactType getReact() {
         return react;
     }
