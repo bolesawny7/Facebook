@@ -1,4 +1,5 @@
-package Models.Users.Managements;
+package Interfaces;
+
 import Enums.FriendType;
 import Models.Users.User;
 import java.util.ArrayList;

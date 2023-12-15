@@ -3,11 +3,13 @@ import Enums.FriendType;
 import Enums.Gender;
 import Enums.PrivacyOption;
 import Enums.RelationshipStatus;
+import Interfaces.FriendManagement;
+import Interfaces.PostManagement;
 import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
-import Models.Users.Managements.FriendManagement;
-import Models.Users.Managements.PostManagement;
+
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
