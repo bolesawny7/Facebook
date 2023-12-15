@@ -10,7 +10,6 @@ import Models.Post;
 import Models.React;
 import Models.Users.Client;
 import Models.Users.User;
-import Views.UserContext;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -68,50 +67,6 @@ public class FileService {
             throw new RuntimeException(e);
         }
     }
-
-
-    public void saveAllConversation() {
-        BufferedWriter writer;
-        try {
-            writer = new BufferedWriter(new FileWriter("Conversations.txt"));
-            for (User user : UserService.clients) {
-                writer.write(user.getId() + " " + user.getConversations().size() + " ");
-                for (Conversation conversation : user.getConversations().values()) {
-                    writer.write(conversation.getId() + " " + conversation.getId() + " " + conversation.getMessages().size() + " ");
-                }
-                writer.write("\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void readAllConversations() {
-        BufferedReader reader;
-        String conversation;
-        try {
-            reader = new BufferedReader(new FileReader("Conversations.txt"));
-            while ((conversation = reader.readLine()) != null) {
-                String[] conversationInfo = conversation.split(" ");
-                int userId = Integer.parseInt(conversationInfo[0]);
-                int conversationsSize = Integer.parseInt(conversationInfo[1]);
-                HashMap<User, Conversation> friendChat = new HashMap<>();
-                for (int i = 0; i < conversationsSize; i++) {
-                    int conversationId = Integer.parseInt(conversationInfo[2 + 3 * i]);
-                    int friendId = Integer.parseInt(conversationInfo[3 + 3 * i]);
-                    int messagesSize = Integer.parseInt(conversationInfo[4 + 3 * i]);
-                    Conversation conv = new Conversation(UserService.clients.get(userId - 1), UserService.clients.get(friendId - 1));
-                    friendChat.put(UserService.clients.get(friendId - 1), conv);
-                }
-                UserService.clients.get(userId - 1).setFriendChat(friendChat);
-            }
-            reader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public void saveAllPosts(UserService userService) {
         BufferedWriter writer;

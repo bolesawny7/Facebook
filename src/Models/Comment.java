@@ -58,9 +58,6 @@ public class Comment {
         this.reacts = reacts;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
@@ -69,21 +66,6 @@ public class Comment {
     public void addReact(User user, ReactType react) {
         React newReact = new React(user, react);
         reacts.add(newReact);
-    }
-
-    public void changeReact(User user, ReactType react) {
-
-        this.reacts.forEach((React r) -> {
-            try {
-                if (r.getUser().equals(user) && r.getReact() != react) {
-                    r.setReact(react);
-                }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-        });
-
-
     }
 
 }

@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class CommentsService implements Interfaces.ReactInterface {
 
     Scanner input = new Scanner(System.in);
-    Dashboard menu = new Dashboard();
-
 
     public void react(User user,Comment comment)
     {

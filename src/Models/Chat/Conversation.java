@@ -39,12 +39,6 @@ public class Conversation {
 
     // Setters
 
-    public void setUser1(User user1) {
-        this.user1 = user1;
-    }
-    public void setUser2(User user2) {
-        this.user2 = user2;
-    }
     public void sendMessage(Message message) {
         messages.add(message);
     }

@@ -12,12 +12,6 @@ public class React {
         this.react = react;
         this.user = user;
     }
-
-     public void setReact(ReactType react) {
-        this.react = react;
-    }
-
-
     public User getUser() {
         return user;
     }

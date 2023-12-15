@@ -3,7 +3,6 @@ package Services;
 import Models.Chat.Conversation;
 import Models.Chat.Message;
 import Models.Users.User;
-import Views.UserContext;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class ConversationService {
-    private ArrayList<Conversation> conversations = new ArrayList<Conversation>();
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     Scanner input = new Scanner(System.in);
     public User seeConversations(User user) {

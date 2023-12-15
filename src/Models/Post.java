@@ -16,10 +16,9 @@ public class Post {
     private User createdBy;
     private LocalDateTime creationDate;
     private String content;
-    //  protected User[] tagged;
     private static int postCounter=1;
     private final int  postId =postCounter;
-    private PrivacyOption privacyOption; //(0 friends , 1 public)
+    private PrivacyOption privacyOption;
     private ArrayList<User> tagged = new ArrayList<>();
     private ArrayList<React> reacts=new ArrayList<>();
 
@@ -52,29 +51,11 @@ public class Post {
         this.tagged = tagged;
     }
 
-    public void editPost(String content , PrivacyOption privacyOption ) {
-        this.content = content;
-        this.privacyOption = privacyOption;
-    }
-    public void editPost(String content )
-    {
-        this.content = content;
-    }
-
-    public void editPost(PrivacyOption privacyOption )
-    {
-        this.privacyOption = privacyOption;
-    }
-
     public void setTaggedUser(User user)
     {
         tagged.add(user);
     }
 
-    public void removeTaggedUser(User user)
-    {
-        tagged.remove(user);
-    }
 
     public ArrayList<User> getTaggedUsers()
     {
@@ -90,35 +71,8 @@ public class Post {
         Comment newComment = new Comment(user, text);
         comments.add(newComment);
     }
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-    }
-
-    public void editComment(Comment comment, String text) {
-       try {
-           this.comments.forEach((Comment c) -> {
-               if (c.equals(comment)) {
-                   c.setText(text);
-               }
-           });
-       } catch (NullPointerException e ) {
-           e.printStackTrace();
-       }
-    }
 
     //React
-    public void changeReact(User user, ReactType react) {
-       try{
-           this.reacts.forEach((React r) -> {
-               if (r.getUser().equals(user) && r.getReact() != react) {
-                   r.setReact(react);
-               }
-           });
-       } catch(NullPointerException e){
-           e.printStackTrace();
-       }
-    }
-
     public ArrayList<React> getReacts() {
         return reacts;
     }

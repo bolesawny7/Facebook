@@ -1,15 +1,14 @@
 package Views;
 
 import Models.Comment;
-import Models.Group;
 import Models.Post;
 import Models.Users.User;
 import Services.CommentsService;
 import Services.ConversationService;
 import Services.PostService;
 import Services.UserService;
+import Utils.UserContext;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dashboard {

@@ -3,12 +3,10 @@ package Services;
 import Enums.FriendType;
 import Enums.Gender;
 import Enums.PrivacyOption;
-import Models.Chat.Conversation;
 import Models.Group;
 import Models.Post;
 import Models.Users.Client;
 import Models.Users.User;
-import Views.Dashboard;
 
 
 import java.io.BufferedReader;
@@ -19,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static Views.UserContext.setCurrentUser;
+import static Utils.UserContext.setCurrentUser;
 
 public class UserService {
     FileService fileService = new FileService();//should be refactored ( boules should do it )
@@ -30,9 +28,6 @@ public class UserService {
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public User login() {
-        if (clients.size() == 0) {
-            readUsers();
-        }
         boolean isLogin = false;
         String ans = new String();
         do {
@@ -57,15 +52,10 @@ public class UserService {
             return null;
         }
         setCurrentUser(currentUser);
-        fileService.readUserFrinends(clients);
-        FileService.readAllPosts();
         return currentUser;
     }
 
     public void signUp() {
-        if (clients.size() == 0) {
-            readUsers();
-        }
         Scanner userData = new Scanner(System.in);
         System.out.println("enter your email");
         String email = userData.next();
@@ -358,6 +348,7 @@ public class UserService {
             commonPosts.add(post);
         });
         for (int i = 0; i < commonPosts.size(); i++) {
+            System.out.println(commonPosts.size());
             System.out.println("created date:" + commonPosts.get(i).getCreationDate() + "\n");
             System.out.println("privacy option:" + commonPosts.get(i).isPrivacyOption() + "\n");
             System.out.println("created by :" + commonPosts.get(i).getCreatedBy().getAccountName() + "\n");

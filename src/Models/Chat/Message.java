@@ -35,21 +35,4 @@ public class Message {
         return receiver;
     }
 
-    //Setters
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
-    }
 }

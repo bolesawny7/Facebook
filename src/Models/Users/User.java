@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public abstract class User {
 
     private static int idCounter=1;
-    private static int userPostsCounter=1;
     private String email;
     private String first_name;
     private String last_name;
@@ -39,16 +38,10 @@ public abstract class User {
     public ArrayList<Group> createdGroups = new ArrayList<Group>();
     private final int id=idCounter;
 
-    public void setFriendChat(HashMap<User, Conversation> friendChat) {
-        FriendChat = friendChat;
-    }
-
-
     //constructor func
     public User(String email, String last_name, String first_name,  String password, RelationshipStatus status,  Gender gender ,LocalDate birth_date,String phone) {
         this(email,last_name,first_name,password,status,gender,birth_date);
         this.phone=phone;
-        this.posts = new ArrayList<>();
     }
 
     //without phone
@@ -79,10 +72,6 @@ public abstract class User {
     public String getEmail() {
         return email;
     }
-    public ArrayList<Group> getCreatedGroups() {
-        return createdGroups;
-    }
-
     public String getLast_name() {
         return last_name;
     }
@@ -91,19 +80,11 @@ public abstract class User {
         return first_name;
     }
 
-    public RelationshipStatus isMartial_status() {
-        return status;
-    }
-
 
     public String getPassword() {
         return password;
     }
 
-
-    public String getPhone() {
-        return phone;
-    }
 
     public LocalDate getBirth_date() {
         String pattern = "yyyy-MM-dd";
@@ -129,49 +110,16 @@ public abstract class User {
     }
     //=====================>Setters<===================//
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setCreatedGroups(Group createdGroup) {
         this.createdGroups.add(createdGroup);
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public void setMartial_status(RelationshipStatus state) {
-        status=state;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-
-    public void setBirth_date(LocalDate birth_date)
-    {
-        this.birth_date = birth_date;
-    }
 
     public void setFriendType(User user,FriendType type)
     {
         FriendType.put(user,type);
     }
 
-    public void setPosts(ArrayList<Post> posts)
-    {
-        this.posts = posts;
-    }
 
     public void setGroups(Group group)
     {
@@ -181,30 +129,15 @@ public abstract class User {
 
     //=====================>methods<===================//
 
-    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content, ArrayList<User> tagged )
-    {
-        Post  post   = new Post(user, date, privacyOption, content, tagged);
-    }
-    public void createPost(User user, LocalDateTime date, PrivacyOption privacyOption , String content )
-    {
-        Post  post   = new Post(user, date, privacyOption, content);
-    }
     public Set<User> getFriends(){
         return FriendType.keySet();
     }
     public FriendType getFriendType(User user){
         return FriendType.get(user);
     }
-   public Set<User> getFriendsConversations(){
-        return (Set<User>) FriendChat.keySet();
-   }
-    public Conversation getConversations(User user){
-        return FriendChat.get(user);
-    }
     public HashMap<User, Conversation> getConversations(){
         return FriendChat;
     }
-
 
     public Conversation getChosenUserConversation(User chosenUser){
         return FriendChat.get(chosenUser);
@@ -238,12 +171,11 @@ public abstract class User {
         }
     }
     public abstract ArrayList<Post> getTaggedPostsWithFriend(User friend);
-    public ArrayList<User> getMutual(User user)
-    {
+    public ArrayList<User> getMutual(User user) {
         ArrayList<User> mutualFriends = new ArrayList<>();
         for (User friend : user.getFriends())
         {
-            if (friend.getFriends().contains(user))
+            if (friend.getFriends().contains(user) && friend.getId() != this.getId())
                 mutualFriends.add(friend);
         }
         return mutualFriends;

@@ -19,7 +19,6 @@ import java.util.Scanner;
 
 
 public class PostService {
-    Dashboard dashboard = new Dashboard();
     Scanner input = new Scanner(System.in);
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
