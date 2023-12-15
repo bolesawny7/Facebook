@@ -198,14 +198,11 @@ public abstract class User {
    public Set<User> getFriendsConversations(){
         return (Set<User>) FriendChat.keySet();
    }
-    public Set<Conversation> getConversations(){
-       return (Set<Conversation>) FriendChat.values();
+    public Conversation getConversations(User user){
+        return FriendChat.get(user);
     }
     public Conversation getChosenUserConversation(User chosenUser){
         return FriendChat.get(chosenUser);
-    }
-    public Set<Map.Entry<User, Conversation>> getConversatios(){
-         return FriendChat.entrySet();
     }
     public String getAccountName(){
         return first_name+" "+last_name;
@@ -225,8 +222,7 @@ public abstract class User {
     {
         sentFriendRequests.add(user);
     }
-    public void removeSentFriendRequest(User user)
-    {
+    public void removeSentFriendRequest(User user) {
         for(User friendRequest: sentFriendRequests)
         {
             if(friendRequest.getId() == user.getId())
@@ -247,5 +243,6 @@ public abstract class User {
         }
         return mutualFriends;
     }
+
 }
 

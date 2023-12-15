@@ -5,18 +5,19 @@ import Models.Users.User;
 import java.util.ArrayList;
 
 public class Conversation {
-    private String id;
+    public static int idCounter=1;
+    private final  int id=idCounter;
     private User user1;
     private User user2;
     private ArrayList<Message> messages = new ArrayList<Message>();
 
-    public Conversation(String id, User user1, User user2) {
-        this.id = id;
+    public Conversation( User user1, User user2) {
         this.user1 = user1;
         this.user2 = user2;
+        idCounter++;
     }
     // Getters
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -44,7 +45,7 @@ public class Conversation {
     public void setUser2(User user2) {
         this.user2 = user2;
     }
-    public void sendMessage(User user,Message message) {
+    public void sendMessage(Message message) {
         messages.add(message);
     }
 }

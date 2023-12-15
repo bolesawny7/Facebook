@@ -46,8 +46,8 @@ public class Dashboard {
         System.out.println("8-pending Friend Requests");
         System.out.println("9-see the timeLine");
         System.out.println("10-conversations");
-        System.out.println(" + -see friendship");
-        System.out.println(" & -see mutual friends");
+        System.out.println("+ see friendship");
+        System.out.println("& see mutual friends");
         System.out.println("11- logout");
         System.out.println("12- close app");
         Scanner input = new Scanner(System.in);
@@ -178,7 +178,7 @@ public class Dashboard {
                 } else
                     return 2;
             case 2:
-                conversationService.sendMessage();
+                conversationService.sendMessage(UserContext.getCurrentUser());
                 return 5;
             case 3:
                 return 2;

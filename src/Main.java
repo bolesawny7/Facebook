@@ -23,7 +23,6 @@ public class Main {
         }
         fileService.readUserFrinends(clients);
         FileService.readAllPosts();
-        fileService.readAllMessages();
 
         int ans = 1;
         while(true){
@@ -50,7 +49,6 @@ public class Main {
                 fileService.saveAllUsers(clients);
                 fileService.saveALlFriends(clients);
                 fileService.saveAllPosts(userService);
-                fileService.saveAllMessages();
                 break;
             }
         }

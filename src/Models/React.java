@@ -17,9 +17,6 @@ public class React {
         this.react = react;
     }
 
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 
     public User getUser() {
         return user;

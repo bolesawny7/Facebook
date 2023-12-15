@@ -8,10 +8,11 @@ import Views.Dashboard;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CommentsService {
+public class CommentsService implements Interfaces.ReactInterface {
 
     Scanner input = new Scanner(System.in);
     Dashboard menu = new Dashboard();
+
 
     public void react(User user,Comment comment)
     {
@@ -33,4 +34,5 @@ public class CommentsService {
         String ans = input.next();
         comment.addReply(user, ans);
     }
+
 }
